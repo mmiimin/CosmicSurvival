@@ -1,5 +1,8 @@
-name: Cosmicsurvival
+name: CosmicSurvival
 author: mmiimin
 version: ${project.version}
 main: io.github.mmiimin.cosmicsurvival.plugin.CosmicSurvival
 api-version: 1.17
+commands:
+  menu:
+  profile:
