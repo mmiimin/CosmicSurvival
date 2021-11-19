@@ -14,20 +14,47 @@ public class SQLite extends Database{
     String dbname;
     public SQLite(CosmicSurvival instance){
         super(instance);
-        dbname = plugin.getConfig().getString("SQLite.Filename", "table_name"); // Set the table name here e.g. player_kills
+        dbname = plugin.getConfig().getString("SQLite.Filename", "playerData");
     }
 
-    public String SQLiteCreateTokensTable = "CREATE TABLE IF NOT EXISTS table_name (" + // make sure to put your table name in here too.
-            "`player` varchar(32) NOT NULL," + // This creates the different columns you will save data too. varchar(32) Is a string, int = integer
-            "`kills` int(11) NOT NULL," +
-            "`total` int(11) NOT NULL," +
-            "`Exp` int(11) NOT NULL," +
-            "`Level` int(11) NOT NULL," +
-            "`Accessory_Slot` int(11) NOT NULL," +
-            "`Rune_Slot` int(11) NOT NULL," +
-            "`Preferences` int(11) NOT NULL," +
-            "PRIMARY KEY (`player`)" +  // This is creating 3 columns Player, Kills, Total. Primary key is what you are going to use as your indexer. Here we want to use player so
-            ");"; // we can search by player, and get kills and total. If you have somehow were searching kills it would provide total and player.
+    public String SQLiteCreateTokensTable = "CREATE TABLE IF NOT EXISTS table_name (" +
+            "`player` varchar(32) NOT NULL," +
+            "`combatExp` int(11) NOT NULL," +
+            "`combatLevel` int(11) NOT NULL," +
+            "`foragingExp` int(11) NOT NULL," +
+            "`foragingLevel` int(11) NOT NULL," +
+            "`farmingExp` int(11) NOT NULL," +
+            "`farmingLevel` int(11) NOT NULL," +
+            "`miningExp` int(11) NOT NULL," +
+            "`miningLevel` int(11) NOT NULL," +
+            "`fishingExp` int(11) NOT NULL," +
+            "`fishingLevel` int(11) NOT NULL," +
+            "`craftingExp` int(11) NOT NULL," +
+            "`craftingLevel` int(11) NOT NULL," +
+            "`achievementExp` int(11) NOT NULL," +
+            "`achievementLevel` int(11) NOT NULL," +
+            "`accessorySlot10` int(11) NOT NULL," +
+            "`accessorySlot11` int(11) NOT NULL," +
+            "`accessorySlot20` int(11) NOT NULL," +
+            "`accessorySlot21` int(11) NOT NULL," +
+            "`accessorySlot30` int(11) NOT NULL," +
+            "`accessorySlot31` int(11) NOT NULL," +
+            "`runeSlot1` int(11) NOT NULL," +
+            "`runeSlot2` int(11) NOT NULL," +
+            "`runeSlot3` int(11) NOT NULL," +
+            "`setting` int(11) NOT NULL," +
+            "`runeCooldown1` int(11) NOT NULL," +
+            "`runeCooldown2` int(11) NOT NULL," +
+            "`runeCooldown3` int(11) NOT NULL," +
+            "`statsATK` int(11) NOT NULL," +
+            "`statsDEF` int(11) NOT NULL," +
+            "`statsDEX` int(11) NOT NULL," +
+            "`statsINT` int(11) NOT NULL," +
+            "`statsPoint` int(11) NOT NULL," +
+
+
+            "PRIMARY KEY (`player`)" +
+            ");";
 
 
     public Connection getSQLConnection() {
@@ -49,7 +76,7 @@ public class SQLite extends Database{
         } catch (SQLException ex) {
             plugin.getLogger().log(Level.SEVERE,"SQLite exception on initialize", ex);
         } catch (ClassNotFoundException ex) {
-            plugin.getLogger().log(Level.SEVERE, "You need the SQLite JDBC library. Google it. Put it in /lib folder.");
+            plugin.getLogger().log(Level.SEVERE, "JDBC library is missing");
         }
         return null;
     }

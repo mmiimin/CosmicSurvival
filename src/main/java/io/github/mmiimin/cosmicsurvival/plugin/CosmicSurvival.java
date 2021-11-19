@@ -2,31 +2,53 @@ package io.github.mmiimin.cosmicsurvival.plugin;
 
 import io.github.mmiimin.cosmicsurvival.database.Database;
 import io.github.mmiimin.cosmicsurvival.database.SQLite;
-import io.github.mmiimin.cosmicsurvival.plugin.EventListener;
-import org.bukkit.attribute.Attribute;
+import io.github.mmiimin.cosmicsurvival.menu.MainProfile;
+import io.github.mmiimin.cosmicsurvival.menu.MenuClick;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerChangedWorldEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 
-public class CosmicSurvival extends JavaPlugin implements Listener {
+public class CosmicSurvival extends JavaPlugin implements CommandExecutor {
+
+    Map<String, String> expTable = new HashMap<String, String>();
+
+
 
     private Database db;
-    private Listener EventListener;
+    MainProfile menu = new MainProfile();
 
     @Override
     public void onEnable(){
-        getServer().getPluginManager().registerEvents(EventListener, this);
+        this.saveDefaultConfig();
+        getServer().getPluginManager().registerEvents(new EventListener(), this);
+        getServer().getPluginManager().registerEvents(new MenuClick(), this);
         this.db = new SQLite(this);
         this.db.load();
+        Objects.requireNonNull(this.getCommand("profile")).setExecutor(this);
     }
 
     @Override
     public void onDisable(){
 
+    }
+
+    @Override
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+        if (sender instanceof Player player) {
+            menu.openMainProfile(player);
+        }
+        else{
+            sender.sendMessage("Cannot open GUI menu");
+        }
+        return true;
     }
 
     public Database getRDatabase() {

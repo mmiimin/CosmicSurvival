@@ -1,7 +1,6 @@
 package io.github.mmiimin.cosmicsurvival;
 
 import io.github.mmiimin.cosmicsurvival.util.ItemManager;
-import net.kyori.adventure.text.Component;
 import org.bukkit.inventory.ItemStack;
 
 public class AccessoryItem {

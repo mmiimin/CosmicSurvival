@@ -14,8 +14,7 @@ import io.github.mmiimin.cosmicsurvival.plugin.CosmicSurvival;
 public abstract class Database {
     CosmicSurvival plugin;
     Connection connection;
-    // The name of the table we created back in SQLite class.
-    public String table = "table_name";
+    public String table = "playerData";
     public int tokens = 0;
     public Database(CosmicSurvival instance){
         plugin = instance;
@@ -37,9 +36,7 @@ public abstract class Database {
         }
     }
 
-    // These are the methods you can use to get things out of your database. You of course can make new ones to return different things in the database.
-    // This returns the number of people the player killed.
-    public Integer getTokens(String string) {
+    public Integer getTokens(String string,String findingData) {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -50,36 +47,7 @@ public abstract class Database {
             rs = ps.executeQuery();
             while(rs.next()){
                 if(rs.getString("player").equalsIgnoreCase(string.toLowerCase())){ // Tell database to search for the player you sent into the method. e.g. getTokens(sam) It will look for sam.
-                    return rs.getInt("kills"); // Return the players amount of kills. If you wanted to get total (just a random number for an example for you guys) You would change this to total!
-                }
-            }
-        } catch (SQLException ex) {
-            plugin.getLogger().log(Level.SEVERE, Errors.sqlConnectionExecute(), ex);
-        } finally {
-            try {
-                if (ps != null)
-                    ps.close();
-                if (conn != null)
-                    conn.close();
-            } catch (SQLException ex) {
-                plugin.getLogger().log(Level.SEVERE, Errors.sqlConnectionClose(), ex);
-            }
-        }
-        return 0;
-    }
-    // Exact same method here, Except as mentioned above I am looking for total!
-    public Integer getTotal(String string) {
-        Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        try {
-            conn = getSQLConnection();
-            ps = conn.prepareStatement("SELECT * FROM " + table + " WHERE player = '"+string+"';");
-
-            rs = ps.executeQuery();
-            while(rs.next()){
-                if(rs.getString("player").equalsIgnoreCase(string.toLowerCase())){
-                    return rs.getInt("total");
+                    return rs.getInt(findingData); // Return the players amount of kills. If you wanted to get total (just a random number for an example for you guys) You would change this to total!
                 }
             }
         } catch (SQLException ex) {
@@ -97,14 +65,13 @@ public abstract class Database {
         return 0;
     }
 
-    // Now we need methods to save things to the database
     public void setTokens(Player player, Integer tokens, Integer total) {
         Connection conn = null;
         PreparedStatement ps = null;
         try {
             conn = getSQLConnection();
             ps = conn.prepareStatement("REPLACE INTO " + table + " (player,kills,total) VALUES(?,?,?)"); // IMPORTANT. In SQLite class, We made 3 columns. player, Kills, Total.
-            ps.setString(1, player.getName().toLowerCase());                                             // YOU MUST put these into this line!! And depending on how many
+            ps.setString(1, String.valueOf(player.getUniqueId()));                                             // YOU MUST put these into this line!! And depending on how many
             // columns you put (say you made 5) All 5 need to be in the brackets
             // Separated with comma's (,) AND there needs to be the same amount of
             // question marks in the VALUES brackets. Right now I only have 3 columns
