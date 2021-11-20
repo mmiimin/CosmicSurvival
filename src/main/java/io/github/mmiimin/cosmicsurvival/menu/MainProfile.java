@@ -72,15 +72,15 @@ public class MainProfile{
                 "§7도전과제를 클리어하여",
                 "§7업적 경험치를 얻을 수 있습니다",
                 "",
-                "다음 레벨까지:",
-                "-----------",
-                "",
-                "§e클릭해서 도전과제 보기"));
+                "§f다음 레벨까지 100% (1000000/1000000)",
+                "§6--------------------",
+                "§4팽서버 시즌 7에 추가 예정",
+                "§e클릭해서 도전과제 안 보기"));
         inv.setItem(40,item.createItem(Material.BARRIER,"§c✖ 닫기"));
-        inv.setItem(44,item.createItem(Material.COMPARATOR,"§a⚙ 설정","","§7클릭해서 열기"));
-        inv.setItem(36,item.createItem(Material.IRON_INGOT,"§f❖ 스텟","","§7클릭해서 열기"));
-        inv.setItem(0,item.createItem(Material.EMERALD,"§a❈ 장신구 메뉴","§7장신구를 착용하거나","§7추가 능력을 감정할 수 있습니다","","§7클릭해서 열기"));
-        inv.setItem(8,item.createItem(Material.END_CRYSTAL,"§5❋ 룬 메뉴","§7장신구를 착용하거나","§7추가 능력을 감정할 수 있습니다","","§7클릭해서 열기"));
+        inv.setItem(44,item.createItem(Material.COMPARATOR,"§a⚙ 설정","","§e클릭해서 열기"));
+        inv.setItem(36,item.createItem(Material.IRON_INGOT,"§f❖ 스텟","","§e클릭해서 열기"));
+        //inv.setItem(0,item.createItem(Material.EMERALD,"§a❈ 장신구 메뉴","§7장신구를 착용하거나","§7추가 능력을 감정할 수 있습니다","","§e클릭해서 열기"));
+        //inv.setItem(8,item.createItem(Material.END_CRYSTAL,"§5❋ 룬 메뉴","§7룬을 착용하거나","§7강화할 수 있습니다","","§e클릭해서 열기"));
 
         player.openInventory(inv);
     }

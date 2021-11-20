@@ -36,18 +36,18 @@ public abstract class Database {
         }
     }
 
-    public Integer getTokens(String string,String findingData) {
+    public Integer getTokens(String playerUUID,String findingData) {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
         try {
             conn = getSQLConnection();
-            ps = conn.prepareStatement("SELECT * FROM " + table + " WHERE player = '"+string+"';");
+            ps = conn.prepareStatement("SELECT * FROM " + table + " WHERE player = '"+playerUUID+"';");
 
             rs = ps.executeQuery();
             while(rs.next()){
-                if(rs.getString("player").equalsIgnoreCase(string.toLowerCase())){ // Tell database to search for the player you sent into the method. e.g. getTokens(sam) It will look for sam.
-                    return rs.getInt(findingData); // Return the players amount of kills. If you wanted to get total (just a random number for an example for you guys) You would change this to total!
+                if(rs.getString("player").equalsIgnoreCase(playerUUID.toLowerCase())){
+                    return rs.getInt(findingData);
                 }
             }
         } catch (SQLException ex) {
@@ -77,10 +77,7 @@ public abstract class Database {
             // question marks in the VALUES brackets. Right now I only have 3 columns
             // So VALUES (?,?,?) If you had 5 columns VALUES(?,?,?,?,?)
 
-            ps.setInt(2, tokens); // This sets the value in the database. The columns go in order. Player is ID 1, kills is ID 2, Total would be 3 and so on. you can use
-            // setInt, setString and so on. tokens and total are just variables sent in, You can manually send values in as well. p.setInt(2, 10) <-
-            // This would set the players kills instantly to 10. Sorry about the variable names, It sets their kills to 10 I just have the variable called
-            // Tokens from another plugin :/
+            ps.setInt(2, tokens);
             ps.setInt(3, total);
             ps.executeUpdate();
             return;

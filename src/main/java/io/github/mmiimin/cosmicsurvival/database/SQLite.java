@@ -17,7 +17,7 @@ public class SQLite extends Database{
         dbname = plugin.getConfig().getString("SQLite.Filename", "playerData");
     }
 
-    public String SQLiteCreateTokensTable = "CREATE TABLE IF NOT EXISTS table_name (" +
+    public String SQLiteCreateTokensTable = "CREATE TABLE IF NOT EXISTS playerData (" +
             "`player` varchar(32) NOT NULL," +
             "`combatExp` int(11) NOT NULL," +
             "`combatLevel` int(11) NOT NULL," +
@@ -46,7 +46,7 @@ public class SQLite extends Database{
             "`runeCooldown1` int(11) NOT NULL," +
             "`runeCooldown2` int(11) NOT NULL," +
             "`runeCooldown3` int(11) NOT NULL," +
-            "`statsATK` int(11) NOT NULL," +
+            "`statsSTR` int(11) NOT NULL," +
             "`statsDEF` int(11) NOT NULL," +
             "`statsDEX` int(11) NOT NULL," +
             "`statsINT` int(11) NOT NULL," +

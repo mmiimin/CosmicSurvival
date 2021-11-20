@@ -18,10 +18,6 @@ import java.util.Objects;
 
 public class CosmicSurvival extends JavaPlugin implements CommandExecutor {
 
-    Map<String, String> expTable = new HashMap<String, String>();
-
-
-
     private Database db;
     MainProfile menu = new MainProfile();
 

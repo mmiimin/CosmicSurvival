@@ -3,6 +3,7 @@ package io.github.mmiimin.cosmicsurvival.util;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import org.bukkit.Material;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
@@ -37,7 +38,7 @@ public class ItemManager {
     public ItemStack createItem(final ItemStack item, final String name, final String... lore) {
         final ItemMeta meta = item.getItemMeta();
         assert meta != null;
-
+        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         meta.setDisplayName(name);
         meta.setLore(List.of(lore));
         item.setItemMeta(meta);
@@ -48,7 +49,7 @@ public class ItemManager {
         final ItemStack item = new ItemStack(material, 1);
         final ItemMeta meta = item.getItemMeta();
         assert meta != null;
-
+        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         meta.setDisplayName(name);
         meta.setLore(List.of(lore));
         item.setItemMeta(meta);

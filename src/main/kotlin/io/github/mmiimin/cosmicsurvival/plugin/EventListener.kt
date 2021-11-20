@@ -1,6 +1,8 @@
 package io.github.mmiimin.cosmicsurvival.plugin
 
 import io.github.mmiimin.cosmicsurvival.LevelHandler
+import io.github.mmiimin.cosmicsurvival.database.Database
+import io.github.mmiimin.cosmicsurvival.database.SQLite
 import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.Sound
@@ -8,10 +10,13 @@ import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.block.BlockBreakEvent
+import org.bukkit.event.entity.EntityDamageByEntityEvent
+import org.bukkit.event.entity.EntityDamageEvent
 import org.bukkit.event.entity.EntityDeathEvent
+import org.bukkit.event.entity.PlayerDeathEvent
 import org.bukkit.event.player.AsyncPlayerChatEvent
 import org.bukkit.event.player.PlayerJoinEvent
-import java.util.*
+import org.bukkit.event.player.PlayerQuitEvent
 
 
 class EventListener: Listener{
@@ -19,6 +24,13 @@ class EventListener: Listener{
 
     @EventHandler
     fun onJoin(event: PlayerJoinEvent) {
+        event.joinMessage = "§a⏻ §e"+event.joinMessage
+
+    }
+
+    @EventHandler
+    fun onQuit(event: PlayerQuitEvent) {
+        event.quitMessage = "§c⏻ §e"+event.quitMessage
     }
 
     @EventHandler
@@ -40,10 +52,12 @@ class EventListener: Listener{
     @EventHandler
     fun onChat(event: AsyncPlayerChatEvent) {
 
-        val msg = event.message.uppercase()
         var message = event.message
-        for (player in Bukkit.getOnlinePlayers()) {
-            if (msg.contains("@"+player.name.uppercase(Locale.getDefault()))) {
+
+        message = message.replace(":yellow_square:", "§e⬛§f")
+        message = message.replace(":red_square:", "§c⬛§f")
+        for(player in Bukkit.getOnlinePlayers()) {
+            if (message.contains("@"+player.name)) {
                 player.playSound(player.location, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.0F)
                 message = message.replace(
                     "@" + player.name.toRegex(),
@@ -54,6 +68,33 @@ class EventListener: Listener{
         event.message = message
 
         event.format = "%s: %s"
+    }
+
+    @EventHandler
+    fun onDeath(event: PlayerDeathEvent) {
+        if (event.entity.killer is Player) {
+            event.deathMessage = "§c⚔ §7" + event.deathMessage
+        }
+        else {
+            event.deathMessage = "§c☠ §7" + event.deathMessage
+        }
+    }
+
+    @EventHandler
+    fun onDamagedByEnvironment(event: EntityDamageEvent) {
+        val victim = event.entity
+        if (event.cause != EntityDamageEvent.DamageCause.ENTITY_ATTACK) {
+            if (victim is Player) {
+
+            }
+        }
+    }
+
+    @EventHandler
+    fun onDamaged(event: EntityDamageByEntityEvent) {
+        val victim = event.entity
+        val attacker = event.damager
+
     }
 
 }

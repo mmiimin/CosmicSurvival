@@ -8,6 +8,8 @@ import org.bukkit.inventory.ItemStack;
 
 public class MenuClick implements Listener
 {
+    MainProfile profile = new MainProfile();
+
     @EventHandler
     public void onInventoryClick(final InventoryClickEvent e) {
 
@@ -24,8 +26,13 @@ public class MenuClick implements Listener
                     break;
             }
         }
-        else if (e.getView().getTitle().equals("§0설정")){
+        else if (e.getView().getTitle().contains("§0보유 스탯 포인트")){
             switch (slot){
+                case 10:
+
+                case 31:
+                    profile.openMainProfile(player);
+                    break;
 
             }
         }
