@@ -1,8 +1,7 @@
 package io.github.mmiimin.cosmicsurvival.plugin
 
 import io.github.mmiimin.cosmicsurvival.LevelHandler
-import io.github.mmiimin.cosmicsurvival.database.Database
-import io.github.mmiimin.cosmicsurvival.database.SQLite
+import io.github.mmiimin.cosmicsurvival.util.PlayerDataStorage
 import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.Sound
@@ -21,24 +20,28 @@ import org.bukkit.event.player.PlayerQuitEvent
 
 class EventListener: Listener{
     private var lh = LevelHandler()
+    private var pds = PlayerDataStorage()
 
     @EventHandler
     fun onJoin(event: PlayerJoinEvent) {
         event.joinMessage = "§a⏻ §e"+event.joinMessage
+        pds.loadFirstTime(event.player)
 
     }
 
     @EventHandler
     fun onQuit(event: PlayerQuitEvent) {
         event.quitMessage = "§c⏻ §e"+event.quitMessage
+        pds.saveAll(event.player)
     }
 
     @EventHandler
     fun onKill(event: EntityDeathEvent) {
-        val attacker = event.entity.killer as Player
+        val attacker = event.entity.killer
+        if (attacker is Player) {
+            if (attacker.world.name != "world_the_end") {
 
-        if (attacker.world.name != "world_the_end") {
-
+            }
         }
     }
 
@@ -72,11 +75,11 @@ class EventListener: Listener{
 
     @EventHandler
     fun onDeath(event: PlayerDeathEvent) {
-        if (event.entity.killer is Player) {
-            event.deathMessage = "§c⚔ §7" + event.deathMessage
-        }
-        else {
-            event.deathMessage = "§c☠ §7" + event.deathMessage
+        event.deathMessage = "§c☠ §7" + event.deathMessage
+        if (event.entity.killer != null) {
+            if (event.entity.killer is Player) {
+                event.deathMessage = "§c⚔ §7" + event.deathMessage
+            }
         }
     }
 

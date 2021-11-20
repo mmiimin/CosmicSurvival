@@ -65,20 +65,33 @@ public abstract class Database {
         return 0;
     }
 
-    public void setTokens(Player player, Integer tokens, Integer total) {
+    public void setTokens(Player player, Integer combatExp, Integer combatLevel, Integer miningExp, Integer miningLevel, Integer foragingExp, Integer foragingLevel, Integer farmingExp, Integer farmingLevel) {
         Connection conn = null;
         PreparedStatement ps = null;
         try {
             conn = getSQLConnection();
-            ps = conn.prepareStatement("REPLACE INTO " + table + " (player,kills,total) VALUES(?,?,?)"); // IMPORTANT. In SQLite class, We made 3 columns. player, Kills, Total.
-            ps.setString(1, String.valueOf(player.getUniqueId()));                                             // YOU MUST put these into this line!! And depending on how many
-            // columns you put (say you made 5) All 5 need to be in the brackets
-            // Separated with comma's (,) AND there needs to be the same amount of
-            // question marks in the VALUES brackets. Right now I only have 3 columns
-            // So VALUES (?,?,?) If you had 5 columns VALUES(?,?,?,?,?)
+            ps = conn.prepareStatement("REPLACE INTO " + table + " (player," +
+                    "combatExp," +
+                    "combatLevel," +
+                    "foragingExp," +
+                    "foragingLevel," +
+                    "farmingExp," +
+                    "farmingLevel," +
+                    "miningExp," +
+                    "miningLevel," +
+                    "fishingExp," +
+                    "fishingLevel) " +
+                    "VALUES(?,?,?,?,?,?,?,?,?,?,?)");
 
-            ps.setInt(2, tokens);
-            ps.setInt(3, total);
+            ps.setString(1, String.valueOf(player.getUniqueId()));
+            ps.setInt(2, combatExp);
+            ps.setInt(3, combatLevel);
+            ps.setInt(4, miningExp);
+            ps.setInt(5, miningLevel);
+            ps.setInt(6, foragingExp);
+            ps.setInt(7, foragingLevel);
+            ps.setInt(8, farmingExp);
+            ps.setInt(9, farmingLevel);
             ps.executeUpdate();
             return;
         } catch (SQLException ex) {

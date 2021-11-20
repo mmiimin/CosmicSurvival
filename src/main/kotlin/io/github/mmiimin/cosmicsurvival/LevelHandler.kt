@@ -31,7 +31,7 @@ class LevelHandler {
 
             else -> "§4ERROR - " + code + "code"
         }
-        pds.addValue(player.name + codex + "exp", amount)
-        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent(message));
+        pds.map[player.name + codex + "exp"] = amount
+        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent(message))
     }
 }
