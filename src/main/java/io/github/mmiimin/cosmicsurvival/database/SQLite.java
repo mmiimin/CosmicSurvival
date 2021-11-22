@@ -49,7 +49,7 @@ public class SQLite extends Database{
             "`statsSTR` int(11) NOT NULL," +
             "`statsDEF` int(11) NOT NULL," +
             "`statsDEX` int(11) NOT NULL," +
-            "`statsINT` int(11) NOT NULL," +
+            "`statsSRV` int(11) NOT NULL," +
             "`statsPoint` int(11) NOT NULL," +
 
 

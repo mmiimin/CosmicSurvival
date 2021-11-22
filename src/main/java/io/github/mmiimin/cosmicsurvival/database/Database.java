@@ -15,7 +15,7 @@ public abstract class Database {
     CosmicSurvival plugin;
     Connection connection;
     public String table = "playerData";
-    public int tokens = 0;
+
     public Database(CosmicSurvival instance){
         plugin = instance;
     }
@@ -39,7 +39,7 @@ public abstract class Database {
     public Integer getTokens(String playerUUID,String findingData) {
         Connection conn = null;
         PreparedStatement ps = null;
-        ResultSet rs = null;
+        ResultSet rs;
         try {
             conn = getSQLConnection();
             ps = conn.prepareStatement("SELECT * FROM " + table + " WHERE player = '"+playerUUID+"';");
@@ -65,7 +65,12 @@ public abstract class Database {
         return 0;
     }
 
-    public void setTokens(Player player, Integer combatExp, Integer combatLevel, Integer miningExp, Integer miningLevel, Integer foragingExp, Integer foragingLevel, Integer farmingExp, Integer farmingLevel) {
+    public void setTokens(Player player, Integer combatExp, Integer combatLevel, Integer miningExp,
+                          Integer miningLevel, Integer foragingExp, Integer foragingLevel, Integer farmingExp,
+                          Integer farmingLevel,Integer fishingExp, Integer fishingLevel,  Integer craftingExp, Integer craftingLevel, Integer achievementExp,
+                          Integer achievementLevel,Integer accessorySlot10,Integer accessorySlot11,Integer accessorySlot20
+            ,Integer accessorySlot21,Integer accessorySlot30,Integer accessorySlot31,Integer runeSlot1,Integer runeSlot2,Integer runeSlot3
+            ,Integer setting,Integer runeCooldown1,Integer runeCooldown2,Integer runeCooldown3,Integer statsSTR,Integer statsDEF,Integer statsDEX,Integer statsSRV,Integer statsPoint) {
         Connection conn = null;
         PreparedStatement ps = null;
         try {
@@ -73,15 +78,37 @@ public abstract class Database {
             ps = conn.prepareStatement("REPLACE INTO " + table + " (player," +
                     "combatExp," +
                     "combatLevel," +
+                    "miningExp," +
+                    "miningLevel," +
                     "foragingExp," +
                     "foragingLevel," +
                     "farmingExp," +
                     "farmingLevel," +
-                    "miningExp," +
-                    "miningLevel," +
                     "fishingExp," +
-                    "fishingLevel) " +
-                    "VALUES(?,?,?,?,?,?,?,?,?,?,?)");
+                    "fishingLevel, " +
+                    "craftingExp," +
+                    "craftingLevel," +
+                    "achievementExp," +
+                    "achievementLevel," +
+                    "accessorySlot10," +
+                    "accessorySlot11," +
+                    "accessorySlot20," +
+                    "accessorySlot21," +
+                    "accessorySlot30," +
+                    "accessorySlot31," +
+                    "runeSlot1," +
+                    "runeSlot2," +
+                    "runeSlot3," +
+                    "setting," +
+                    "runeCooldown1," +
+                    "runeCooldown2," +
+                    "runeCooldown3," +
+                    "statsSTR," +
+                    "statsDEF," +
+                    "statsDEX," +
+                    "statsSRV," +
+                    "statsPoint)" +
+                    "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 
             ps.setString(1, String.valueOf(player.getUniqueId()));
             ps.setInt(2, combatExp);
@@ -92,8 +119,32 @@ public abstract class Database {
             ps.setInt(7, foragingLevel);
             ps.setInt(8, farmingExp);
             ps.setInt(9, farmingLevel);
+            ps.setInt(10, fishingExp);
+            ps.setInt(11, fishingLevel);
+            ps.setInt(12, craftingExp);
+            ps.setInt(13, craftingLevel);
+            ps.setInt(14, achievementExp);
+            ps.setInt(15, achievementLevel);
+            ps.setInt(16, accessorySlot10);
+            ps.setInt(17, accessorySlot11);
+            ps.setInt(18, accessorySlot20);
+            ps.setInt(19, accessorySlot21);
+            ps.setInt(20, accessorySlot30);
+            ps.setInt(21, accessorySlot31);
+            ps.setInt(22, runeSlot1);
+            ps.setInt(23, runeSlot2);
+            ps.setInt(24, runeSlot3);
+            ps.setInt(25, setting);
+            ps.setInt(26, runeCooldown1);
+            ps.setInt(27, runeCooldown2);
+            ps.setInt(28, runeCooldown3);
+            ps.setInt(29, statsSTR);
+            ps.setInt(30, statsDEF);
+            ps.setInt(31, statsDEX);
+            ps.setInt(32, statsSRV);
+            ps.setInt(33, statsPoint);
+
             ps.executeUpdate();
-            return;
         } catch (SQLException ex) {
             plugin.getLogger().log(Level.SEVERE, Errors.sqlConnectionExecute(), ex);
         } finally {
@@ -106,7 +157,6 @@ public abstract class Database {
                 plugin.getLogger().log(Level.SEVERE, Errors.sqlConnectionClose(), ex);
             }
         }
-        return;
     }
 
 
