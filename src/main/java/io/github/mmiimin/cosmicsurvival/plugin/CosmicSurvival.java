@@ -42,6 +42,7 @@ public class CosmicSurvival extends JavaPlugin implements CommandExecutor, Liste
 
     }
 
+    //test
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
