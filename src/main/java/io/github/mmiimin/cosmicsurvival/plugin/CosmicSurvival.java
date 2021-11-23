@@ -42,8 +42,6 @@ public class CosmicSurvival extends JavaPlugin implements CommandExecutor, Liste
 
     }
 
-    //test
-
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (sender instanceof Player player) {
@@ -57,6 +55,14 @@ public class CosmicSurvival extends JavaPlugin implements CommandExecutor, Liste
 
     public Database getRDatabase() {
         return this.db;
+    }
+
+    @EventHandler
+    public void onEntityExplode(final EntityExplodeEvent event) {
+        if (event.getEntityType() == EntityType.CREEPER) {
+            event.setCancelled(true);
+            Bukkit.getWorld("world").playSound(event.getEntity().getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 1.0F, 1.0F);
+        }
     }
 
     @EventHandler
