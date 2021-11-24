@@ -1,6 +1,8 @@
 package io.github.mmiimin.cosmicsurvival.plugin
 
 import io.github.mmiimin.cosmicsurvival.LevelHandler
+import io.github.mmiimin.cosmicsurvival.LevelStyleManager
+import io.github.mmiimin.cosmicsurvival.util.ItemManager
 import io.github.mmiimin.cosmicsurvival.util.PlayerDataStorage
 import net.coreprotect.CoreProtect
 import net.coreprotect.CoreProtectAPI
@@ -9,8 +11,8 @@ import org.bukkit.Bukkit.getServer
 import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.Sound
-import org.bukkit.attribute.Attribute
 import org.bukkit.block.data.Ageable
+import org.bukkit.enchantments.Enchantment
 import org.bukkit.entity.*
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
@@ -18,15 +20,18 @@ import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.entity.*
 import org.bukkit.event.player.AsyncPlayerChatEvent
 import org.bukkit.event.player.PlayerFishEvent
-import org.bukkit.event.player.PlayerJoinEvent
-import org.bukkit.event.player.PlayerQuitEvent
+import org.bukkit.inventory.ItemStack
 import org.bukkit.plugin.Plugin
+import org.bukkit.potion.PotionEffect
+import org.bukkit.potion.PotionEffectType
+import kotlin.math.min
 import kotlin.math.pow
 
 
 class EventListener: Listener{
     private var lh = LevelHandler()
-    private var pds = PlayerDataStorage()
+    private var lsm = LevelStyleManager()
+    private var im = ItemManager()
 
     private fun getCoreProtect(): CoreProtectAPI? {
         val plugin: Plugin? = getServer().pluginManager.getPlugin("CoreProtect")
@@ -63,9 +68,9 @@ class EventListener: Listener{
                 is WitherSkeleton -> {lh.addExp(attacker,1,200)}
                 is Blaze -> {lh.addExp(attacker,1,240)}
                 is ZombieVillager -> {lh.addExp(attacker,1,75)}
-                is Zoglin -> {lh.addExp(attacker,1,340)}
-                is Phantom -> {lh.addExp(attacker,1,455)}
-                is Hoglin -> {lh.addExp(attacker,1,320)}
+                is Zoglin -> {lh.addExp(attacker,1,440)}
+                is Phantom -> {lh.addExp(attacker,1,755)}
+                is Hoglin -> {lh.addExp(attacker,1,420)}
                 is PigZombie -> {lh.addExp(attacker,1,80)}
                 is Piglin -> {lh.addExp(attacker,1,185)}
                 is PiglinBrute -> {lh.addExp(attacker,1,245)}
@@ -76,8 +81,9 @@ class EventListener: Listener{
                 is Husk -> {lh.addExp(attacker,1,85)}
                 is Slime -> {lh.addExp(attacker,1,50)}
                 is MagmaCube -> {lh.addExp(attacker,1,52)}
-                is Ravager -> {lh.addExp(attacker,1,500)}
-                is Wither -> {lh.addExp(attacker,1,999)}
+                is Ravager -> {lh.addExp(attacker,1,900)}
+                is Wither -> {lh.addExp(attacker,1,3500)}
+                is EnderDragon -> {lh.addExp(attacker,1,4000)}
                 is Illusioner -> {lh.addExp(attacker,1,307)}
                 is Stray -> {lh.addExp(attacker,1,100)}
                 is Vindicator -> {lh.addExp(attacker,1,298)}
@@ -85,6 +91,8 @@ class EventListener: Listener{
                 is Witch -> {lh.addExp(attacker,1,180)}
                 is Shulker -> {lh.addExp(attacker,1,288)}
                 is Silverfish -> {lh.addExp(attacker,1,102)}
+                is Guardian -> {lh.addExp(attacker,1,296)}
+                is ElderGuardian -> {lh.addExp(attacker,1,604)}
 
                 is Salmon -> {lh.addExp(attacker,5,80)}
                 is Cod -> {lh.addExp(attacker,5,70)}
@@ -103,7 +111,10 @@ class EventListener: Listener{
         if (CoreProtect.blockLookup(event.block,2147000000).size == 0) {
             when (blo) {
 
+                Material.SAND -> { lh.addExp(event.player,2,3) }
+                Material.GRAVEL -> { lh.addExp(event.player,2,3) }
                 Material.STONE -> { lh.addExp(event.player,2,5) }
+                Material.COBBLESTONE -> { lh.addExp(event.player,2,5) }
                 Material.DIORITE -> { lh.addExp(event.player,2,5) }
                 Material.ANDESITE -> { lh.addExp(event.player,2,5) }
                 Material.GRANITE -> { lh.addExp(event.player,2,5) }
@@ -128,55 +139,56 @@ class EventListener: Listener{
                 Material.DEEPSLATE_DIAMOND_ORE -> { lh.addExp(event.player,2,2200) }
                 Material.EMERALD_ORE -> { lh.addExp(event.player,2,5000) }
                 Material.DEEPSLATE_EMERALD_ORE -> { lh.addExp(event.player,2,5000) }
-                Material.ANCIENT_DEBRIS -> { lh.addExp(event.player,2,5000) }
+                Material.ANCIENT_DEBRIS -> { lh.addExp(event.player,2,3000) }
                 Material.NETHER_QUARTZ_ORE -> { lh.addExp(event.player,2,60) }
                 Material.NETHER_GOLD_ORE -> { lh.addExp(event.player,2,37) }
+                Material.GLOWSTONE -> { lh.addExp(event.player,2,46) }
                 Material.AMETHYST_BLOCK -> { lh.addExp(event.player,2,13) }
                 Material.AMETHYST_SHARD -> { lh.addExp(event.player,2,333) }
 
                 Material.SPAWNER -> { lh.addExp(event.player,1,2000) }
 
-                Material.ACACIA_LOG -> { lh.addExp(event.player,3,32) }
-                Material.JUNGLE_LOG -> { lh.addExp(event.player,3,32) }
-                Material.OAK_LOG -> { lh.addExp(event.player,3,32) }
-                Material.DARK_OAK_LOG -> { lh.addExp(event.player,3,32) }
-                Material.SPRUCE_LOG -> { lh.addExp(event.player,3,32) }
-                Material.BIRCH_LOG -> { lh.addExp(event.player,3,32) }
-                Material.STRIPPED_SPRUCE_LOG -> { lh.addExp(event.player,3,32) }
-                Material.STRIPPED_ACACIA_LOG -> { lh.addExp(event.player,3,32) }
-                Material.STRIPPED_BIRCH_LOG -> { lh.addExp(event.player,3,32) }
-                Material.STRIPPED_DARK_OAK_LOG -> { lh.addExp(event.player,3,32) }
-                Material.STRIPPED_OAK_LOG -> { lh.addExp(event.player,3,32) }
-                Material.STRIPPED_JUNGLE_LOG -> { lh.addExp(event.player,3,32) }
-                Material.CRIMSON_STEM -> { lh.addExp(event.player,3,32) }
-                Material.STRIPPED_CRIMSON_STEM -> { lh.addExp(event.player,3,32) }
-                Material.WARPED_STEM -> { lh.addExp(event.player,3,32) }
-                Material.STRIPPED_WARPED_STEM -> { lh.addExp(event.player,3,32) }
+                Material.ACACIA_LOG -> { lh.addExp(event.player,3,64) }
+                Material.JUNGLE_LOG -> { lh.addExp(event.player,3,64) }
+                Material.OAK_LOG -> { lh.addExp(event.player,3,64) }
+                Material.DARK_OAK_LOG -> { lh.addExp(event.player,3,64) }
+                Material.SPRUCE_LOG -> { lh.addExp(event.player,3,64) }
+                Material.BIRCH_LOG -> { lh.addExp(event.player,3,64) }
+                Material.STRIPPED_SPRUCE_LOG -> { lh.addExp(event.player,3,64) }
+                Material.STRIPPED_ACACIA_LOG -> { lh.addExp(event.player,3,64) }
+                Material.STRIPPED_BIRCH_LOG -> { lh.addExp(event.player,3,64) }
+                Material.STRIPPED_DARK_OAK_LOG -> { lh.addExp(event.player,3,64) }
+                Material.STRIPPED_OAK_LOG -> { lh.addExp(event.player,3,64) }
+                Material.STRIPPED_JUNGLE_LOG -> { lh.addExp(event.player,3,64) }
+                Material.CRIMSON_STEM -> { lh.addExp(event.player,3,64) }
+                Material.STRIPPED_CRIMSON_STEM -> { lh.addExp(event.player,3,64) }
+                Material.WARPED_STEM -> { lh.addExp(event.player,3,64) }
+                Material.STRIPPED_WARPED_STEM -> { lh.addExp(event.player,3,64) }
 
                 Material.PUMPKIN -> { lh.addExp(event.player,4,35) }
                 Material.MELON -> { lh.addExp(event.player,4,35) }
                 Material.WHEAT -> {
                     val ageable: Ageable = event.block.blockData as Ageable
                     if (ageable.age == ageable.maximumAge) {
-                        lh.addExp(event.player,4,75)
+                        lh.addExp(event.player,4,85)
                     }
                 }
                 Material.CARROTS -> {
                     val ageable: Ageable = event.block.blockData as Ageable
                     if (ageable.age == ageable.maximumAge) {
-                        lh.addExp(event.player, 4, 50)
+                        lh.addExp(event.player, 4, 60)
                     }
                 }
                 Material.POTATOES -> {
                     val ageable: Ageable = event.block.blockData as Ageable
                     if (ageable.age == ageable.maximumAge) {
-                        lh.addExp(event.player, 4, 50)
+                        lh.addExp(event.player, 4, 60)
                     }
                 }
                 Material.NETHER_WART -> {
                     val ageable: Ageable = event.block.blockData as Ageable
                     if (ageable.age == ageable.maximumAge) {
-                        lh.addExp(event.player, 4, 55)
+                        lh.addExp(event.player, 4, 65)
                     }
                 }
                 Material.SUGAR_CANE -> {
@@ -195,7 +207,43 @@ class EventListener: Listener{
                         }
                         else{ break }
                     }
-                    lh.addExp(event.player, 4, 30*i)
+                    lh.addExp(event.player, 4, 30*min(i,3))
+                }
+                Material.BAMBOO -> {
+                    var baseheight = event.block.location.blockY.toDouble()
+                    var i = 1
+                    while (baseheight < 255) {
+                        baseheight++
+                        val loc = Location(
+                            event.block.world,
+                            event.block.location.blockX.toDouble(),
+                            baseheight,
+                            event.block.location.blockZ.toDouble()
+                        )
+                        if (loc.block.type == Material.BAMBOO) {
+                            if (CoreProtect.blockLookup(loc.block, 150).size == 0) { i++ }
+                        }
+                        else{ break }
+                    }
+                    lh.addExp(event.player, 3, 3*min(i,16))
+                }
+                Material.KELP -> {
+                    var baseheight = event.block.location.blockY.toDouble()
+                    var i = 1
+                    while (baseheight < 255) {
+                        baseheight++
+                        val loc = Location(
+                            event.block.world,
+                            event.block.location.blockX.toDouble(),
+                            baseheight,
+                            event.block.location.blockZ.toDouble()
+                        )
+                        if (loc.block.type == Material.KELP) {
+                            if (CoreProtect.blockLookup(loc.block, 150).size == 0) { i++ }
+                        }
+                        else{ break }
+                    }
+                    lh.addExp(event.player, 4, 5*min(i,16))
                 }
 
                 else -> {}
@@ -203,47 +251,47 @@ class EventListener: Listener{
         }
         else if (CoreProtect.blockLookup(event.block,120).size == 0) {
             when (blo) {
-                Material.ACACIA_LOG -> { lh.addExp(event.player,3,32) }
-                Material.JUNGLE_LOG -> { lh.addExp(event.player,3,32) }
-                Material.OAK_LOG -> { lh.addExp(event.player,3,32) }
-                Material.DARK_OAK_LOG -> { lh.addExp(event.player,3,32) }
-                Material.SPRUCE_LOG -> { lh.addExp(event.player,3,32) }
-                Material.BIRCH_LOG -> { lh.addExp(event.player,3,32) }
-                Material.STRIPPED_SPRUCE_LOG -> { lh.addExp(event.player,3,32) }
-                Material.STRIPPED_ACACIA_LOG -> { lh.addExp(event.player,3,32) }
-                Material.STRIPPED_BIRCH_LOG -> { lh.addExp(event.player,3,32) }
-                Material.STRIPPED_DARK_OAK_LOG -> { lh.addExp(event.player,3,32) }
-                Material.STRIPPED_OAK_LOG -> { lh.addExp(event.player,3,32) }
-                Material.STRIPPED_JUNGLE_LOG -> { lh.addExp(event.player,3,32) }
-                Material.CRIMSON_STEM -> { lh.addExp(event.player,3,32) }
-                Material.STRIPPED_CRIMSON_STEM -> { lh.addExp(event.player,3,32) }
-                Material.WARPED_STEM -> { lh.addExp(event.player,3,32) }
-                Material.STRIPPED_WARPED_STEM -> { lh.addExp(event.player,3,32) }
+                Material.ACACIA_LOG -> { lh.addExp(event.player,3,64) }
+                Material.JUNGLE_LOG -> { lh.addExp(event.player,3,64) }
+                Material.OAK_LOG -> { lh.addExp(event.player,3,64) }
+                Material.DARK_OAK_LOG -> { lh.addExp(event.player,3,64) }
+                Material.SPRUCE_LOG -> { lh.addExp(event.player,3,64) }
+                Material.BIRCH_LOG -> { lh.addExp(event.player,3,64) }
+                Material.STRIPPED_SPRUCE_LOG -> { lh.addExp(event.player,3,64) }
+                Material.STRIPPED_ACACIA_LOG -> { lh.addExp(event.player,3,64) }
+                Material.STRIPPED_BIRCH_LOG -> { lh.addExp(event.player,3,64) }
+                Material.STRIPPED_DARK_OAK_LOG -> { lh.addExp(event.player,3,64) }
+                Material.STRIPPED_OAK_LOG -> { lh.addExp(event.player,3,64) }
+                Material.STRIPPED_JUNGLE_LOG -> { lh.addExp(event.player,3,64) }
+                Material.CRIMSON_STEM -> { lh.addExp(event.player,3,64) }
+                Material.STRIPPED_CRIMSON_STEM -> { lh.addExp(event.player,3,64) }
+                Material.WARPED_STEM -> { lh.addExp(event.player,3,64) }
+                Material.STRIPPED_WARPED_STEM -> { lh.addExp(event.player,3,64) }
 
                 Material.PUMPKIN -> { lh.addExp(event.player,4,35) }
                 Material.MELON -> { lh.addExp(event.player,4,35) }
                 Material.WHEAT -> {
                     val ageable: Ageable = event.block.blockData as Ageable
                     if (ageable.age == ageable.maximumAge) {
-                        lh.addExp(event.player,4,75)
+                        lh.addExp(event.player,4,85)
                     }
                 }
                 Material.CARROTS -> {
                     val ageable: Ageable = event.block.blockData as Ageable
                     if (ageable.age == ageable.maximumAge) {
-                        lh.addExp(event.player, 4, 50)
+                        lh.addExp(event.player, 4, 60)
                     }
                 }
                 Material.POTATOES -> {
                     val ageable: Ageable = event.block.blockData as Ageable
                     if (ageable.age == ageable.maximumAge) {
-                        lh.addExp(event.player, 4, 50)
+                        lh.addExp(event.player, 4, 60)
                     }
                 }
                 Material.NETHER_WART -> {
                     val ageable: Ageable = event.block.blockData as Ageable
                     if (ageable.age == ageable.maximumAge) {
-                        lh.addExp(event.player, 4, 55)
+                        lh.addExp(event.player, 4, 65)
                     }
                 }
                 Material.SUGAR_CANE -> {
@@ -262,9 +310,44 @@ class EventListener: Listener{
                         }
                         else{ break }
                     }
-                    lh.addExp(event.player, 4, 30*i)
+                    lh.addExp(event.player, 4, 30* min(i,3))
                 }
-
+                Material.BAMBOO -> {
+                    var baseheight = event.block.location.blockY.toDouble()
+                    var i = 1
+                    while (baseheight < 255) {
+                        baseheight++
+                        val loc = Location(
+                            event.block.world,
+                            event.block.location.blockX.toDouble(),
+                            baseheight,
+                            event.block.location.blockZ.toDouble()
+                        )
+                        if (loc.block.type == Material.BAMBOO) {
+                            if (CoreProtect.blockLookup(loc.block, 150).size == 0) { i++ }
+                        }
+                        else{ break }
+                    }
+                    lh.addExp(event.player, 3, 3*min(i,16))
+                }
+                Material.KELP -> {
+                    var baseheight = event.block.location.blockY.toDouble()
+                    var i = 1
+                    while (baseheight < 255) {
+                        baseheight++
+                        val loc = Location(
+                            event.block.world,
+                            event.block.location.blockX.toDouble(),
+                            baseheight,
+                            event.block.location.blockZ.toDouble()
+                        )
+                        if (loc.block.type == Material.KELP) {
+                            if (CoreProtect.blockLookup(loc.block, 150).size == 0) { i++ }
+                        }
+                        else{ break }
+                    }
+                    lh.addExp(event.player, 4, 5*min(i,16))
+                }
 
                 else -> {}
             }
@@ -276,8 +359,9 @@ class EventListener: Listener{
     @EventHandler
     fun onChat(event: AsyncPlayerChatEvent) {
 
+        val p = event.player.name
         var message = event.message
-
+        val levelDisplay = lsm.getLevelStyle(PlayerDataStorage.map[p + "settingLS"]!!,event.player)
         message = message.replace(":yellow_square:", "§e⬛§f")
         message = message.replace(":red_square:", "§c⬛§f")
         for(player in Bukkit.getOnlinePlayers()) {
@@ -291,7 +375,7 @@ class EventListener: Listener{
         }
         event.message = message
 
-        event.format = "%s: %s"
+        event.format = "$levelDisplay§f %s: %s"
     }
 
     @EventHandler
@@ -307,7 +391,7 @@ class EventListener: Listener{
     @EventHandler
     fun onDamagedByEnvironment(event: EntityDamageEvent) {
         val victim = event.entity
-        if (event.cause != EntityDamageEvent.DamageCause.ENTITY_ATTACK && event.cause != EntityDamageEvent.DamageCause.ENTITY_SWEEP_ATTACK) {
+        if (event.cause != EntityDamageEvent.DamageCause.ENTITY_ATTACK && event.cause != EntityDamageEvent.DamageCause.PROJECTILE && event.cause != EntityDamageEvent.DamageCause.ENTITY_SWEEP_ATTACK && event.cause != EntityDamageEvent.DamageCause.THORNS && event.cause != EntityDamageEvent.DamageCause.ENTITY_EXPLOSION) {
             if (victim is Player) {
                 event.damage = event.damage* (0.9993.pow(PlayerDataStorage.map[victim.name + "statsDEF"]!!.toDouble()))
                 if (PlayerDataStorage.map[victim.name + "settingDI"] == 1) {
@@ -315,7 +399,6 @@ class EventListener: Listener{
                         EntityDamageEvent.DamageCause.FIRE -> "불"
                         EntityDamageEvent.DamageCause.FIRE_TICK -> "불"
                         EntityDamageEvent.DamageCause.BLOCK_EXPLOSION -> "폭발"
-                        EntityDamageEvent.DamageCause.ENTITY_EXPLOSION -> "폭발"
                         EntityDamageEvent.DamageCause.CONTACT -> "찔림"
                         EntityDamageEvent.DamageCause.CRAMMING -> "끼임 (엔티티 과다)"
                         EntityDamageEvent.DamageCause.FREEZE -> "동상"
@@ -379,15 +462,352 @@ class EventListener: Listener{
 
     @EventHandler
     fun onFishing(event: PlayerFishEvent) {
-        val fishingRate = Math.random()
-        val weight = Math.random()
-
-        if (fishingRate > 0.8) {
-            if (weight < 0.2) {
-
+        if(event.caught != null) {
+            val bait = event.player.inventory.itemInOffHand.itemMeta?.displayName
+            var los = event.player.inventory.itemInMainHand.itemMeta?.getEnchantLevel(Enchantment.LUCK)
+            if (los == null) {
+                los = event.player.inventory.itemInOffHand.itemMeta?.getEnchantLevel(Enchantment.LUCK)
+                if (los == null) { los=0 }
             }
-            else if (weight < 0.4) {
+            val fishingRate = Math.random()*100
+            val weight = Math.random()*100
+            val rate: String
+            val caught: String
+            var amount = 0
+            if (event.caught is Item){
+                val stack = event.caught as Item?
+                if (fishingRate < 80) {
+                    rate = "§3§lFISH!"
+                    if (weight < 60) {
+                        stack!!.itemStack = ItemStack(Material.COD)
+                        caught = "대구"
+                        lh.addExp(event.player,5,150)
+                    }
+                    else if (weight < 85) {
+                        stack!!.itemStack = ItemStack(Material.SALMON)
+                        caught = "연어"
+                        lh.addExp(event.player,5,250)
+                    }
+                    else if (weight < 98) {
+                        stack!!.itemStack = ItemStack(Material.PUFFERFISH)
+                        caught = "복어"
+                        lh.addExp(event.player,5,500)
+                    }
+                    else {
+                        stack!!.itemStack = ItemStack(Material.TROPICAL_FISH)
+                        caught = "열대어"
+                        lh.addExp(event.player,5,1200)
+                    }
+                    event.player.sendMessage("$rate §f$caught 을(를) 낚았다.")
+                }
+                else if (fishingRate <= 90-(los.minus(3))) {
+                    rate = "§a§lCOMMON!"
+                    if (weight < 5) {
+                        stack!!.itemStack = ItemStack(Material.STICK)
+                        caught = "막대기"
+                        lh.addExp(event.player,5,145)
+                    }
+                    else if (weight < 22) {
+                        stack!!.itemStack = ItemStack(Material.LILY_PAD)
+                        caught = "수련잎"
+                        lh.addExp(event.player,5,70)
+                    }
+                    else if (weight < 32) {
+                        stack!!.itemStack = ItemStack(Material.BOWL)
+                        caught = "그릇"
+                        lh.addExp(event.player,5,120)
+                    }
+                    else if (weight < 42) {
+                        stack!!.itemStack = ItemStack(Material.LEATHER)
+                        caught = "가죽"
+                        lh.addExp(event.player,5,100)
+                    }
+                    else if (weight < 52) {
+                        stack!!.itemStack = ItemStack(Material.ROTTEN_FLESH)
+                        caught = "썩은 살점"
+                        lh.addExp(event.player,5,30)
+                    }
+                    else if (weight < 62) {
+                        stack!!.itemStack = ItemStack(Material.BONE)
+                        caught = "뼈"
+                        lh.addExp(event.player,5,40)
+                    }
+                    else if (weight < 72) {
+                        stack!!.itemStack = ItemStack(Material.GLASS_BOTTLE)
+                        caught = "유리병"
+                        lh.addExp(event.player,5,90)
+                    }
+                    else if (weight < 77) {
+                        stack!!.itemStack = ItemStack(Material.STRING)
+                        caught = "실"
+                        lh.addExp(event.player,5,20)
+                    }
+                    else if (weight < 78) {
+                        stack!!.itemStack = ItemStack(Material.INK_SAC)
+                        caught = "먹물"
+                        lh.addExp(event.player,5,350)
+                    }
+                    else if (weight < 88) {
+                        stack!!.itemStack = ItemStack(Material.TRIPWIRE_HOOK)
+                        caught = "철사 덫 갈고리"
+                        lh.addExp(event.player,5,130)
+                    }
+                    else if (weight < 98) {
+                        stack!!.itemStack = ItemStack(Material.LEATHER_BOOTS)
+                        val itemMeta = stack.itemStack
+                        if (itemMeta is Damageable) {
+                            (itemMeta as Damageable).damage(Math.random()*50+10)
+                        }
+                        caught = "낡은 장화"
+                        lh.addExp(event.player,5,85)
+                    }
+                    else {
+                        stack!!.itemStack = ItemStack(Material.FISHING_ROD)
+                        val itemMeta = stack.itemStack
+                        if (itemMeta is Damageable) {
+                            (itemMeta as Damageable).damage(Math.random()*50+10)
+                        }
+                        caught = "낡은 낚싯대"
+                        lh.addExp(event.player,5,105)
+                    }
+                    event.player.sendMessage("$rate §f$caught 을(를) 낚았다.")
+                }
+                else if (fishingRate <= 99.5-(los.minus(3))) {
+                    rate = "§b§lRARE!"
+                    if (weight < 12) {
+                        stack!!.itemStack = ItemStack(Material.NAME_TAG)
+                        caught = "이름표"
+                        lh.addExp(event.player,5,850)
+                    }
+                    else if (weight < 24) {
+                        stack!!.itemStack = ItemStack(Material.NAUTILUS_SHELL)
+                        caught = "앵무조개 껍데기"
+                        lh.addExp(event.player,5,755)
+                    }
+                    else if (weight < 36) {
+                        stack!!.itemStack = ItemStack(Material.SADDLE)
+                        caught = "안장"
+                        lh.addExp(event.player,5,650)
+                    }
+                    else if (weight < 48) {
+                        stack!!.itemStack = ItemStack(Material.EXPERIENCE_BOTTLE)
+                        caught = "경험치 병"
+                        lh.addExp(event.player,5,777)
+                    }
+                    else if (weight < 60) {
+                        stack!!.itemStack = ItemStack(Material.DIAMOND)
+                        caught = "다이아몬드"
+                        lh.addExp(event.player,5,1000)
+                    }
+                    else if (weight < 72) {
+                        stack!!.itemStack = ItemStack(Material.FISHING_ROD)
+                        stack.itemStack = im.randomEnchantment(stack.itemStack)
+                        caught = "마법이 부여된 낚싯대"
+                        lh.addExp(event.player,5,700)
+                    }
+                    else if (weight < 84) {
+                        stack!!.itemStack = ItemStack(Material.ENCHANTED_BOOK)
+                        stack.itemStack = im.randomEnchantment(stack.itemStack)
+                        caught = "마법이 부여된 책"
+                        lh.addExp(event.player,5,710)
+                    }
+                    else if (weight < 96) {
+                        stack!!.itemStack = ItemStack(Material.BOW)
+                        stack.itemStack = im.randomEnchantment(stack.itemStack)
+                        caught = "마법이 부여된 활"
+                        lh.addExp(event.player,5,730)
+                    }
+                    else {
+                        stack!!.itemStack = ItemStack(Material.SHULKER_SHELL)
+                        caught = "셜커 껍데기"
+                        lh.addExp(event.player,5,1290)
+                    }
+                    event.player.sendMessage("$rate §f$caught 을(를) 낚았다.")
+                }
+                else if (fishingRate <= 99.95-(los.minus(3))) {
+                    rate = "§d§lEPIC!"
+                    if (weight < 20) {
+                        stack!!.itemStack = ItemStack(Material.ANCIENT_DEBRIS)
+                        caught = "고대 잔해"
+                        lh.addExp(event.player,5,7000)
+                    }
+                    else if (weight < 40) {
+                        stack!!.itemStack = ItemStack(Material.TOTEM_OF_UNDYING)
+                        caught = "불사의 토템"
+                        lh.addExp(event.player,5,6700)
+                    }
+                    else if (weight < 50) {
+                        stack!!.itemStack = ItemStack(Material.AIR)
+                        event.expToDrop = 1500
+                        caught = "1500 인첸트 경험치"
+                        lh.addExp(event.player,5,6700)
+                    }
+                    else if (weight < 60) {
+                        stack!!.itemStack = im.createItem(im.createSkull("http://textures.minecraft.net/texture/7594ca5dc5c85db3b4a90d485932bede5fbdf4023fc4fbff6fe14be409c1f97")
+                            ,"§e빛나는 미끼","§7낚는 물고기/보물의 개수가 2배로 증가합니다","","§7미끼 사용법:","§7왼손에 들고 낚시를 하면 자동으로 1개가 소모됩니다","§7주의: 미끼를 설치 시 사용할 수 없게 됩니다!")
+                        stack.itemStack.amount = 5
+                        caught = "빛나는 미끼"
+                        amount = 5
+                        lh.addExp(event.player,5,7500)
+                    }
+                    else if (weight < 70) {
+                        stack!!.itemStack = im.createItem(im.createSkull("http://textures.minecraft.net/texture/e679918e52f3f8f2cabbbeac6a97681f2f8aa10c0b2e818592885a4a0e9d227")
+                            ,"§e경험치 미끼","§7낚시 경험치가 1~10000중 랜덤으로 추가 지급됩니다","","§7미끼 사용법:","§7왼손에 들고 낚시를 하면 자동으로 1개가 소모됩니다","§7주의: 미끼를 설치 시 사용할 수 없게 됩니다!")
+                        stack.itemStack.amount = 5
+                        caught = "경험치 미끼"
+                        amount = 5
+                    }
 
+                    else if (weight < 80) {
+                        stack!!.itemStack = ItemStack(Material.WITHER_SKELETON_SKULL)
+                        caught = "위더 스켈레톤 해골"
+                        lh.addExp(event.player,5,6666)
+                    }
+                    else if (weight < 81) {
+                        stack!!.itemStack = ItemStack(Material.MUSIC_DISC_13)
+                        caught = "뮤직 디스크 - 13"
+                        lh.addExp(event.player,5,6080)
+                    }
+                    else if (weight < 82) {
+                        stack!!.itemStack = ItemStack(Material.MUSIC_DISC_BLOCKS)
+                        caught = "뮤직 디스크 - Blocks"
+                        lh.addExp(event.player,5,6080)
+                    }
+                    else if (weight < 83) {
+                        stack!!.itemStack = ItemStack(Material.MUSIC_DISC_CAT)
+                        caught = "뮤직 디스크 - Cat"
+                        lh.addExp(event.player,5,6080)
+                    }
+                    else if (weight < 84) {
+                        stack!!.itemStack = ItemStack(Material.MUSIC_DISC_CHIRP)
+                        caught = "뮤직 디스크 - Chirp"
+                        lh.addExp(event.player,5,6080)
+                    }
+                    else if (weight < 85) {
+                        stack!!.itemStack = ItemStack(Material.MUSIC_DISC_MALL)
+                        caught = "뮤직 디스크 - Mall"
+                        lh.addExp(event.player,5,6080)
+                    }
+                    else if (weight < 86) {
+                        stack!!.itemStack = ItemStack(Material.MUSIC_DISC_MELLOHI)
+                        caught = "뮤직 디스크 - Mellohi"
+                        lh.addExp(event.player,5,6080)
+                    }
+                    else if (weight < 87) {
+                        stack!!.itemStack = ItemStack(Material.MUSIC_DISC_PIGSTEP)
+                        caught = "뮤직 디스크 - Pigstep"
+                        lh.addExp(event.player,5,6080)
+                    }
+                    else if (weight < 88) {
+                        stack!!.itemStack = ItemStack(Material.MUSIC_DISC_FAR)
+                        caught = "뮤직 디스크 - Far"
+                        lh.addExp(event.player,5,6080)
+                    }
+                    else if (weight < 89) {
+                        stack!!.itemStack = ItemStack(Material.MUSIC_DISC_WAIT)
+                        caught = "뮤직 디스크 - Wait"
+                        lh.addExp(event.player,5,6080)
+                    }
+                    else if (weight < 90) {
+                        stack!!.itemStack = ItemStack(Material.MUSIC_DISC_WARD)
+                        caught = "뮤직 디스크 - Ward"
+                        lh.addExp(event.player,5,6080)
+                    }
+                    else if (weight < 91) {
+                        stack!!.itemStack = ItemStack(Material.MUSIC_DISC_STAL)
+                        caught = "뮤직 디스크 - Stal"
+                        lh.addExp(event.player,5,6080)
+                    }
+                    else if (weight < 92) {
+                        stack!!.itemStack = ItemStack(Material.MUSIC_DISC_STRAD)
+                        caught = "뮤직 디스크 - Strad"
+                        lh.addExp(event.player,5,6080)
+                    }
+                    else {
+                        stack!!.itemStack = ItemStack(Material.ENCHANTED_GOLDEN_APPLE)
+                        caught = "마법이 부여된 황금 사과"
+                        lh.addExp(event.player,5,7777)
+                    }
+                    if (amount > 0){ Bukkit.broadcastMessage("$rate §f${event.player.name}님이 $caught§7x$amount §f을(를) 낚았습니다!") }
+                    else { Bukkit.broadcastMessage("$rate §f${event.player.name}님이 $caught §f을(를) 낚았습니다!") }
+                }
+                else {
+                    rate = "§e§lLEGENDARY!"
+                    if (weight < 30) {
+                        stack!!.itemStack = ItemStack(Material.NETHERITE_INGOT)
+                        caught = "네더라이트 주괴"
+                        lh.addExp(event.player,5,36000)
+                    }
+                    else if (weight < 40) {
+                        stack!!.itemStack = ItemStack(Material.NETHERITE_PICKAXE)
+                        caught = "마법이 부여된 네더라이트 곡괭이"
+                        stack.itemStack = im.randomEnchantment(stack.itemStack)
+                        lh.addExp(event.player,5,40000)
+                    }
+                    else if (weight < 50) {
+                        stack!!.itemStack = ItemStack(Material.HEART_OF_THE_SEA)
+                        caught = "바다의 심장"
+                        stack.itemStack = im.randomEnchantment(stack.itemStack)
+                        lh.addExp(event.player,5,45000)
+                    }
+                    else if (weight < 70) {
+                        stack!!.itemStack = ItemStack(Material.NETHER_STAR)
+                        caught = "네더의 별"
+                        stack.itemStack = im.randomEnchantment(stack.itemStack)
+                        lh.addExp(event.player,5,49000)
+                    }
+                    else if (weight < 80) {
+                        stack!!.itemStack = im.createItem(im.createSkull("http://textures.minecraft.net/texture/884e92487c6749995b79737b8a9eb4c43954797a6dd6cd9b4efce17cf475846")
+                            ,"§e체력 증가 미끼","§7체력 증가 III 버프를 1시간동안 얻습니다 ","","§7미끼 사용법:","§7왼손에 들고 낚시를 하면 자동으로 1개가 소모됩니다","§7주의: 미끼를 설치 시 사용할 수 없게 됩니다!")
+                        stack.itemStack.amount = 2
+                        caught = "체력 증가 미끼"
+                        amount = 2
+                        lh.addExp(event.player,5,47000)
+                    }
+                    else if (weight < 90) {
+                        stack!!.itemStack = im.createItem(im.createSkull("http://textures.minecraft.net/texture/5e48615df6b7ddf3ad495041876d9169bdc983a3fa69a2aca107e8f251f7687")
+                            ,"§e포만한 미끼","§7포화 I 버프를 1시간동안 얻습니다","","§7미끼 사용법:","§7왼손에 들고 낚시를 하면 자동으로 1개가 소모됩니다","§7주의: 미끼를 설치 시 사용할 수 없게 됩니다!")
+                        stack.itemStack.amount = 2
+                        caught = "포만한 미끼"
+                        amount = 2
+                        lh.addExp(event.player,5,38000)
+                    }
+                    else {
+                        stack!!.itemStack = ItemStack(Material.NETHERITE_HELMET)
+                        caught = "마법이 부여된 네더라이트 투구"
+                        stack.itemStack = im.randomEnchantment(stack.itemStack)
+                        lh.addExp(event.player,5,41000)
+                    }
+                    if (amount > 0){ Bukkit.broadcastMessage("$rate §f${event.player.name}님이 $caught§7x$amount §f을(를) 낚았습니다!") }
+                    else { Bukkit.broadcastMessage("$rate §f${event.player.name}님이 $caught §f을(를) 낚았습니다!") }
+                }
+                when (bait) {
+                    "§e빛나는 미끼" -> {
+                        stack.itemStack.amount *= 2
+                        event.player.sendMessage("§e빛나는 미끼§f가 사용되었습니다 §7(아이템 개수 2배)")
+                        if (event.player.inventory.itemInOffHand.amount == 1){ event.player.inventory.setItemInOffHand(ItemStack(Material.AIR)) }
+                        else { event.player.inventory.itemInOffHand.amount = event.player.inventory.itemInOffHand.amount-1 }
+                    }
+                    "§e경험치 미끼" -> {
+                        val expBait = (Math.random()*10000).toInt()
+                        lh.addExp(event.player,5,expBait)
+                        event.player.sendMessage("§e경험치 미끼§f가 사용되었습니다 §7(+$expBait)")
+                        if (event.player.inventory.itemInOffHand.amount == 1){ event.player.inventory.setItemInOffHand(ItemStack(Material.AIR)) }
+                        else { event.player.inventory.itemInOffHand.amount = event.player.inventory.itemInOffHand.amount-1 }
+                    }
+                    "§e체력 증가 미끼" -> {
+                        event.player.addPotionEffect(PotionEffect(PotionEffectType.HEALTH_BOOST,20*3599,2))
+                        event.player.sendMessage("§e체력 증가 미끼§f가 사용되었습니다 §7(체력 버프 1시간)")
+                        if (event.player.inventory.itemInOffHand.amount == 1){ event.player.inventory.setItemInOffHand(ItemStack(Material.AIR)) }
+                        else { event.player.inventory.itemInOffHand.amount = event.player.inventory.itemInOffHand.amount-1 }
+                    }
+                    "§e포만한 미끼" -> {
+                        event.player.addPotionEffect(PotionEffect(PotionEffectType.SATURATION,20*3599,0))
+                        event.player.sendMessage("§e포만한 미끼§f가 사용되었습니다 §7(포화 버프 1시간)")
+                        if (event.player.inventory.itemInOffHand.amount == 1){ event.player.inventory.setItemInOffHand(ItemStack(Material.AIR)) }
+                        else { event.player.inventory.itemInOffHand.amount = event.player.inventory.itemInOffHand.amount-1 }
+                    }
+                }
             }
         }
     }

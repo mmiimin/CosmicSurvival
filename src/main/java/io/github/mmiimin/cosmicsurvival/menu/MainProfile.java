@@ -41,31 +41,31 @@ public class MainProfile{
                 "§7전투 경험치를 얻을 수 있습니다",
                 "",
                 "§f다음 레벨까지: §b"+String.format("%.2f",(PlayerDataStorage.map.get(p+"combatExp")/((float) PlayerDataStorage.map.get(p+"combatLevel")*10000+10000))*100)+"% §7("+PlayerDataStorage.map.get(p+"combatExp")+"/"+(PlayerDataStorage.map.get(p+"combatLevel")*10000+10000)+")",
-                "§6-".repeat((int) Math.ceil((PlayerDataStorage.map.get(p+"combatExp")/((float) PlayerDataStorage.map.get(p+"combatLevel")*10000+10000))*20))+"§7-".repeat(20 - (int) Math.ceil((PlayerDataStorage.map.get(p+"combatExp")/((float) PlayerDataStorage.map.get(p+"combatLevel")*10000+10000))*20))));
+                "§6-".repeat(Math.round((PlayerDataStorage.map.get(p+"combatExp")/((float) PlayerDataStorage.map.get(p+"combatLevel")*10000+10000))*20))+"§7-".repeat(20 - Math.round((PlayerDataStorage.map.get(p+"combatExp")/((float) PlayerDataStorage.map.get(p+"combatLevel")*10000+10000))*20))));
         inv.setItem(20,item.createItem(Material.IRON_PICKAXE,"§e⛏ 채광 §7Lv" + PlayerDataStorage.map.get(p+"miningLevel"),
                 "§7돌과 광물을 채굴하여",
                 "§7채광 경험치를 얻을 수 있습니다",
                 "",
                 "§f다음 레벨까지: §b"+String.format("%.2f",(PlayerDataStorage.map.get(p+"miningExp")/((float) PlayerDataStorage.map.get(p+"miningLevel")*10000+10000))*100)+"% §7("+PlayerDataStorage.map.get(p+"miningExp")+"/"+(PlayerDataStorage.map.get(p+"miningLevel")*10000+10000)+")",
-                "§6-".repeat((int) Math.ceil((PlayerDataStorage.map.get(p+"miningExp")/((float) PlayerDataStorage.map.get(p+"miningLevel")*10000+10000))*20))+"§7-".repeat(20 - (int) Math.ceil((PlayerDataStorage.map.get(p+"miningExp")/((float) PlayerDataStorage.map.get(p+"miningLevel")*10000+10000))*20))));
+                "§6-".repeat(Math.round((PlayerDataStorage.map.get(p+"miningExp")/((float) PlayerDataStorage.map.get(p+"miningLevel")*10000+10000))*20))+"§7-".repeat(20 - Math.round((PlayerDataStorage.map.get(p+"miningExp")/((float) PlayerDataStorage.map.get(p+"miningLevel")*10000+10000))*20))));
         inv.setItem(21,item.createItem(Material.GOLDEN_AXE,"§6\uD83E\uDE93 벌목 §7Lv" + PlayerDataStorage.map.get(p+"foragingLevel"),
                 "§7나무를 캐서",
                 "§7벌목 경험치를 얻을 수 있습니다",
                 "",
                 "§f다음 레벨까지: §b"+String.format("%.2f",(PlayerDataStorage.map.get(p+"foragingExp")/((float) PlayerDataStorage.map.get(p+"foragingLevel")*10000+10000))*100)+"% §7("+PlayerDataStorage.map.get(p+"foragingExp")+"/"+(PlayerDataStorage.map.get(p+"foragingLevel")*10000+10000)+")",
-                "§6-".repeat((int) Math.ceil((PlayerDataStorage.map.get(p+"foragingExp")/((float) PlayerDataStorage.map.get(p+"foragingLevel")*10000+10000))*20))+"§7-".repeat(20 - (int) Math.ceil((PlayerDataStorage.map.get(p+"foragingExp")/((float) PlayerDataStorage.map.get(p+"foragingLevel")*10000+10000))*20))));
+                "§6-".repeat(Math.round((PlayerDataStorage.map.get(p+"foragingExp")/((float) PlayerDataStorage.map.get(p+"foragingLevel")*10000+10000))*20))+"§7-".repeat(20 - Math.round((PlayerDataStorage.map.get(p+"foragingExp")/((float) PlayerDataStorage.map.get(p+"foragingLevel")*10000+10000))*20))));
         inv.setItem(22,item.createItem(Material.STONE_HOE,"§a☘ 농사 §7Lv" + PlayerDataStorage.map.get(p+"farmingLevel"),
                 "§7농작물을 수확하여",
                 "§7농사 경험치를 얻을 수 있습니다",
                 "",
                 "§f다음 레벨까지: §b"+String.format("%.2f",(PlayerDataStorage.map.get(p+"farmingExp")/((float) PlayerDataStorage.map.get(p+"farmingLevel")*10000+10000))*100)+"% §7("+PlayerDataStorage.map.get(p+"farmingExp")+"/"+(PlayerDataStorage.map.get(p+"farmingLevel")*10000+10000)+")",
-                "§6-".repeat((int) Math.ceil((PlayerDataStorage.map.get(p+"farmingExp")/((float) PlayerDataStorage.map.get(p+"farmingLevel")*10000+10000))*20))+"§7-".repeat(20 - (int) Math.ceil((PlayerDataStorage.map.get(p+"farmingExp")/((float) PlayerDataStorage.map.get(p+"farmingLevel")*10000+10000))*20))));
+                "§6-".repeat(Math.round((PlayerDataStorage.map.get(p+"farmingExp")/((float) PlayerDataStorage.map.get(p+"farmingLevel")*10000+10000))*20))+"§7-".repeat(20 - Math.round((PlayerDataStorage.map.get(p+"farmingExp")/((float) PlayerDataStorage.map.get(p+"farmingLevel")*10000+10000))*20))));
         inv.setItem(23,item.createItem(Material.FISHING_ROD,"§3\uD83C\uDFA3 낚시 §7Lv" + PlayerDataStorage.map.get(p+"fishingLevel"),
                 "§7물고기를 잡거나 보물을 낚아",
                 "§7낚시 경험치를 얻을 수 있습니다",
                 "",
                 "§f다음 레벨까지: §b"+String.format("%.2f",(PlayerDataStorage.map.get(p+"fishingExp")/((float) PlayerDataStorage.map.get(p+"fishingLevel")*10000+10000))*100)+"% §7("+PlayerDataStorage.map.get(p+"fishingExp")+"/"+(PlayerDataStorage.map.get(p+"fishingLevel")*10000+10000)+")",
-                "§6-".repeat((int) Math.ceil((PlayerDataStorage.map.get(p+"fishingExp")/((float) PlayerDataStorage.map.get(p+"fishingLevel")*10000+10000))*20))+"§7-".repeat(20 - (int) Math.ceil((PlayerDataStorage.map.get(p+"fishingExp")/((float) PlayerDataStorage.map.get(p+"fishingLevel")*10000+10000))*20))));
+                "§6-".repeat(Math.round((PlayerDataStorage.map.get(p+"fishingExp")/((float) PlayerDataStorage.map.get(p+"fishingLevel")*10000+10000))*20))+"§7-".repeat(20 - Math.round((PlayerDataStorage.map.get(p+"fishingExp")/((float) PlayerDataStorage.map.get(p+"fishingLevel")*10000+10000))*20))));
         /*inv.setItem(24,item.createItem(Material.ANVIL,"§d⦾ 제작",
                 "§7장신구 또는 룬을 제작하거나",
                 "§7희귀 재료를 발견하여 제작 경험치를 얻을 수 있습니다.",

@@ -5,13 +5,17 @@ import io.github.mmiimin.cosmicsurvival.database.SQLite;
 import io.github.mmiimin.cosmicsurvival.menu.MainProfile;
 import io.github.mmiimin.cosmicsurvival.menu.MenuClick;
 import io.github.mmiimin.cosmicsurvival.util.PlayerDataStorage;
+import org.bukkit.Bukkit;
+import org.bukkit.Sound;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -35,10 +39,16 @@ public class CosmicSurvival extends JavaPlugin implements CommandExecutor, Liste
         this.db = new SQLite(this);
         this.db.load();
         Objects.requireNonNull(this.getCommand("profile")).setExecutor(this);
+        for(Player player : Bukkit.getServer().getOnlinePlayers()) {
+            loadAll(player);
+        }
     }
 
     @Override
     public void onDisable(){
+        for(Player player : Bukkit.getServer().getOnlinePlayers()) {
+            saveAll(player);
+        }
 
     }
 
@@ -56,6 +66,14 @@ public class CosmicSurvival extends JavaPlugin implements CommandExecutor, Liste
 
     public Database getRDatabase() {
         return this.db;
+    }
+
+    @EventHandler
+    public void onEntityExplode(final EntityExplodeEvent event) {
+        if (event.getEntityType() == EntityType.CREEPER) {
+            event.setCancelled(true);
+            Bukkit.getWorld("world").playSound(event.getEntity().getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 1.0F, 1.0F);
+        }
     }
 
     @EventHandler
@@ -99,7 +117,7 @@ public class CosmicSurvival extends JavaPlugin implements CommandExecutor, Liste
                 0,
                 0,
                 0,
-                PlayerDataStorage.map.get(p+"settingDI"),
+                PlayerDataStorage.map.get(p+"settingLS")*10+PlayerDataStorage.map.get(p+"settingDI"),
                 0,
                 0,
                 0,
@@ -131,7 +149,7 @@ public class CosmicSurvival extends JavaPlugin implements CommandExecutor, Liste
         PlayerDataStorage.map.put(p+"statsSRV",db.getTokens(String.valueOf(player.getUniqueId()),"statsSRV"));
         PlayerDataStorage.map.put(p+"statsPoint",db.getTokens(String.valueOf(player.getUniqueId()),"statsPoint"));
         PlayerDataStorage.map.put(p+"settingDI",db.getTokens(String.valueOf(player.getUniqueId()),"setting")%10);
-        //PlayerDataStorage.map.put(p+"settingDI",(db.getTokens(String.valueOf(player.getUniqueId()),"setting")%100)/10);
+        PlayerDataStorage.map.put(p+"settingLS",(db.getTokens(String.valueOf(player.getUniqueId()),"setting")%1000)/10);
     }
 
     public void loadFirstTime(Player player) {
@@ -156,6 +174,7 @@ public class CosmicSurvival extends JavaPlugin implements CommandExecutor, Liste
         PlayerDataStorage.map.put(p+"statsSRV",0);
         PlayerDataStorage.map.put(p+"statsPoint",0);
         PlayerDataStorage.map.put(p+"settingDI",0);
+        PlayerDataStorage.map.put(p+"settingLS",0);
     }
 }
 

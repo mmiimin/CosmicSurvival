@@ -32,9 +32,26 @@ public class StatsMenu {
                 "§f배고픔이 §a" + String.format("%.2f", 100-(Math.pow(0.9975,PlayerDataStorage.map.get(player.getName()+"statsSRV"))*100 )) +"%§7➜"+String.format("%.2f", 100-(Math.pow(0.9975,PlayerDataStorage.map.get(player.getName()+"statsSRV")+1)*100 ))+"% §f확률로 닳지 않습니다",
                 "",
                 "§e클릭해서 1포인트 투자하기"));
-        //inv.setItem(27,item.createItem(Material.REDSTONE_BLOCK,"§c스텟 초기화"));
+        inv.setItem(27,item.createItem(Material.REDSTONE_BLOCK,"§c스텟 초기화",
+                "§c⚠ 투자한 모든 스텟 포인트가 환불됩니다",
+                "",
+                "§e클릭해서 스텟 초기화"));
         inv.setItem(31,item.createItem(Material.ARROW,"§a뒤로 가기"));
         player.openInventory(inv);
     }
 
+    public void resetConfirm(Player player) {
+        Inventory inv = Bukkit.createInventory(null, 36, "§0스텟 초기화");
+        for (int i = 0; i < 36; i++) {
+            inv.setItem(i, item.createItem(Material.BLACK_STAINED_GLASS_PANE, " "));
+        }
+        inv.setItem(13,item.createItem(Material.REDSTONE_BLOCK,"§c스텟 초기화",
+                "§c정말 초기화하시겠습니까?",
+                "§c투자한 모든 스텟 포인트가 환불됩니다",
+                "",
+                "§e클릭해서 스텟 초기화"));
+        inv.setItem(31,item.createItem(Material.ARROW,"§a뒤로 가기",
+                "§7스텟창으로 돌아갑니다"));
+        player.openInventory(inv);
+    }
 }
