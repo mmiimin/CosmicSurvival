@@ -34,9 +34,9 @@ class LevelStyleManager {
                 stringBuilder.toString()
             } //Rainbow
             13 -> ""+ChatColor.of("#86DDFF") + "[" + ChatColor.of("#2DA1FE") + level + ChatColor.of("#4F78FE") + "☽" + ChatColor.of("#374EEE") + "]" //Zenith
-            14 -> ""+ChatColor.of("#FDCE4C") + "[" + ChatColor.of("#EBF32A") + level + ChatColor.of("#56F1F2") + "✵" + ChatColor.of("#FDCE4C") + "]" //Luxury
+            14 -> ""+ChatColor.of("#FFE737") + "[" + ChatColor.of("#FFF07F") + level + ChatColor.of("#ADFCFF") + "✵" + ChatColor.of("#FFF5AD") + "]" //Luxury
             15 -> {//１２３４５６７８９０
-                val Str = level.toString().replace("1", "１")
+                val str = level.toString().replace("1", "１")
                     .replace("2", "２")
                     .replace("3", "３")
                     .replace("4", "４")
@@ -46,13 +46,33 @@ class LevelStyleManager {
                     .replace("8", "８")
                     .replace("9", "９")
                     .replace("0", "０")
-                "" + ChatColor.of("#98B2BF") + "[" + ChatColor.of("#F1EFD6") + Str + "★" + ChatColor.of("#98B2BF") + "]"
+                "" + ChatColor.of("#98B2BF") + "[" + ChatColor.of("#F1EFD6") + str + "⚝" + ChatColor.of("#98B2BF") + "]"
             }//Modern
-
-
-            16 -> ""+ChatColor.of("#EEEEEE") + "[" + ChatColor.of("#AE8A66") + level + "❋" + ChatColor.of("#EEEEEE") + "]" //TDL
-            17 -> ""+ChatColor.of("#EEEEEE") + "[" + ChatColor.of("#AE8A66") + level + "❋" + ChatColor.of("#EEEEEE") + "]" //TDL
-
+            16 -> ""+ChatColor.of("#F8FF25") + "[" + ChatColor.of("#FEF5F1") + level + ChatColor.of("#00EA0B") + "❋" + ChatColor.of("#F8FF25") + "]" //Nature
+            17 -> {
+                val stringBuilder = StringBuilder()
+                val rainbowList = "§c§a§c§a§c§a§c§a§c§a".chunked(2)
+                val everySplit = "[$level◎]".chunked(1)
+                for (i in everySplit.indices){
+                    stringBuilder.append(rainbowList[i])
+                    stringBuilder.append(everySplit[i])
+                }
+                stringBuilder.toString()
+            } //Christmas
+            18 -> ""+ChatColor.of("#2E2D00") + "[" + ChatColor.of("#FFFFFF") + level + ChatColor.of("#FFFB00") + "☽" + ChatColor.of("#2E2D00") + "]" //Moonlight
+            19 -> {//１２３４５６７８９０
+                val str = level.toString().replace("1", "§c♪")
+                    .replace("6", "§b♪")
+                    .replace("9", "§d♪")
+                    .replace("2", "§6♪")
+                    .replace("3", "§e♪")
+                    .replace("4", "§a♪")
+                    .replace("5", "§2♪")
+                    .replace("7", "§9♪")
+                    .replace("8", "§5♪")
+                    .replace("0", "§4♪")
+                "" + ChatColor.of("#725D4B") + "[" + str + "§f♪" + ChatColor.of("#725D4B") + "]"
+            }//NoteBlock
 
             else -> "§4ERROR (code:$code)"
         }
