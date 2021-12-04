@@ -171,7 +171,30 @@ public class CosmeticMenu {
             inv.setItem(14, item.createItem(item.createSkull("http://textures.minecraft.net/texture/4080bbefca87dc0f36536b6508425cfc4b95ba6e8f5e6a46ff9e9cb488a9ed"), "§4화염",
                     "",
                     checkLevel(45,player)));
-
+            inv.setItem(15, item.createItem(item.createSkull("http://textures.minecraft.net/texture/c3a8e402dad1b7dad9aae6f4015932183429ce87bbbeced3119026f8296336c2"), "§5포탈",
+                    "",
+                    checkLevel(55,player)));
+            inv.setItem(16, item.createItem(item.createSkull("http://textures.minecraft.net/texture/8c5063f9576570a8939006207659989ff81b9c87a28ce3417caae82b6e7d62e"), "§f별",
+                    "",
+                    checkLevel(65,player)));
+            inv.setItem(19, item.createItem(item.createSkull("http://textures.minecraft.net/texture/1dfd7724c69a024dcfc60b16e00334ab5738f4a92bafb8fbc76cf15322ea0293"), "§f눈꽃",
+                    "",
+                    checkLevel(70,player)));
+            inv.setItem(20, item.createItem(item.createSkull("http://textures.minecraft.net/texture/345831eaef99e030c82b1e79ce63b2cb44df1361660daf4e42161dd9db42a754"), "§b영혼",
+                    "",
+                    checkLevel(80,player)));
+            inv.setItem(21, item.createItem(item.createSkull("http://textures.minecraft.net/texture/2484aa5bee898a6e8960a3f9a99759b1f39f9dcb321050f714cd72b3d8a8041"), "§9물풍선",
+                    "§8HitSound♪",
+                    "",
+                    checkLevel(90,player)));
+            inv.setItem(22, item.createItem(item.createSkull("http://textures.minecraft.net/texture/f22e40b4bfbcc0433044d86d67685f0567025904271d0a74996afbe3f9be2c0f"), "§e음표",
+                    "§8HitSound♪",
+                    "",
+                    checkLevel(95,player)));
+            inv.setItem(23, item.createItem(item.createSkull("http://textures.minecraft.net/texture/b85bcf7f82d34db89a95addf8e53253e2d9554c6fd2f2e39e24362d243a0ccf7"), "§6번개",
+                    "§8HitSound♪",
+                    "",
+                    checkLevel(100,player)));
         }
         else if (page == 2) {
 
@@ -189,6 +212,4 @@ public class CosmeticMenu {
             return "§c요구 레벨: " + target;
         }
     }
-
-
 }

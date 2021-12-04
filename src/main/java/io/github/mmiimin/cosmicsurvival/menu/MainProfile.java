@@ -91,7 +91,7 @@ public class MainProfile{
         playerHead.setItemMeta(meta);
         inv.setItem(4,playerHead);
         
-        inv.setItem(24,item.createItem(Material.NETHERITE_SWORD,"§c\uD83D\uDDE1 전투 §7Lv" + PlayerDataStorage.map.get(p+"combatLevel"), //19
+        inv.setItem(20,item.createItem(Material.NETHERITE_SWORD,"§c\uD83D\uDDE1 전투 §7Lv" + PlayerDataStorage.map.get(p+"combatLevel"),
                 "§7몬스터를 사냥하여",
                 "§7전투 경험치를 얻을 수 있습니다",
                 "",
@@ -102,7 +102,7 @@ public class MainProfile{
                 getLeaderboard("co",0),
                 getLeaderboard("co",1),
                 getLeaderboard("co",2)));
-        inv.setItem(20,item.createItem(Material.IRON_PICKAXE,"§e⛏ 채광 §7Lv" + PlayerDataStorage.map.get(p+"miningLevel"),
+        inv.setItem(21,item.createItem(Material.IRON_PICKAXE,"§e⛏ 채광 §7Lv" + PlayerDataStorage.map.get(p+"miningLevel"),
                 "§7돌과 광물을 채굴하여",
                 "§7채광 경험치를 얻을 수 있습니다",
                 "",
@@ -113,7 +113,7 @@ public class MainProfile{
                 getLeaderboard("mi",0),
                 getLeaderboard("mi",1),
                 getLeaderboard("mi",2)));
-        inv.setItem(21,item.createItem(Material.GOLDEN_AXE,"§6\uD83E\uDE93 벌목 §7Lv" + PlayerDataStorage.map.get(p+"foragingLevel"),
+        inv.setItem(22,item.createItem(Material.GOLDEN_AXE,"§6\uD83E\uDE93 벌목 §7Lv" + PlayerDataStorage.map.get(p+"foragingLevel"),
                 "§7나무를 캐서",
                 "§7벌목 경험치를 얻을 수 있습니다",
                 "",
@@ -124,7 +124,7 @@ public class MainProfile{
                 getLeaderboard("fo",0),
                 getLeaderboard("fo",1),
                 getLeaderboard("fo",2)));
-        inv.setItem(22,item.createItem(Material.STONE_HOE,"§a☘ 농사 §7Lv" + PlayerDataStorage.map.get(p+"farmingLevel"),
+        inv.setItem(23,item.createItem(Material.STONE_HOE,"§a☘ 농사 §7Lv" + PlayerDataStorage.map.get(p+"farmingLevel"),
                 "§7농작물을 수확하여",
                 "§7농사 경험치를 얻을 수 있습니다",
                 "",
@@ -135,7 +135,7 @@ public class MainProfile{
                 getLeaderboard("fa",0),
                 getLeaderboard("fa",1),
                 getLeaderboard("fa",2)));
-        inv.setItem(23,item.createItem(Material.FISHING_ROD,"§3\uD83C\uDFA3 낚시 §7Lv" + PlayerDataStorage.map.get(p+"fishingLevel"),
+        inv.setItem(24,item.createItem(Material.FISHING_ROD,"§3\uD83C\uDFA3 낚시 §7Lv" + PlayerDataStorage.map.get(p+"fishingLevel"),
                 "§7물고기를 잡거나 보물을 낚아",
                 "§7낚시 경험치를 얻을 수 있습니다",
                 "",
@@ -146,19 +146,7 @@ public class MainProfile{
                 getLeaderboard("fi",0),
                 getLeaderboard("fi",1),
                 getLeaderboard("fi",2)));
-        /*inv.setItem(24,item.createItem(Material.ANVIL,"§d⦾ 제작",
-                "§7장신구 또는 룬을 제작하거나",
-                "§7희귀 재료를 발견하여 제작 경험치를 얻을 수 있습니다.",
-                "",
-                "§f다음 레벨까지: §b"+String.format("%.2f",(pds.getValue(p+"fishingExp")/(float) pds.getValue(p+"fishingLevel")*10000+10000))+"% §7("+pds.getValue(p+"fishingExp")+"/"+pds.getValue(p+"fishingLevel")*10000+10000+")",
-                "§6-".repeat((int) Math.ceil((pds.getValue(p+"fishingExp")/(float) pds.getValue(p+"fishingLevel")*10000+10000)/5))+"§7-".repeat(20 - (int) Math.ceil((pds.getValue(p+"fishingExp")/(float) pds.getValue(p+"fishingLevel")*10000+10000)/5))));
 
-        inv.setItem(25,item.createItem(Material.DIAMOND,"§b✧ 업적",
-                "§7도전과제를 클리어하여",
-                "§7업적 경험치를 얻을 수 있습니다",
-                "",
-                "§c 시즌 7 추가 예정"));
-        */
         inv.setItem(40,item.createItem(Material.BARRIER,"§c✖ 닫기"));
         inv.setItem(44,item.createItem(Material.COMPARATOR,"§a⚙ 설정","","§e클릭해서 열기"));
         if (PlayerDataStorage.map.get(p+"statsPoint") == 0) {

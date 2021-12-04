@@ -95,6 +95,7 @@ class EventListener: Listener{
                 is Silverfish -> {lh.addExp(attacker,1,152)}
                 is Guardian -> {lh.addExp(attacker,1,800)}
                 is ElderGuardian -> {lh.addExp(attacker,1,2700)}
+                is Pillager -> {lh.addExp(attacker,1,550)}
 
                 is Salmon -> {lh.addExp(attacker,5,80)}
                 is Cod -> {lh.addExp(attacker,5,70)}
@@ -157,7 +158,7 @@ class EventListener: Listener{
                 Material.AMETHYST_BLOCK -> { lh.addExp(event.player,2,13) }
                 Material.AMETHYST_SHARD -> { lh.addExp(event.player,2,333) }
 
-                Material.SPAWNER -> { lh.addExp(event.player,1,2000) }
+                Material.SPAWNER -> { lh.addExp(event.player,1,5000) }
 
                 Material.ACACIA_LOG -> { lh.addExp(event.player,3,128) }
                 Material.JUNGLE_LOG -> { lh.addExp(event.player,3,128) }
@@ -165,16 +166,8 @@ class EventListener: Listener{
                 Material.DARK_OAK_LOG -> { lh.addExp(event.player,3,128) }
                 Material.SPRUCE_LOG -> { lh.addExp(event.player,3,128) }
                 Material.BIRCH_LOG -> { lh.addExp(event.player,3,128) }
-                Material.STRIPPED_SPRUCE_LOG -> { lh.addExp(event.player,3,128) }
-                Material.STRIPPED_ACACIA_LOG -> { lh.addExp(event.player,3,128) }
-                Material.STRIPPED_BIRCH_LOG -> { lh.addExp(event.player,3,128) }
-                Material.STRIPPED_DARK_OAK_LOG -> { lh.addExp(event.player,3,128) }
-                Material.STRIPPED_OAK_LOG -> { lh.addExp(event.player,3,128) }
-                Material.STRIPPED_JUNGLE_LOG -> { lh.addExp(event.player,3,128) }
                 Material.CRIMSON_STEM -> { lh.addExp(event.player,3,128) }
-                Material.STRIPPED_CRIMSON_STEM -> { lh.addExp(event.player,3,128) }
                 Material.WARPED_STEM -> { lh.addExp(event.player,3,128) }
-                Material.STRIPPED_WARPED_STEM -> { lh.addExp(event.player,3,128) }
 
                 Material.PUMPKIN -> { lh.addExp(event.player,4,35) }
                 Material.MELON -> { lh.addExp(event.player,4,35) }
@@ -242,25 +235,8 @@ class EventListener: Listener{
                 else -> {}
             }
         }
-        else if (CoreProtect.blockLookup(event.block,120).size == 0) {
+        else if (CoreProtect.blockLookup(event.block,120).size == 0 && !(blockPlacer.contains(event.block.location))) {
             when (blo) {
-                Material.ACACIA_LOG -> { lh.addExp(event.player,3,128) }
-                Material.JUNGLE_LOG -> { lh.addExp(event.player,3,128) }
-                Material.OAK_LOG -> { lh.addExp(event.player,3,128) }
-                Material.DARK_OAK_LOG -> { lh.addExp(event.player,3,128) }
-                Material.SPRUCE_LOG -> { lh.addExp(event.player,3,128) }
-                Material.BIRCH_LOG -> { lh.addExp(event.player,3,128) }
-                Material.STRIPPED_SPRUCE_LOG -> { lh.addExp(event.player,3,128) }
-                Material.STRIPPED_ACACIA_LOG -> { lh.addExp(event.player,3,128) }
-                Material.STRIPPED_BIRCH_LOG -> { lh.addExp(event.player,3,128) }
-                Material.STRIPPED_DARK_OAK_LOG -> { lh.addExp(event.player,3,128) }
-                Material.STRIPPED_OAK_LOG -> { lh.addExp(event.player,3,128) }
-                Material.STRIPPED_JUNGLE_LOG -> { lh.addExp(event.player,3,128) }
-                Material.CRIMSON_STEM -> { lh.addExp(event.player,3,128) }
-                Material.STRIPPED_CRIMSON_STEM -> { lh.addExp(event.player,3,128) }
-                Material.WARPED_STEM -> { lh.addExp(event.player,3,128) }
-                Material.STRIPPED_WARPED_STEM -> { lh.addExp(event.player,3,128) }
-
                 Material.PUMPKIN -> { lh.addExp(event.player,4,35) }
                 Material.MELON -> { lh.addExp(event.player,4,35) }
                 Material.WHEAT -> {
@@ -409,6 +385,7 @@ class EventListener: Listener{
             event.damage = event.damage* (0.9992.pow(PlayerDataStorage.map[victim.name + "statsDEF"]!!.toDouble()))
             if (attacker is Player) {
                 event.damage = event.damage* (1+(PlayerDataStorage.map[attacker.name + "statsSTR"]!!.toDouble()*0.0011) )
+                spawnHitParticle(attacker,victim)
             }
             if (PlayerDataStorage.map[victim.name + "settingDI"] == 1) {
                 victim.sendMessage("§c➜ §7" + attacker.name + "에게 §c" + String.format("%.2f",event.finalDamage) + "§7 피해를 받았다.")
@@ -419,14 +396,34 @@ class EventListener: Listener{
         }
         else if (attacker is Player) {
             event.damage = event.damage* (1+(PlayerDataStorage.map[attacker.name + "statsSTR"]!!.toDouble()*0.001) )
-            when (PlayerDataStorage.map[attacker.name + "settingHE"]){
-                1 -> attacker.spawnParticle( Particle.ASH,victim.location.x,victim.location.y+1,victim.location.z,150,0.3,1.0,0.3 )
-                2 -> attacker.spawnParticle( Particle.DRAGON_BREATH,victim.location.x,victim.location.y+1,victim.location.z,8,0.3,0.3,0.3, 0.05)
-                3 -> attacker.spawnParticle( Particle.HEART,victim.location.x,victim.location.y+2,victim.location.z,2,0.1,0.1,0.1)
-                4 -> attacker.spawnParticle( Particle.FLAME,victim.location.x,victim.location.y+1,victim.location.z,8,0.2,0.2,0.2,0.01)
-            }
+            spawnHitParticle(attacker,victim)
             if (PlayerDataStorage.map[attacker.name + "settingDI"] == 1) {
                 attacker.sendMessage("§a➜ §7" + victim.name + "에게 §a" + String.format("%.2f",event.finalDamage)  + "§7 피해를 주었다.")
+            }
+        }
+    }
+
+    private fun spawnHitParticle(attacker: Player, victim: Entity) {
+        when (PlayerDataStorage.map[attacker.name + "settingHE"]){
+            1 -> attacker.world.spawnParticle( Particle.ASH,victim.location.x,victim.location.y+1,victim.location.z,150,0.3,1.0,0.3 )
+            2 -> attacker.world.spawnParticle( Particle.DRAGON_BREATH,victim.location.x,victim.location.y+1,victim.location.z,8,0.3,0.3,0.3, 0.05)
+            3 -> attacker.world.spawnParticle( Particle.HEART,victim.location.x,victim.location.y+2,victim.location.z,2,0.1,0.1,0.1)
+            4 -> attacker.world.spawnParticle( Particle.FLAME,victim.location.x,victim.location.y+1,victim.location.z,8,0.2,0.2,0.2,0.01)
+            5 -> attacker.world.spawnParticle( Particle.PORTAL,victim.location.x,victim.location.y+1,victim.location.z,30,0.1,0.1,0.1,2.0)
+            6 -> attacker.world.spawnParticle( Particle.FIREWORKS_SPARK,victim.location.x,victim.location.y+1,victim.location.z,20,0.3,0.3,0.3,0.0)
+            7 -> attacker.world.spawnParticle( Particle.SNOWFLAKE,victim.location.x,victim.location.y+1,victim.location.z,20,0.2,0.5,0.2,0.0)
+            8 -> attacker.world.spawnParticle( Particle.SOUL,victim.location.x,victim.location.y+1,victim.location.z,5,0.3,0.5,0.3,0.0)
+            9 -> {
+                attacker.world.spawnParticle( Particle.BUBBLE_POP,victim.location.x,victim.location.y+1,victim.location.z,10,0.5,0.5,0.5,0.0)
+                attacker.world.playSound(victim.location,Sound.ENTITY_PLAYER_SPLASH,1.5F,1F)
+            }
+            10 -> {
+                attacker.world.spawnParticle( Particle.NOTE,victim.location.x,victim.location.y+1,victim.location.z,7,0.5,0.5,0.5,1.0)
+                attacker.world.playSound(victim.location,Sound.BLOCK_NOTE_BLOCK_BELL,1.5F,(Math.random()+1).toFloat())
+            }
+            11 -> {
+                attacker.world.spawnParticle( Particle.ELECTRIC_SPARK,victim.location.x,victim.location.y+2,victim.location.z,300,0.0,20.0,0.0,0.0)
+                attacker.world.playSound(victim.location,Sound.ENTITY_LIGHTNING_BOLT_IMPACT,1.5F,2F)
             }
         }
     }
@@ -628,9 +625,8 @@ class EventListener: Listener{
                                 lh.addExp(event.player,5,1400)
                             }
                             else if (weight < 84) {
-                                stack!!.itemStack = ItemStack(Material.ENCHANTED_BOOK)
-                                stack.itemStack = im.randomEnchantment(stack.itemStack)
-                                caught = "마법이 부여된 책"
+                                stack!!.itemStack = ItemStack(Material.GOLDEN_APPLE)
+                                caught = "황금 사과"
                                 lh.addExp(event.player,5,1420)
                             }
                             else if (weight < 96) {
@@ -771,29 +767,33 @@ class EventListener: Listener{
                             else if (weight < 50) {
                                 stack!!.itemStack = ItemStack(Material.HEART_OF_THE_SEA)
                                 caught = "바다의 심장"
-                                stack.itemStack = im.randomEnchantment(stack.itemStack)
+                                lh.addExp(event.player,5,50000)
+                            }
+                            else if (weight < 60) {
+                                stack!!.itemStack = ItemStack(Material.BOW)
+                                caught = "무한 수선 활"
+                                stack.itemStack = im.infMendEnchantment(stack.itemStack)
                                 lh.addExp(event.player,5,50000)
                             }
                             else if (weight < 70) {
                                 stack!!.itemStack = ItemStack(Material.NETHER_STAR)
                                 caught = "네더의 별"
-                                stack.itemStack = im.randomEnchantment(stack.itemStack)
                                 lh.addExp(event.player,5,50000)
                             }
                             else if (weight < 80) {
                                 stack!!.itemStack = im.createItem(im.createSkull("http://textures.minecraft.net/texture/884e92487c6749995b79737b8a9eb4c43954797a6dd6cd9b4efce17cf475846")
                                     ,"§e체력 증가 미끼","§7체력 증가 III 버프를 1시간동안 얻습니다 ","","§7미끼 사용법:","§7왼손에 들고 낚시를 하면 자동으로 1개가 소모됩니다","§7주의: 미끼를 설치 시 사용할 수 없게 됩니다!")
-                                stack.itemStack.amount = 2
+                                stack.itemStack.amount = 3
                                 caught = "체력 증가 미끼"
-                                amount = 2
+                                amount = 3
                                 lh.addExp(event.player,5,50000)
                             }
                             else if (weight < 90) {
                                 stack!!.itemStack = im.createItem(im.createSkull("http://textures.minecraft.net/texture/5e48615df6b7ddf3ad495041876d9169bdc983a3fa69a2aca107e8f251f7687")
                                     ,"§e포만한 미끼","§7포화 I 버프를 1시간동안 얻습니다","","§7미끼 사용법:","§7왼손에 들고 낚시를 하면 자동으로 1개가 소모됩니다","§7주의: 미끼를 설치 시 사용할 수 없게 됩니다!")
-                                stack.itemStack.amount = 2
+                                stack.itemStack.amount = 3
                                 caught = "포만한 미끼"
-                                amount = 2
+                                amount = 3
                                 lh.addExp(event.player,5,50000)
                             }
                             else {

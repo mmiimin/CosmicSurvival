@@ -72,19 +72,27 @@ public class ItemManager {
             if (ench.canEnchantItem(item)) {
                 possible.add(ench);
             }
-            if (item.getType() == Material.ENCHANTED_BOOK) {
-                possible.add(ench);
-            }
         }
 
         if (possible.size() >= 1) {
             Collections.shuffle(possible);
-            int max = Math.min(possible.size(),(int) Math.ceil(Math.random()*5));
+            int max = Math.min(possible.size(),(int) Math.ceil(Math.random()*4));
             for (int i = 0;i<max;i++) {
                 Enchantment chosen = possible.get(i);
-                item.addUnsafeEnchantment(chosen, 1 + (int) (Math.random() * ((chosen.getMaxLevel() - 1) + 1)));
+                item.addEnchantment(chosen, 1 + (int) (Math.random() * ((chosen.getMaxLevel() - 1) + 1)));
             }
         }
+
+        return item;
+    }
+
+    public ItemStack infMendEnchantment(ItemStack item) {
+
+        item.addUnsafeEnchantment(Enchantment.ARROW_DAMAGE, (int) Math.ceil(Math.random()*5));
+        item.addUnsafeEnchantment(Enchantment.ARROW_FIRE, 1);
+        item.addUnsafeEnchantment(Enchantment.ARROW_INFINITE, 1);
+        item.addUnsafeEnchantment(Enchantment.MENDING, 1);
+        item.addUnsafeEnchantment(Enchantment.ARROW_KNOCKBACK, (int) Math.ceil(Math.random()*2));
 
         return item;
     }

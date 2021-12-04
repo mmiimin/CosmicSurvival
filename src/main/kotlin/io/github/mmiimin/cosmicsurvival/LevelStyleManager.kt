@@ -48,7 +48,7 @@ class LevelStyleManager {
                     .replace("0", "０")
                 "" + ChatColor.of("#98B2BF") + "[" + ChatColor.of("#F1EFD6") + str + "⚝" + ChatColor.of("#98B2BF") + "]"
             }//Modern
-            16 -> ""+ChatColor.of("#F8FF25") + "[" + ChatColor.of("#FEF5F1") + level + ChatColor.of("#00EA0B") + "❋" + ChatColor.of("#F8FF25") + "]" //Nature
+            16 -> ""+ChatColor.of("#E4FFC5") + "[" + ChatColor.of("#FFD5C5") + level + ChatColor.of("#FDFFC5") + "❋" + ChatColor.of("#E4FFC5") + "]" //Nature
             17 -> {
                 val stringBuilder = StringBuilder()
                 val rainbowList = "§c§a§c§a§c§a§c§a§c§a".chunked(2)
