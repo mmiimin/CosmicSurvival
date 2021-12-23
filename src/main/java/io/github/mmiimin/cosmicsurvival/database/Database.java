@@ -64,6 +64,8 @@ public abstract class Database {
         }
         return 0;
     }
+    
+    //test
 
     public void setTokens(Player player, Integer combatExp, Integer combatLevel, Integer miningExp,
                           Integer miningLevel, Integer foragingExp, Integer foragingLevel, Integer farmingExp,
