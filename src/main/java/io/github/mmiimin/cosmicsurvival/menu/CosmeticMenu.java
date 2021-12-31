@@ -32,7 +32,11 @@ public class CosmeticMenu {
                 "§7파티클을 설정합니다",
                 "",
                 "§e클릭해서 변경하기"));
-
+        inv.setItem(14,item.createItem(Material.ARROW,"§a화살 파티클",
+                "§7화살이 날아갈 때의",
+                "§7파티클을 설정합니다",
+                "",
+                "§e클릭해서 변경하기"));
 
         inv.setItem(31,item.createItem(Material.ARROW,"§a뒤로 가기"));
         player.openInventory(inv);
@@ -134,6 +138,10 @@ public class CosmeticMenu {
                     "§7적용 예시: " + lsm.getLevelStyle(19,player),
                     "",
                     checkLevel(135,player)));
+            inv.setItem(34, item.createItem(item.createSkull("http://textures.minecraft.net/texture/efd8bed2dfe4c32168c972154eea335a8042e9d64b850767c6ea04ce8f85f12a"), "§c레§6인§e보§a우 §b모§9던",
+                    "§7적용 예시: " + lsm.getLevelStyle(20,player),
+                    "",
+                    checkLevel(150,player)));
         }
         else if (page == 2) {
 
@@ -195,6 +203,42 @@ public class CosmeticMenu {
                     "§8HitSound♪",
                     "",
                     checkLevel(100,player)));
+            inv.setItem(24, item.createItem(item.createSkull("http://textures.minecraft.net/texture/74d028cd9236b2fb49ef4c104184bc2bd1ab8a89ec2596fe6c3724d24f569445"), "§a용검",
+                    "§8HitSound♪",
+                    "",
+                    checkLevel(105,player)));
+            inv.setItem(25, item.createItem(item.createSkull("http://textures.minecraft.net/texture/7be7545297dfd6266bbaa2051825e8879cbfa42c7e7e24e50796f27ca6a18"), "§c무§6지§a개",
+                    "§8HitSound♪",
+                    "",
+                    checkLevel(115,player)));
+        }
+        else if (page == 2) {
+
+        }
+        player.openInventory(inv);
+    }
+
+    public void arrowTrail(Player player, int page) {
+        Inventory inv = Bukkit.createInventory(null, 54, "§0화살 파티클 - "+page);
+        for (int i = 0; i < 9; i++) {
+            inv.setItem(i, item.createItem(Material.BLACK_STAINED_GLASS_PANE, " "));
+            inv.setItem(i + 45, item.createItem(Material.BLACK_STAINED_GLASS_PANE, " "));
+        }
+        for (int i = 0; i < 6; i++) {
+            inv.setItem(i * 9, item.createItem(Material.BLACK_STAINED_GLASS_PANE, " "));
+            inv.setItem(i * 9 + 8, item.createItem(Material.BLACK_STAINED_GLASS_PANE, " "));
+        }
+
+        inv.setItem(49,item.createItem(Material.ARROW,"§a뒤로 가기"));
+
+        if (page == 1) {
+
+            inv.setItem(10, item.createItem(item.createSkull("http://textures.minecraft.net/texture/1919d1594bf809db7b44b3782bf90a69f449a87ce5d18cb40eb653fdec2722"), ChatColor.of("#7F7F7F")+"없음",
+                    "",
+                    checkLevel(0,player)));
+            inv.setItem(11, item.createItem(item.createSkull("http://textures.minecraft.net/texture/fdd4364fe2b19a6c119d17b56944eff566c14b4fea45e9b4bc32928d597f468"), "§7핵폭탄",
+                    "",
+                    checkLevel(2147483647,player)));
         }
         else if (page == 2) {
 

@@ -68,6 +68,9 @@ public class MainProfile{
             case 2 -> ranks = "§c#3";
             default -> ranks = "§7" + (rank-1);
         }
+        if (iInfo/10000000 == 200) {
+            return ranks + " "+ sInfo + " §7Lv" + iInfo/10000000 + " §b§lMAX LEVEL";
+        }
         return ranks + " "+ sInfo + " §7Lv" + iInfo/10000000 + " §8" + String.format("%.2f", ((iInfo%10000000) / ((float) (iInfo/10000000)*10000+10000))*100)+"%";
         //return ranks + " "+ info.getKey() + " §7Lv" + info.getValue()/10000000 + " §8" + String.format("%.2f", ((info.getValue()%10000000) / ((float) (info.getValue()/10000000)*10000+10000))*100)+"%";
     }
@@ -155,7 +158,7 @@ public class MainProfile{
         else {
             inv.setItem(36, item.createItem(Material.GOLD_INGOT, "§e❖ 스텟", "§f사용하지 않은 스텟 포인트가 §6"+PlayerDataStorage.map.get(p+"statsPoint")+"§f만큼 있습니다!","", "§e클릭해서 열기"));
         }
-        //inv.setItem(0,item.createItem(Material.EMERALD,"§a❈ 장신구 메뉴","§7장신구를 착용하거나","§7추가 능력을 감정할 수 있습니다","","§e클릭해서 열기"));
+        //inv.setItem(0,item.createItem(Material.EMERALD,"§a✦ 장신구 메뉴","§7장신구를 착용하거나","§7추가 능력을 감정할 수 있습니다","","§c업데이트 예정"));
         inv.setItem(8,item.createItem(Material.CHEST,"§e★ 치장품","§7레벨 칭호, 파티클 등","§7치장 아이템을 변경할 수 있습니다","","§e클릭해서 열기"));
 
         player.openInventory(inv);

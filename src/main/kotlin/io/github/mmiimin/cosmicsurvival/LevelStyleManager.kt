@@ -36,19 +36,19 @@ class LevelStyleManager {
             13 -> ""+ChatColor.of("#86DDFF") + "[" + ChatColor.of("#2DA1FE") + level + ChatColor.of("#4F78FE") + "☽" + ChatColor.of("#374EEE") + "]" //Zenith
             14 -> ""+ChatColor.of("#FFE737") + "[" + ChatColor.of("#FFF07F") + level + ChatColor.of("#ADFCFF") + "✵" + ChatColor.of("#FFF5AD") + "]" //Luxury
             15 -> {//１２３４５６７８９０
-                val str = level.toString().replace("1", "１")
-                    .replace("2", "２")
-                    .replace("3", "３")
-                    .replace("4", "４")
-                    .replace("5", "５")
-                    .replace("6", "６")
-                    .replace("7", "７")
-                    .replace("8", "８")
-                    .replace("9", "９")
-                    .replace("0", "０")
+                val str = level.toString().replace("1", "I")
+                    .replace("2", "II")
+                    .replace("3", "III")
+                    .replace("4", "IV")
+                    .replace("5", "V")
+                    .replace("6", "VI")
+                    .replace("7", "VII")
+                    .replace("8", "VIII")
+                    .replace("9", "IX")
+                    .replace("0", "X")
                 "" + ChatColor.of("#98B2BF") + "[" + ChatColor.of("#F1EFD6") + str + "⚝" + ChatColor.of("#98B2BF") + "]"
             }//Modern
-            16 -> ""+ChatColor.of("#E4FFC5") + "[" + ChatColor.of("#FFD5C5") + level + ChatColor.of("#FDFFC5") + "❋" + ChatColor.of("#E4FFC5") + "]" //Nature
+            16 -> ""+ChatColor.of("#E4FFC5") + "[" + ChatColor.of("#FFD5C5") + level + ChatColor.of("#FDFFC5") + "✵" + ChatColor.of("#E4FFC5") + "]" //Nature
             17 -> {
                 val stringBuilder = StringBuilder()
                 val rainbowList = "§c§a§c§a§c§a§c§a§c§a".chunked(2)
@@ -73,7 +73,29 @@ class LevelStyleManager {
                     .replace("0", "§4♪")
                 "" + ChatColor.of("#725D4B") + "[" + str + "§f♪" + ChatColor.of("#725D4B") + "]"
             }//NoteBlock
+            20 -> {//１２３４５６７８９０
 
+                val str = level.toString().replace("1", "I")
+                    .replace("2", "II")
+                    .replace("3", "III")
+                    .replace("4", "IV")
+                    .replace("5", "V")
+                    .replace("6", "VI")
+                    .replace("7", "VII")
+                    .replace("8", "VIII")
+                    .replace("9", "IX")
+                    .replace("0", "X")
+
+                val stringBuilder = StringBuilder()
+                val rainbowList = "§c§6§e§a§b§9§c§6§e§a§b§9".chunked(2)
+                val everySplit = "[$str⚝]".chunked(1)
+                for (i in everySplit.indices){
+                    stringBuilder.append(rainbowList[i])
+                    stringBuilder.append(everySplit[i])
+                }
+                stringBuilder.toString()
+
+            }//RModern
             else -> "§4ERROR (code:$code)"
         }
 

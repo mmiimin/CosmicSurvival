@@ -89,7 +89,7 @@ public class CosmicSurvival extends JavaPlugin implements CommandExecutor, Liste
         loadFirstTime(event.getPlayer());
         loadAll(event.getPlayer());
 
-        Objects.requireNonNull(event.getPlayer().getAttribute(Attribute.GENERIC_MOVEMENT_SPEED)).setBaseValue(0.1 + PlayerDataStorage.map.get(event.getPlayer().getName()+"statsDEX")*0.00007);
+        Objects.requireNonNull(event.getPlayer().getAttribute(Attribute.GENERIC_MOVEMENT_SPEED)).setBaseValue(0.1 + PlayerDataStorage.map.get(event.getPlayer().getName()+"statsDEX")*0.0001);
     }
 
     @EventHandler
@@ -100,7 +100,7 @@ public class CosmicSurvival extends JavaPlugin implements CommandExecutor, Liste
 
     public void saveAll(Player player) {
         String p=player.getName();
-        Objects.requireNonNull(player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED)).setBaseValue(0.1 + PlayerDataStorage.map.get(p+"statsDEX")*0.00007);
+        Objects.requireNonNull(player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED)).setBaseValue(0.1 + PlayerDataStorage.map.get(p+"statsDEX")*0.0001);
         this.getConfig().set("Leaderboard."+player.getUniqueId() +".co",PlayerDataStorage.map.get(p+"combatLevel")*10000000+PlayerDataStorage.map.get(p+"combatExp"));
         this.getConfig().set("Leaderboard."+player.getUniqueId() +".mi",PlayerDataStorage.map.get(p+"miningLevel")*10000000+PlayerDataStorage.map.get(p+"miningExp"));
         this.getConfig().set("Leaderboard."+player.getUniqueId() +".fo",PlayerDataStorage.map.get(p+"foragingLevel")*10000000+PlayerDataStorage.map.get(p+"foragingExp"));
@@ -131,7 +131,7 @@ public class CosmicSurvival extends JavaPlugin implements CommandExecutor, Liste
                 PlayerDataStorage.map.get(p+"statResetLevel"),
                 0,
                 0,
-                PlayerDataStorage.map.get(p+"settingHE")*1000+PlayerDataStorage.map.get(p+"settingLS")*10+PlayerDataStorage.map.get(p+"settingDI"),
+                PlayerDataStorage.map.get(p+"settingAT")*100000+PlayerDataStorage.map.get(p+"settingHE")*1000+PlayerDataStorage.map.get(p+"settingLS")*10+PlayerDataStorage.map.get(p+"settingDI"),
                 0,
                 0,
                 0,
@@ -166,6 +166,7 @@ public class CosmicSurvival extends JavaPlugin implements CommandExecutor, Liste
         PlayerDataStorage.map.put(p+"settingDI",db.getTokens(String.valueOf(player.getUniqueId()),"setting")%10);
         PlayerDataStorage.map.put(p+"settingLS",(db.getTokens(String.valueOf(player.getUniqueId()),"setting")%1000)/10);
         PlayerDataStorage.map.put(p+"settingHE",(db.getTokens(String.valueOf(player.getUniqueId()),"setting")%100000)/1000);
+        PlayerDataStorage.map.put(p+"settingAT",(db.getTokens(String.valueOf(player.getUniqueId()),"setting")%10000000)/100000);
     }
 
     public void loadFirstTime(Player player) {
@@ -193,6 +194,7 @@ public class CosmicSurvival extends JavaPlugin implements CommandExecutor, Liste
         PlayerDataStorage.map.put(p+"settingDI",0);
         PlayerDataStorage.map.put(p+"settingLS",0);
         PlayerDataStorage.map.put(p+"settingHE",0);
+        PlayerDataStorage.map.put(p+"settingAT",0);
     }
 }
 

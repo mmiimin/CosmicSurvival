@@ -73,7 +73,7 @@ public class ItemManager {
                 possible.add(ench);
             }
         }
-
+        possible.remove(Enchantment.MENDING);
         if (possible.size() >= 1) {
             Collections.shuffle(possible);
             int max = Math.min(possible.size(),(int) Math.ceil(Math.random()*4));

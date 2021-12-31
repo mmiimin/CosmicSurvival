@@ -67,6 +67,7 @@ class LevelHandler {
                     else -> "X"
                 }
                 Bukkit.broadcastMessage("§e↑ " + player.name+"§f님이 "+ icon + " §e" + PlayerDataStorage.map[player.name + codex + "Level"]+"레벨§f을 달성했습니다!")
+                addExp(player,code,0)
             }
             else{
             message = hi + " §b(+" + amount + ") " + fi.repeat(((PlayerDataStorage.map[player.name + codex + "Exp"]!! /((PlayerDataStorage.map[player.name + codex + "Level"]!!).toFloat()*10000+10000))*50).toInt())+
@@ -75,9 +76,9 @@ class LevelHandler {
             player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent(message))
         }
         else{
+            PlayerDataStorage.map[player.name + codex + "Exp"] = 0
             message = hi + " §b(+" + amount + ") " + "§b".repeat(50)+
                     "§b§lMAX LEVEL"
             player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent(message))}
-
     }
 }
