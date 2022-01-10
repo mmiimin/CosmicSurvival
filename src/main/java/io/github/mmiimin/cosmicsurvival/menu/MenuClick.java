@@ -1,14 +1,19 @@
 package io.github.mmiimin.cosmicsurvival.menu;
 
+import io.github.mmiimin.cosmicsurvival.AccessoryUpgrade;
 import io.github.mmiimin.cosmicsurvival.util.PlayerDataStorage;
+import io.github.mmiimin.cosmicsurvival.util.WandItem;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Objects;
+
+import static java.lang.Integer.parseInt;
 
 public class MenuClick implements Listener
 {
@@ -16,6 +21,10 @@ public class MenuClick implements Listener
     StatsMenu stats = new StatsMenu();
     SettingMenu setting = new SettingMenu();
     CosmeticMenu cosmeticMenu = new CosmeticMenu();
+    AccessoryMenu accessoryMenu = new AccessoryMenu();
+    WandSelectMenu wandSelectMenu = new WandSelectMenu();
+    WandItem wandItem = new WandItem();
+    AccessoryUpgrade accessoryUpgrade = new AccessoryUpgrade();
 
     @EventHandler
     public void onInventoryClick(final InventoryClickEvent e) {
@@ -27,14 +36,17 @@ public class MenuClick implements Listener
         final Player player = (Player) e.getWhoClicked();
         final int slot = e.getRawSlot();
 
-
-
         if (e.getView().getTitle().equals("§0프로필")){
             switch (slot) {
                 case 8 -> cosmeticMenu.openCosmeticMenu(player);
                 case 36 -> stats.openStatsMenu(player);
                 case 40 -> player.closeInventory();
                 case 44 -> setting.openSettingMenu(player);
+                case 0 -> {
+                    if (Objects.requireNonNull(Objects.requireNonNull(clickedItem.getItemMeta()).getLore()).contains("§e클릭해서 열기")) {
+                        accessoryMenu.openAccessoryMenu(player);
+                    }
+                }
             }
         }
 
@@ -79,6 +91,141 @@ public class MenuClick implements Listener
                     setting.openSettingMenu(player);
                 }
                 case 40 -> profile.openMainProfile(player);
+            }
+        }
+
+        else if (e.getView().getTitle().equals("§0장신구")){
+            if (slot==40){
+                profile.openMainProfile(player);
+            }
+            else if (player.getCooldown(wandItem.getWandMaterial(PlayerDataStorage.map.get(player.getName() + "wand1")))==0 &&
+                    player.getCooldown(wandItem.getWandMaterial(PlayerDataStorage.map.get(player.getName() + "wand2")))==0 &&
+                    player.getCooldown(wandItem.getWandMaterial(PlayerDataStorage.map.get(player.getName() + "wand3")))==0) {
+                switch (slot) {
+                    case 11 -> {
+                        if (Objects.requireNonNull(Objects.requireNonNull(clickedItem.getItemMeta()).getLore()).contains("§e클릭해서 변경하기")) {
+                            accessoryMenu.openAccessoryList(player, "첫번째 슬롯", 1);
+                        }
+                    }
+                    case 13 -> {
+                        if (Objects.requireNonNull(Objects.requireNonNull(clickedItem.getItemMeta()).getLore()).contains("§e클릭해서 변경하기")) {
+                            accessoryMenu.openAccessoryList(player, "두번째 슬롯", 1);
+                        }
+                    }
+                    case 15 -> {
+                        if (Objects.requireNonNull(Objects.requireNonNull(clickedItem.getItemMeta()).getLore()).contains("§e클릭해서 변경하기")) {
+                            accessoryMenu.openAccessoryList(player, "세번째 슬롯", 1);
+                        }
+                    }
+                    case 20 -> wandSelectMenu.openWandMenu(player, "첫번째 슬롯");
+                    case 22 -> wandSelectMenu.openWandMenu(player, "두번째 슬롯");
+                    case 24 -> wandSelectMenu.openWandMenu(player, "세번째 슬롯");
+
+                }
+            }
+            else{
+                player.sendMessage("§c[!] 완드의 재사용 대기시간 중에는 장신구 또는 완드를 변경할 수 없습니다");
+            }
+        }
+
+        else if (e.getView().getTitle().contains("§0장신구")){
+            int page = parseInt(e.getView().getTitle().substring(e.getView().getTitle().length() - 1));
+            int z=45*(page-1)+slot;
+            if (slot == 49){accessoryMenu.openAccessoryMenu(player);}
+            if (e.getClick() == ClickType.RIGHT) {
+                if (!(Objects.requireNonNull(clickedItem.getItemMeta()).getLore() == null)) {
+                    if (Objects.requireNonNull(Objects.requireNonNull(clickedItem.getItemMeta()).getLore()).contains("§e우클릭해서 제작하기") || Objects.requireNonNull(Objects.requireNonNull(clickedItem.getItemMeta()).getLore()).contains("§e우클릭해서 강화하기")) {
+                        accessoryMenu.openAccessoryUpgrade(player, z, PlayerDataStorage.accessory.get(player.getName()+z));
+                    }
+                }
+            }
+            if (e.getView().getTitle().contains("첫번째 슬롯")) {
+                if (!(Objects.requireNonNull(clickedItem.getItemMeta()).getLore() == null)) {
+                    if (Objects.requireNonNull(Objects.requireNonNull(clickedItem.getItemMeta()).getLore()).contains("§e좌클릭해서 장착하기") && e.getClick() == ClickType.LEFT) {
+                        if (z!=0 && z == PlayerDataStorage.map.get(player.getName() + "accessory2")) {
+                            PlayerDataStorage.map.put(player.getName() + "accessory2", PlayerDataStorage.map.get(player.getName() + "accessory1"));
+                        } else if (z!=0 && z == PlayerDataStorage.map.get(player.getName() + "accessory3")) {
+                            PlayerDataStorage.map.put(player.getName() + "accessory3", PlayerDataStorage.map.get(player.getName() + "accessory1"));
+                        }
+                        PlayerDataStorage.map.put(player.getName() + "accessory1", z);
+                        player.sendMessage("§a✦§f 첫번째 장신구가 " + Objects.requireNonNull(clickedItem.getItemMeta()).getDisplayName() + " §f으로 변경되었습니다.");
+                    }
+                }
+            } else if (e.getView().getTitle().contains("두번째 슬롯")) {
+                if (!(Objects.requireNonNull(clickedItem.getItemMeta()).getLore() == null)) {
+                    if (Objects.requireNonNull(Objects.requireNonNull(clickedItem.getItemMeta()).getLore()).contains("§e좌클릭해서 장착하기") && e.getClick() == ClickType.LEFT) {
+                        if (z!=0 && z == PlayerDataStorage.map.get(player.getName() + "accessory1")) {
+                            PlayerDataStorage.map.put(player.getName() + "accessory1", PlayerDataStorage.map.get(player.getName() + "accessory2"));
+                        } else if (z!=0 && z == PlayerDataStorage.map.get(player.getName() + "accessory3")) {
+                            PlayerDataStorage.map.put(player.getName() + "accessory3", PlayerDataStorage.map.get(player.getName() + "accessory2"));
+                        }
+                        PlayerDataStorage.map.put(player.getName() + "accessory2", z);
+                        player.sendMessage("§a✦§f 두번째 장신구가 " + Objects.requireNonNull(clickedItem.getItemMeta()).getDisplayName() + " §f으로 변경되었습니다.");
+                    }
+                }
+            } else if (e.getView().getTitle().contains("세번째 슬롯")) {
+                if (!(Objects.requireNonNull(clickedItem.getItemMeta()).getLore() == null)) {
+                    if (Objects.requireNonNull(Objects.requireNonNull(clickedItem.getItemMeta()).getLore()).contains("§e좌클릭해서 장착하기") && e.getClick() == ClickType.LEFT) {
+                        if (z!=0 && z == PlayerDataStorage.map.get(player.getName() + "accessory2")) {
+                            PlayerDataStorage.map.put(player.getName() + "accessory2", PlayerDataStorage.map.get(player.getName() + "accessory3"));
+                        } else if (z!=0 && z == PlayerDataStorage.map.get(player.getName() + "accessory1")) {
+                            PlayerDataStorage.map.put(player.getName() + "accessory1", PlayerDataStorage.map.get(player.getName() + "accessory3"));
+                        }
+                        PlayerDataStorage.map.put(player.getName() + "accessory3", z);
+                        player.sendMessage("§a✦§f 세번째 장신구가 " + Objects.requireNonNull(clickedItem.getItemMeta()).getDisplayName() + " §f으로 변경되었습니다.");
+                    }
+                }
+            }
+        }
+
+        else if (e.getView().getTitle().contains("§0완드 선택")){
+            int z=getCosmeticNumber(slot, 1);
+            if (slot == 49){accessoryMenu.openAccessoryMenu(player);}
+            else if (e.getView().getTitle().contains("첫번째 슬롯")) {
+                if (!(Objects.requireNonNull(clickedItem.getItemMeta()).getLore() == null)) {
+                    if (Objects.requireNonNull(Objects.requireNonNull(clickedItem.getItemMeta()).getLore()).contains("§e클릭해서 변경하기")) {
+                        if (z == PlayerDataStorage.map.get(player.getName() + "wand2")) {
+                            PlayerDataStorage.map.put(player.getName() + "wand2", PlayerDataStorage.map.get(player.getName() + "wand1"));
+                        } else if (z == PlayerDataStorage.map.get(player.getName() + "wand3")) {
+                            PlayerDataStorage.map.put(player.getName() + "wand3", PlayerDataStorage.map.get(player.getName() + "wand1"));
+                        }
+                        PlayerDataStorage.map.put(player.getName() + "wand1", z);
+                        player.sendMessage("§a✦§f 첫번째 완드가 " + Objects.requireNonNull(clickedItem.getItemMeta()).getDisplayName() + " §f로 변경되었습니다.");
+                    }
+                }
+                } else if (e.getView().getTitle().contains("두번째 슬롯")) {
+                if (!(Objects.requireNonNull(clickedItem.getItemMeta()).getLore() == null)) {
+                    if (Objects.requireNonNull(Objects.requireNonNull(clickedItem.getItemMeta()).getLore()).contains("§e클릭해서 변경하기")) {
+                        if (z == PlayerDataStorage.map.get(player.getName() + "wand1")) {
+                            PlayerDataStorage.map.put(player.getName() + "wand1", PlayerDataStorage.map.get(player.getName() + "wand2"));
+                        } else if (z == PlayerDataStorage.map.get(player.getName() + "wand3")) {
+                            PlayerDataStorage.map.put(player.getName() + "wand3", PlayerDataStorage.map.get(player.getName() + "wand2"));
+                        }
+                        PlayerDataStorage.map.put(player.getName() + "wand2", z);
+                        player.sendMessage("§a✦§f 두번째 완드가 " + Objects.requireNonNull(clickedItem.getItemMeta()).getDisplayName() + " §f로 변경되었습니다.");
+                    }
+                }
+                } else if (e.getView().getTitle().contains("세번째 슬롯")) {
+                if (!(Objects.requireNonNull(clickedItem.getItemMeta()).getLore() == null)) {
+                    if (Objects.requireNonNull(Objects.requireNonNull(clickedItem.getItemMeta()).getLore()).contains("§e클릭해서 변경하기")) {
+                        if (z == PlayerDataStorage.map.get(player.getName() + "wand2")) {
+                            PlayerDataStorage.map.put(player.getName() + "wand2", PlayerDataStorage.map.get(player.getName() + "wand3"));
+                        } else if (z == PlayerDataStorage.map.get(player.getName() + "wand1")) {
+                            PlayerDataStorage.map.put(player.getName() + "wand1", PlayerDataStorage.map.get(player.getName() + "wand3"));
+                        }
+                        PlayerDataStorage.map.put(player.getName() + "wand3", z);
+                        player.sendMessage("§a✦§f 세번째 완드가 " + Objects.requireNonNull(clickedItem.getItemMeta()).getDisplayName() + " §f로 변경되었습니다.");
+                    }
+                }
+            }
+        }
+
+        else if (e.getView().getTitle().contains("§0Accessory >")){
+            int acc = parseInt(e.getView().getTitle().split("f")[1]);
+            int accLv = PlayerDataStorage.accessory.get(player.getName()+acc);
+            if (slot == 49){accessoryMenu.openAccessoryMenu(player);}
+            if (slot==24) {
+                accessoryUpgrade.upgradeAccessory(acc,accLv,player);
             }
         }
 
@@ -203,5 +350,4 @@ public class MenuClick implements Listener
         result+=(28*(page-1));
         return result;
     }
-
 }

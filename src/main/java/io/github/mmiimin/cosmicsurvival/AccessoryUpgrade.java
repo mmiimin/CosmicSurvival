@@ -1,0 +1,138 @@
+package io.github.mmiimin.cosmicsurvival;
+
+import io.github.mmiimin.cosmicsurvival.util.PlayerDataStorage;
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.Particle;
+import org.bukkit.Sound;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
+public class AccessoryUpgrade {
+
+    AccessoryItem ai = new AccessoryItem();
+
+    public String[] getUpgradeList(int code, int upgrade) {
+        List<String> upgradeList = new ArrayList<>();
+        switch (code) {
+            case 1 -> {
+                upgradeList.add("§b○§f 네더의 별 x1");
+                upgradeList.add("§b○§f 전달체 x1");
+                upgradeList.add("§b○§f 석탄 블록 x"+(128+upgrade*128));
+            }
+            case 2 -> {
+                upgradeList.add("§b○§f 황금 사과 x"+(64+upgrade*96));
+                upgradeList.add("§b○§f 꿀 블록 x"+(32+upgrade*16));
+            }
+            case 3 -> {
+                upgradeList.add("§b○§f 네더라이트 주괴 x"+(20+25*upgrade));
+                upgradeList.add("§b○§f 금 블록 x"+(100+upgrade*120));
+            }
+            case 4 -> {
+                upgradeList.add("§b○§f 바다 랜턴 x"+(64+64*upgrade));
+                upgradeList.add("§b○§f 다이아몬드 x"+(100+upgrade*150));
+                upgradeList.add("§b○§f 푸른 얼음 x"+(96+upgrade*64));
+            }
+            case 5 -> {
+                upgradeList.add("§b○§f 리스폰 정박기 x"+(48+48*upgrade));
+                upgradeList.add("§b○§f 네더라이트 블록 x"+(4+4*upgrade));
+            }
+            case 6 -> {
+                upgradeList.add("§b○§f 자수정 블록 x"+(256+256*upgrade));
+                upgradeList.add("§b○§f 네더라이트 블록 x"+(3+4*upgrade));
+            }
+            case 7 -> {
+                upgradeList.add("§b○§f 에메랄드 광석 x"+(21+21*upgrade));
+                upgradeList.add("§b○§f 다이아몬드 블록 x"+(30+50*upgrade));
+                upgradeList.add("§b○§f 빛나는 먹물 주머니 x"+(64+64*upgrade));
+            }
+        }
+        upgradeList.add("§e");
+        if (upgrade==0) {
+            upgradeList.add("§e클릭해서 제작하기");
+        }
+        else{
+            upgradeList.add("§e클릭해서 강화하기");
+        }
+
+        return upgradeList.toArray(new String[upgradeList.size()]);
+    }
+
+    public void upgradeAccessory(int code, int upgrade, Player player) {
+        List<ItemStack> checkListItem = new ArrayList<>();
+        List<Integer> checkListAmount = new ArrayList<>();
+        int count=0;
+        switch (code) {
+            case 1 -> {
+                checkListItem.add(new ItemStack(Material.NETHER_STAR));
+                checkListItem.add(new ItemStack(Material.CONDUIT));
+                checkListItem.add(new ItemStack(Material.COAL_BLOCK));
+                checkListAmount.add(1);
+                checkListAmount.add(1);
+                checkListAmount.add(128+upgrade*128);
+            }
+            case 2 -> {
+                checkListItem.add(new ItemStack(Material.GOLDEN_APPLE));
+                checkListItem.add(new ItemStack(Material.HONEY_BLOCK));
+                checkListAmount.add(64+upgrade*96);
+                checkListAmount.add(32+upgrade*16);
+            }
+            case 3 -> {
+                checkListItem.add(new ItemStack(Material.NETHERITE_INGOT));
+                checkListItem.add(new ItemStack(Material.GOLD_BLOCK));
+                checkListAmount.add(20+upgrade*25);
+                checkListAmount.add(100+upgrade*120);
+            }
+            case 4 -> {
+                checkListItem.add(new ItemStack(Material.SEA_LANTERN));
+                checkListItem.add(new ItemStack(Material.DIAMOND));
+                checkListItem.add(new ItemStack(Material.BLUE_ICE));
+                checkListAmount.add(64+upgrade*64);
+                checkListAmount.add(100+upgrade*150);
+                checkListAmount.add(96+upgrade*64);
+            }
+            case 5 -> {
+                checkListItem.add(new ItemStack(Material.RESPAWN_ANCHOR));
+                checkListItem.add(new ItemStack(Material.NETHERITE_BLOCK));
+                checkListAmount.add(64+upgrade*64);
+                checkListAmount.add(4+4*upgrade);
+            }
+            case 6 -> {
+                checkListItem.add(new ItemStack(Material.NETHERITE_BLOCK));
+                checkListItem.add(new ItemStack(Material.AMETHYST_BLOCK));
+                checkListAmount.add(3+4*upgrade);
+                checkListAmount.add(256+upgrade*256);
+            }
+            case 7 -> {
+                checkListItem.add(new ItemStack(Material.EMERALD_ORE));
+                checkListItem.add(new ItemStack(Material.DIAMOND_BLOCK));
+                checkListItem.add(new ItemStack(Material.GLOW_INK_SAC));
+                checkListAmount.add(21+upgrade*21);
+                checkListAmount.add(30+upgrade*50);
+                checkListAmount.add(64+upgrade*64);
+            }
+        }
+        for (int i=0;i<checkListItem.size();i++){
+            if (!(player.getInventory().containsAtLeast(checkListItem.get(i),checkListAmount.get(i)))){
+                player.sendMessage("§c[!] 재료가 부족합니다: §7"+checkListItem.get(i).getType());
+            }
+            else{
+                count++;
+            }
+        }
+        if (count==checkListItem.size()){
+            for (int i=0;i<checkListItem.size();i++){
+                player.getInventory().removeItem(new ItemStack(checkListItem.get(i).getType(),checkListAmount.get(i)));
+            }
+            player.closeInventory();
+            PlayerDataStorage.accessory.put(player.getName()+code,upgrade+1);
+            Bukkit.broadcastMessage("§a✦ "+player.getName()+"§f 님이 "+Objects.requireNonNull(ai.createAccessory(player,code, upgrade + 1).getItemMeta()).getDisplayName()+"§f을(를) 제작하였습니다!");
+            player.playSound(player.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_BLAST,1,1);
+            player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING,1,2);
+        }
+    }
+}

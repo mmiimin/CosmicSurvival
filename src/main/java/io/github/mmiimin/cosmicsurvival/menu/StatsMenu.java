@@ -13,24 +13,28 @@ public class StatsMenu {
 
     public void openStatsMenu(Player player) {
         Inventory inv = Bukkit.createInventory(null, 36, "§0보유 스텟 포인트: "+ PlayerDataStorage.map.get(player.getName()+"statsPoint"));
+        double strMultiplier = 0.2;
+        double defMultiplier = 0.9985;
+        double dexMultiplier = 0.1;
+        double srvMultiplier = 0.9965;
         for (int i = 0; i < 36; i++) {
             inv.setItem(i, item.createItem(Material.BLACK_STAINED_GLASS_PANE, " "));
         }
         inv.setItem(10,item.createItem(Material.IRON_SWORD,"§a힘 §7" + PlayerDataStorage.map.get(player.getName()+"statsSTR"),
-                "§f공격력이 §a" + String.format("%.2f",PlayerDataStorage.map.get(player.getName()+"statsSTR")*0.2) +"%§7➜"+ String.format("%.2f",(PlayerDataStorage.map.get(player.getName()+"statsSTR")+1)*0.2)+"% §f증가합니다",
+                "§f공격력이 §a" + String.format("%.2f",PlayerDataStorage.map.get(player.getName()+"statsSTR")*strMultiplier) +"%§7➜"+ String.format("%.2f",(PlayerDataStorage.map.get(player.getName()+"statsSTR")+1)*strMultiplier)+"% §f증가합니다",
                 "",
                 "§e클릭해서 1포인트 투자하기"));
         inv.setItem(12,item.createItem(Material.IRON_CHESTPLATE,"§a방어 §7" + PlayerDataStorage.map.get(player.getName()+"statsDEF"),
-                "§f받은 피해의 §a" + String.format("%.2f", 100-(Math.pow(0.9985,PlayerDataStorage.map.get(player.getName()+"statsDEF"))*100 )) +"%§7➜"+String.format("%.2f", 100-(Math.pow(0.9985,PlayerDataStorage.map.get(player.getName()+"statsDEF")+1)*100 ))+"% §f를 방어합니다",
+                "§f받은 피해의 §a" + String.format("%.2f", 100-(Math.pow(defMultiplier,PlayerDataStorage.map.get(player.getName()+"statsDEF"))*100 )) +"%§7➜"+String.format("%.2f", 100-(Math.pow(defMultiplier,PlayerDataStorage.map.get(player.getName()+"statsDEF")+1)*100 ))+"% §f를 방어합니다",
                 "",
                 "§e클릭해서 1포인트 투자하기"));
         inv.setItem(14,item.createItem(Material.FEATHER,"§a민첩 §7" + PlayerDataStorage.map.get(player.getName()+"statsDEX"),
-                "§f이동 속도가 §a" + String.format("%.2f",PlayerDataStorage.map.get(player.getName()+"statsDEX")*0.1) +"%§7➜"+String.format("%.2f",(PlayerDataStorage.map.get(player.getName()+"statsDEX")+1)*0.1)+"% §f증가합니다",
+                "§f이동 속도가 §a" + String.format("%.2f",PlayerDataStorage.map.get(player.getName()+"statsDEX")*dexMultiplier) +"%§7➜"+String.format("%.2f",(PlayerDataStorage.map.get(player.getName()+"statsDEX")+1)*dexMultiplier)+"% §f증가합니다",
                 "",
                 "§e클릭해서 1포인트 투자하기"));
         inv.setItem(16,item.createItem(Material.COOKED_BEEF,"§a생존 §7" + PlayerDataStorage.map.get(player.getName()+"statsSRV"),
-                "§f배고픔이 §a" + String.format("%.2f", 100-(Math.pow(0.9965,PlayerDataStorage.map.get(player.getName()+"statsSRV"))*100 )) +"%§7➜"+String.format("%.2f", 100-(Math.pow(0.9965,PlayerDataStorage.map.get(player.getName()+"statsSRV")+1)*100 ))+"% §f확률로 닳지 않습니다",
-                "§f이 효과로 배고픔이 감소하지 않을 시 체력이 2만큼 회복됩니다.",
+                "§f배고픔이 §a" + String.format("%.2f", 100-(Math.pow(srvMultiplier,PlayerDataStorage.map.get(player.getName()+"statsSRV"))*100 )) +"%§7➜"+String.format("%.2f", 100-(Math.pow(srvMultiplier,PlayerDataStorage.map.get(player.getName()+"statsSRV")+1)*100 ))+"% §f확률로 닳지 않습니다",
+                "§f이 효과로 배고픔이 감소하지 않을 시 체력이 1만큼 회복됩니다.",
                 "",
                 "§e클릭해서 1포인트 투자하기"));
         if (PlayerDataStorage.map.get(player.getName()+"miningLevel")+PlayerDataStorage.map.get(player.getName()+"foragingLevel")+PlayerDataStorage.map.get(player.getName()+"fishingLevel")+PlayerDataStorage.map.get(player.getName()+"combatLevel")+PlayerDataStorage.map.get(player.getName()+"farmingLevel") >= PlayerDataStorage.map.get(player.getName()+"statResetLevel")) {

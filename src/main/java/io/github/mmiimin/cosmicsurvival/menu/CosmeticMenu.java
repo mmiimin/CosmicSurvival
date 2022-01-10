@@ -185,7 +185,7 @@ public class CosmeticMenu {
             inv.setItem(16, item.createItem(item.createSkull("http://textures.minecraft.net/texture/8c5063f9576570a8939006207659989ff81b9c87a28ce3417caae82b6e7d62e"), "§f별",
                     "",
                     checkLevel(65,player)));
-            inv.setItem(19, item.createItem(item.createSkull("http://textures.minecraft.net/texture/1dfd7724c69a024dcfc60b16e00334ab5738f4a92bafb8fbc76cf15322ea0293"), "§f눈꽃",
+            inv.setItem(19, item.createItem(item.createSkull("http://textures.minecraft.net/texture/1dfd7724c69a024dcfc60b16e00334ab5738f4a92bafb8fbc76cf15322ea0293"), "§f섬광",
                     "",
                     checkLevel(70,player)));
             inv.setItem(20, item.createItem(item.createSkull("http://textures.minecraft.net/texture/345831eaef99e030c82b1e79ce63b2cb44df1361660daf4e42161dd9db42a754"), "§b영혼",
@@ -236,9 +236,6 @@ public class CosmeticMenu {
             inv.setItem(10, item.createItem(item.createSkull("http://textures.minecraft.net/texture/1919d1594bf809db7b44b3782bf90a69f449a87ce5d18cb40eb653fdec2722"), ChatColor.of("#7F7F7F")+"없음",
                     "",
                     checkLevel(0,player)));
-            inv.setItem(11, item.createItem(item.createSkull("http://textures.minecraft.net/texture/fdd4364fe2b19a6c119d17b56944eff566c14b4fea45e9b4bc32928d597f468"), "§7핵폭탄",
-                    "",
-                    checkLevel(2147483647,player)));
         }
         else if (page == 2) {
 

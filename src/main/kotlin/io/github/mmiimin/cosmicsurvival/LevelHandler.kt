@@ -1,20 +1,13 @@
 package io.github.mmiimin.cosmicsurvival
 
+import io.github.mmiimin.cosmicsurvival.util.PlayerDataStorage
 import net.md_5.bungee.api.ChatMessageType
 import net.md_5.bungee.api.chat.TextComponent
-import org.bukkit.entity.Player
-import org.bukkit.event.EventHandler
-import org.bukkit.event.player.PlayerInteractEvent
-import io.github.mmiimin.cosmicsurvival.util.PlayerDataStorage
 import org.bukkit.Bukkit
 import org.bukkit.Sound
+import org.bukkit.entity.Player
 
 class LevelHandler {
-
-    @EventHandler
-    fun onInteract(event: PlayerInteractEvent) {
-        event.player.sendMessage("Interaction")
-    }
 
     fun addExp(player: Player, code: Int, amount: Int) {
         val codex: String = when (code) {
@@ -48,7 +41,7 @@ class LevelHandler {
                        fi = "§4|"}
         }
 
-        if (PlayerDataStorage.map[player.name + codex + "Level"]!! < 200) {
+        if (PlayerDataStorage.map[player.name + codex + "Level"]!! < 50) {
             PlayerDataStorage.map[player.name + codex + "Exp"] = amount + PlayerDataStorage.map[player.name + codex + "Exp"]!!
             if (PlayerDataStorage.map[player.name + codex + "Exp"]!! >= (PlayerDataStorage.map[player.name + codex + "Level"]!!)*10000+10000) {
                 message = "§6§lLEVEL UP!"
@@ -71,14 +64,15 @@ class LevelHandler {
             }
             else{
             message = hi + " §b(+" + amount + ") " + fi.repeat(((PlayerDataStorage.map[player.name + codex + "Exp"]!! /((PlayerDataStorage.map[player.name + codex + "Level"]!!).toFloat()*10000+10000))*50).toInt())+
-                    "§7|".repeat(50-(((PlayerDataStorage.map[player.name + codex + "Exp"]!! /((PlayerDataStorage.map[player.name + codex + "Level"]!!).toFloat()*10000+10000))*50).toInt())) +
+                    "§7|".repeat(49-(((PlayerDataStorage.map[player.name + codex + "Exp"]!! /((PlayerDataStorage.map[player.name + codex + "Level"]!!).toFloat()*10000+10000))*50).toInt())) +
                     " §7(" +String.format("%.1f",((PlayerDataStorage.map[player.name + codex + "Exp"]!! /((PlayerDataStorage.map[player.name + codex + "Level"]!!).toFloat()*10000+10000)))*100)+ "%)"}
             player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent(message))
         }
         else{
             PlayerDataStorage.map[player.name + codex + "Exp"] = 0
-            message = hi + " §b(+" + amount + ") " + "§b".repeat(50)+
-                    "§b§lMAX LEVEL"
-            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent(message))}
+            message = hi + " §b(+" + amount + ") " + "§b|".repeat(50)+
+                    " §b(MAX)"
+            player.spigot().sendMessage(ChatMessageType.ACTION_BAR,TextComponent(message))
+        }
     }
 }

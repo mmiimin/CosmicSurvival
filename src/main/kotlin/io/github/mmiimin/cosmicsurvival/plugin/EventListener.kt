@@ -1,9 +1,12 @@
 package io.github.mmiimin.cosmicsurvival.plugin
 
+import io.github.mmiimin.cosmicsurvival.AccessoryActive
+import io.github.mmiimin.cosmicsurvival.AccessoryRefresh
 import io.github.mmiimin.cosmicsurvival.LevelHandler
 import io.github.mmiimin.cosmicsurvival.LevelStyleManager
 import io.github.mmiimin.cosmicsurvival.util.ItemManager
 import io.github.mmiimin.cosmicsurvival.util.PlayerDataStorage
+import io.github.mmiimin.cosmicsurvival.util.WandItem
 import net.coreprotect.CoreProtect
 import net.coreprotect.CoreProtectAPI
 import net.md_5.bungee.api.ChatMessageType
@@ -16,11 +19,14 @@ import org.bukkit.enchantments.Enchantment
 import org.bukkit.entity.*
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
+import org.bukkit.event.block.Action
 import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.block.BlockPlaceEvent
 import org.bukkit.event.entity.*
+import org.bukkit.event.inventory.InventoryCloseEvent
 import org.bukkit.event.player.AsyncPlayerChatEvent
 import org.bukkit.event.player.PlayerFishEvent
+import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.inventory.ItemStack
 import org.bukkit.plugin.Plugin
 import org.bukkit.potion.PotionEffect
@@ -33,6 +39,10 @@ class EventListener: Listener{
     private var lh = LevelHandler()
     private var lsm = LevelStyleManager()
     private var im = ItemManager()
+    private var de = DamageEvent()
+    private var wi = WandItem()
+    private var aa = AccessoryActive()
+    private var ar = AccessoryRefresh()
     private var blockPlacer: ArrayList<Location> = ArrayList()
 
     private fun getCoreProtect(): CoreProtectAPI? {
@@ -44,15 +54,15 @@ class EventListener: Listener{
         }
 
         // Check that the API is enabled
-        val CoreProtect = plugin.api
-        if (!CoreProtect.isEnabled) {
+        val coreProtect = plugin.api
+        if (!coreProtect.isEnabled) {
             return null
         }
 
         // Check that a compatible version of the API is loaded
-        return if (CoreProtect.APIVersion() < 7) {
+        return if (coreProtect.APIVersion() < 7) {
             null
-        } else CoreProtect
+        } else coreProtect
     }
 
     @EventHandler
@@ -138,31 +148,39 @@ class EventListener: Listener{
                     Material.TUFF -> { lh.addExp(event.player,2,7) }
                     Material.OBSIDIAN -> { lh.addExp(event.player,2,10) }
                     Material.COBBLED_DEEPSLATE -> { lh.addExp(event.player,2,6) }
-                    Material.IRON_ORE -> { lh.addExp(event.player,2,65) }
-                    Material.DEEPSLATE_IRON_ORE -> { lh.addExp(event.player,2,72) }
-                    Material.COAL_ORE -> { lh.addExp(event.player,2,45) }
-                    Material.DEEPSLATE_COAL_ORE -> { lh.addExp(event.player,2,50) }
-                    Material.GOLD_ORE -> { lh.addExp(event.player,2,450) }
-                    Material.DEEPSLATE_GOLD_ORE -> { lh.addExp(event.player,2,495) }
-                    Material.LAPIS_ORE -> { lh.addExp(event.player,2,340) }
-                    Material.DEEPSLATE_LAPIS_ORE -> { lh.addExp(event.player,2,374) }
-                    Material.REDSTONE_ORE -> { lh.addExp(event.player,2,350) }
-                    Material.DEEPSLATE_REDSTONE_ORE -> { lh.addExp(event.player,2,385) }
-                    Material.COPPER_ORE -> { lh.addExp(event.player,2,15) }
-                    Material.DEEPSLATE_COPPER_ORE -> { lh.addExp(event.player,2,18) }
-                    Material.DIAMOND_ORE -> { lh.addExp(event.player,2,2000) }
-                    Material.DEEPSLATE_DIAMOND_ORE -> { lh.addExp(event.player,2,2200) }
+                    Material.IRON_ORE -> { lh.addExp(event.player,2,68) }
+                    Material.DEEPSLATE_IRON_ORE -> { lh.addExp(event.player,2,68) }
+                    Material.COAL_ORE -> { lh.addExp(event.player,2,47) }
+                    Material.DEEPSLATE_COAL_ORE -> { lh.addExp(event.player,2,47) }
+                    Material.GOLD_ORE -> { lh.addExp(event.player,2,475) }
+                    Material.DEEPSLATE_GOLD_ORE -> { lh.addExp(event.player,2,475) }
+                    Material.LAPIS_ORE -> { lh.addExp(event.player,2,350) }
+                    Material.DEEPSLATE_LAPIS_ORE -> { lh.addExp(event.player,2,350) }
+                    Material.REDSTONE_ORE -> { lh.addExp(event.player,2,360) }
+                    Material.DEEPSLATE_REDSTONE_ORE -> { lh.addExp(event.player,2,360) }
+                    Material.COPPER_ORE -> { lh.addExp(event.player,2,20) }
+                    Material.DEEPSLATE_COPPER_ORE -> { lh.addExp(event.player,2,20) }
+                    Material.DIAMOND_ORE -> { lh.addExp(event.player,2,2100) }
+                    Material.DEEPSLATE_DIAMOND_ORE -> { lh.addExp(event.player,2,2100) }
                     Material.EMERALD_ORE -> { lh.addExp(event.player,2,5000) }
                     Material.DEEPSLATE_EMERALD_ORE -> { lh.addExp(event.player,2,5000) }
                     Material.ANCIENT_DEBRIS -> { lh.addExp(event.player,2,3000) }
-                    Material.NETHER_QUARTZ_ORE -> { lh.addExp(event.player,2,60) }
+                    Material.NETHER_QUARTZ_ORE -> { lh.addExp(event.player,2,70) }
                     Material.NETHER_GOLD_ORE -> { lh.addExp(event.player,2,37) }
-                    Material.GLOWSTONE -> { lh.addExp(event.player,2,46) }
+                    Material.GLOWSTONE -> { lh.addExp(event.player,2,77) }
                     Material.AMETHYST_BLOCK -> { lh.addExp(event.player,2,13) }
                     Material.AMETHYST_SHARD -> { lh.addExp(event.player,2,333) }
 
                     Material.SPAWNER -> { lh.addExp(event.player,1,5000) }
 
+                    Material.ACACIA_LEAVES -> { lh.addExp(event.player,3,4) }
+                    Material.BIRCH_LEAVES -> { lh.addExp(event.player,3,4) }
+                    Material.DARK_OAK_LEAVES -> { lh.addExp(event.player,3,4) }
+                    Material.OAK_LEAVES -> { lh.addExp(event.player,3,4) }
+                    Material.SPRUCE_LEAVES -> { lh.addExp(event.player,3,4) }
+                    Material.JUNGLE_LEAVES -> { lh.addExp(event.player,3,4) }
+                    Material.AZALEA_LEAVES -> { lh.addExp(event.player,3,4) }
+                    Material.FLOWERING_AZALEA_LEAVES -> { lh.addExp(event.player,3,4) }
                     Material.ACACIA_LOG -> { lh.addExp(event.player,3,128) }
                     Material.JUNGLE_LOG -> { lh.addExp(event.player,3,128) }
                     Material.OAK_LOG -> { lh.addExp(event.player,3,128) }
@@ -321,12 +339,16 @@ class EventListener: Listener{
         val levelDisplay = lsm.getLevelStyle(PlayerDataStorage.map[p + "settingLS"]!!,event.player)
         message = message.replace(":yellow_square:", "§e⬛§f")
         message = message.replace(":red_square:", "§c⬛§f")
+        message = message.replace(":green_square:", "§a⬛§f")
+        message = message.replace(":rolling_on_the_floor_laughing:", "§f:rofl:§f")
+        message = message.replace(":open_mouth:", "§eö§f")
+        message = message.replace(":heart:", "§c❤§f")
         for(player in Bukkit.getOnlinePlayers()) {
-            if (message.contains("@"+player.name)) {
+            if (message.contains(player.name)) {
                 player.playSound(player.location, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.0F)
                 message = message.replace(
-                    "@" + player.name.toRegex(),
-                    "§6@" + player.name.toRegex()+"§f")
+                    player.name.toRegex(),
+                    "§6" + player.name.toRegex()+"§f")
 
             }
         }
@@ -346,13 +368,37 @@ class EventListener: Listener{
     }
 
     @EventHandler
+    fun onInventoryClose(event: InventoryCloseEvent) {
+        ar.aRefresh(event.player as Player?)
+    }
+
+    @EventHandler
+    fun onInteract(event: PlayerInteractEvent) {
+        if (event.action == Action.RIGHT_CLICK_BLOCK || event.action == Action.RIGHT_CLICK_AIR) {
+            when (event.player.inventory.itemInMainHand.type) {
+                wi.getWandMaterial(PlayerDataStorage.map[event.player.name + "wand1"]!!) -> {
+                    aa.aaActive(event.player, 1)
+                }
+                wi.getWandMaterial(PlayerDataStorage.map[event.player.name + "wand2"]!!) -> {
+                    aa.aaActive(event.player, 2)
+                }
+                wi.getWandMaterial(PlayerDataStorage.map[event.player.name + "wand3"]!!) -> {
+                    aa.aaActive(event.player, 3)
+                }
+                else -> {
+                }
+            }
+        }
+    }
+
+    @EventHandler
     fun onDamagedByEnvironment(event: EntityDamageEvent) {
         val victim = event.entity
         if (event.cause != EntityDamageEvent.DamageCause.ENTITY_ATTACK && event.cause != EntityDamageEvent.DamageCause.PROJECTILE &&
             event.cause != EntityDamageEvent.DamageCause.ENTITY_SWEEP_ATTACK &&
             event.cause != EntityDamageEvent.DamageCause.THORNS && event.cause != EntityDamageEvent.DamageCause.ENTITY_EXPLOSION) {
             if (victim is Player) {
-                event.damage = event.damage* (0.9985.pow(PlayerDataStorage.map[victim.name + "statsDEF"]!!.toDouble()))
+                event.damage = de.victimDamageCalculate(victim,event.damage)
                 if (PlayerDataStorage.map[victim.name + "settingDI"] == 1) {
                     val indicate: String = when (event.cause) {
                         EntityDamageEvent.DamageCause.FIRE -> "불"
@@ -387,15 +433,16 @@ class EventListener: Listener{
     fun onDamaged(event: EntityDamageByEntityEvent) {
         val victim = event.entity
         val attacker = event.damager
+        event.damage = de.damageCalculate(victim,attacker,event.damage)
+        event.damage = de.victimDamageCalculate(victim,event.damage)
+        event.damage = de.execution(victim,attacker,event.finalDamage)
         if (victim is Player) {
-            event.damage = event.damage* (0.9985.pow(PlayerDataStorage.map[victim.name + "statsDEF"]!!.toDouble()))
             if (attacker is Arrow) {
                 val distance= String.format("%.2f",(attacker.shooter as Entity).location.distance(victim.location))
                 if (PlayerDataStorage.map[victim.name + "settingDI"] == 1) {
                     victim.sendMessage("§c➜ §7" + (attacker.shooter as Entity).name + "에게 §6"+distance+" 거리에서 §c" + String.format("%.2f",event.finalDamage) + "§7 피해를 받았다.")
                 }
                 if (attacker.shooter is Player) {
-                    event.damage = event.damage* (1+(PlayerDataStorage.map[(attacker.shooter as Player).name + "statsSTR"]!!.toDouble()*0.002) )
                     spawnHitParticle(attacker.shooter as Player,victim)
                     if (PlayerDataStorage.map[(attacker.shooter as Player).name + "settingDI"] == 1) {
                         (attacker.shooter as Player).sendMessage("§a➜ §7" + victim.name + "에게 §6"+distance+" 거리에서 §a" + String.format("%.2f",event.finalDamage)  + "§7 피해를 주었다.")
@@ -404,7 +451,6 @@ class EventListener: Listener{
             }
             else{
                 if (attacker is Player) {
-                    event.damage = event.damage* (1+(PlayerDataStorage.map[attacker.name + "statsSTR"]!!.toDouble()*0.002) )
                     spawnHitParticle(attacker,victim)
                 }
                 if (PlayerDataStorage.map[victim.name + "settingDI"] == 1) {
@@ -416,7 +462,6 @@ class EventListener: Listener{
             }
         }
         else if (attacker is Player) { //Victim = Entity
-            event.damage = event.damage* (1+(PlayerDataStorage.map[attacker.name + "statsSTR"]!!.toDouble()*0.002) )
             spawnHitParticle(attacker,victim)
             if (PlayerDataStorage.map[attacker.name + "settingDI"] == 1) {
                 attacker.sendMessage("§a➜ §7" + victim.name + "에게 §a" + String.format("%.2f",event.finalDamage)  + "§7 피해를 주었다.")
@@ -425,7 +470,6 @@ class EventListener: Listener{
         else if (attacker is Arrow) {
             val distance= String.format("%.2f",(attacker.shooter as Entity).location.distance(victim.location))
             if (attacker.shooter is Player) {
-                event.damage = event.damage* (1+(PlayerDataStorage.map[(attacker.shooter as Player).name + "statsSTR"]!!.toDouble()*0.002) )
                 spawnHitParticle(attacker.shooter as Player,victim)
                 if (PlayerDataStorage.map[(attacker.shooter as Player).name + "settingDI"] == 1) {
                     (attacker.shooter as Player).sendMessage("§a➜ §7" + victim.name + "에게 §6"+distance+" 거리에서 §a" + String.format("%.2f",event.finalDamage)  + "§7 피해를 주었다.")
@@ -440,9 +484,12 @@ class EventListener: Listener{
             2 -> attacker.world.spawnParticle( Particle.DRAGON_BREATH,victim.location.x,victim.location.y+1,victim.location.z,8,0.3,0.3,0.3, 0.05)
             3 -> attacker.world.spawnParticle( Particle.HEART,victim.location.x,victim.location.y+2,victim.location.z,2,0.1,0.1,0.1)
             4 -> attacker.world.spawnParticle( Particle.FLAME,victim.location.x,victim.location.y+1,victim.location.z,12,0.4,0.4,0.4,0.01)
-            5 -> attacker.world.spawnParticle( Particle.PORTAL,victim.location.x,victim.location.y+1,victim.location.z,60,0.1,0.1,0.1,0.33)
+            5 -> {
+                attacker.world.spawnParticle( Particle.PORTAL,victim.location.x,victim.location.y+1,victim.location.z,60,0.1,0.1,0.1,0.33)
+                attacker.world.spawnParticle( Particle.PORTAL,victim.location.x,victim.location.y+1,victim.location.z,60,0.5,0.5,0.5,0.0)
+            }
             6 -> attacker.world.spawnParticle( Particle.FIREWORKS_SPARK,victim.location.x,victim.location.y+1,victim.location.z,20,0.3,0.3,0.3,0.0)
-            7 -> attacker.world.spawnParticle( Particle.SNOWFLAKE,victim.location.x,victim.location.y+1,victim.location.z,20,0.2,0.5,0.2,0.0)
+            7 -> attacker.world.spawnParticle( Particle.FLASH,victim.location.x,victim.location.y+1,victim.location.z,1,0.2,0.5,0.2,0.0)
             8 -> attacker.world.spawnParticle( Particle.SOUL,victim.location.x,victim.location.y+1,victim.location.z,5,0.3,0.5,0.3,0.0)
             9 -> {
                 attacker.world.spawnParticle( Particle.BUBBLE_POP,victim.location.x,victim.location.y+1,victim.location.z,20,0.5,0.5,0.5,0.0)
@@ -457,12 +504,12 @@ class EventListener: Listener{
                 attacker.world.playSound(victim.location,Sound.ENTITY_LIGHTNING_BOLT_IMPACT,1.5F,2F)
             }
             12 -> {
-                attacker.world.spawnParticle( Particle.VILLAGER_HAPPY,victim.location.x,victim.location.y+1.5,victim.location.z,50,1.0,0.0,0.0,0.0)
-                attacker.world.spawnParticle( Particle.VILLAGER_HAPPY,victim.location.x,victim.location.y+1.5,victim.location.z,50,0.0,0.0,1.0,0.0)
+                attacker.world.spawnParticle( Particle.VILLAGER_HAPPY,victim.location.x,victim.location.y+1,victim.location.z,50,1.0,0.0,0.0,0.0)
+                attacker.world.spawnParticle( Particle.VILLAGER_HAPPY,victim.location.x,victim.location.y+1,victim.location.z,50,0.0,0.0,1.0,0.0)
                 attacker.world.playSound(victim.location,Sound.ENTITY_ENDER_DRAGON_SHOOT,1.5F,1F)
             }
             13 -> {
-                attacker.world.spawnParticle( Particle.REDSTONE,victim.location.x,victim.location.y+1.5,victim.location.z,50,0.4,0.4,0.4,1.0)
+                attacker.world.spawnParticle( Particle.REDSTONE,victim.location.x,victim.location.y+1.5,victim.location.z,0,0.4,0.4,0.4,1.0)
                 attacker.world.playSound(victim.location,Sound.BLOCK_NOTE_BLOCK_BELL,1.5F,1F)
             }
         }
@@ -480,7 +527,7 @@ class EventListener: Listener{
             val srvRate = Math.random()
             if (srvRate > (0.9965.pow(PlayerDataStorage.map[player.name + "statsSRV"]!!.toDouble()))){
                 event.isCancelled = true
-                player.health = min(player.health + 2, player.getAttribute(Attribute.GENERIC_MAX_HEALTH)!!.value)
+                player.health = min(player.health + 1, player.getAttribute(Attribute.GENERIC_MAX_HEALTH)!!.value)
             }
         }
     }
