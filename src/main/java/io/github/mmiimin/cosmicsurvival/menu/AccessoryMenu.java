@@ -44,15 +44,15 @@ public class AccessoryMenu {
         }
         inv.setItem(40,item.createItem(Material.ARROW,"§a뒤로 가기"));
         inv.setItem(43, item.createItem(Material.LIGHT, "§e[!] 장신구 등급",
-                "§7장신구 등급은 §f✦ 일반 §7< §b✦ 빛나는 §7< §e✦ 완벽한 §7순서로 업그레이드가 가능합니다",
-                "§7장신구를 제작하거나 업그레이드 할 때 자원이 소모됩니다."));
+                "§7장신구는 §f✦ 일반 §7< §b✦ 빛나는 §7< §e✦ 완벽한 §7순서로 강화가 가능합니다",
+                "§7장신구를 제작하거나 강화할 때 자원이 소모됩니다."));
         inv.setItem(44, item.createItem(Material.LIGHT, "§e[!] 완드 사용법",
                 "§7완드는 염료만을 사용할 수 있으며",
                 "§c⚡ 사용 효과§7가 있는 장신구를 장착 시",
-                "§7해당 슬롯에 해당하는 완드를 우클릭하여 효과를 발동할 수 있습니다. (아이템을 소모하지는 않습니다.)",
+                "§7해당 슬롯에 해당하는 완드를 우클릭하여 효과를 발동할 수 있습니다.",
                 "§c⚡ 사용 효과§7가 없는 장신구는 완드를 사용해도 효과가 발동하지 않습니다.",
                 "§7서버에 접속 시 완드 대기시간 60초가 기본으로 적용됩니다.",
-                "§7완드의 재사용 대기시간이 모두 끝나기 전까지는 장신구나 완드를 교체할 수 없습니다."));
+                "§7완드의 재사용 대기시간이 모두 끝나기 전까지 장신구나 완드를 교체할 수 없습니다."));
         player.openInventory(inv);
     }
 
@@ -61,7 +61,7 @@ public class AccessoryMenu {
         for (int i = 45; i < 54; i++) {
             inv.setItem(i, item.createItem(Material.BLACK_STAINED_GLASS_PANE, " "));
         }
-        for (int i = (page-1)*45; i < 8; i++) {
+        for (int i = (page-1)*45; i < 10; i++) {
             inv.setItem(i, ai.createAccessory(player,i,2));
         }
 

@@ -25,7 +25,7 @@ public class AccessoryActive {
                         player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 20 * 10 + ((accLevel - 1) * 50), accLevel + 1));
                         player.getWorld().spawnParticle(Particle.FIREWORKS_SPARK,player.getLocation().add(0,1,0),50,0.5,0.5,0.5,0.5);
                         player.playSound(player.getLocation(), Sound.BLOCK_ANVIL_USE,1F,2F);
-                        cooldown = 65 - accLevel * 5;
+                        cooldown = 70 - accLevel * 10;
                     }
                     case 2 -> {
                         player.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 20 * 2, accLevel - 1));
@@ -38,6 +38,11 @@ public class AccessoryActive {
                         player.getWorld().spawnParticle(Particle.SWEEP_ATTACK,player.getLocation().add(0,1,0),5,0.2,0.2,0.2,0.0);
                         player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP,1F,1F);
                         cooldown = 20 - accLevel * 5;
+                    }
+                    case 9 -> {
+                        player.getWorld().spawnParticle(Particle.FLAME,player.getLocation().add(0,1,0),5,0.2,0.2,0.2,0.0);
+                        player.playSound(player.getLocation(), Sound.ENTITY_BLAZE_SHOOT,1F,1F);
+                        cooldown = 56 - accLevel * 2;
                     }
                 }
                 player.setCooldown(wandItem.getWandMaterial(PlayerDataStorage.map.get(player.getName() + "wand" + slot)), 20 * cooldown);

@@ -50,6 +50,14 @@ public class AccessoryUpgrade {
                 upgradeList.add("§b○§f 다이아몬드 블록 x"+(30+50*upgrade));
                 upgradeList.add("§b○§f 빛나는 먹물 주머니 x"+(64+64*upgrade));
             }
+            case 8 -> {
+                upgradeList.add("§b○§f 엔드 막대기 x"+(64+64*upgrade));
+                upgradeList.add("§b○§f 금 블록 x"+(80+100*upgrade));
+            }
+            case 9 -> {
+                upgradeList.add("§b○§f 마그마 크림 x"+(100+110*upgrade));
+                upgradeList.add("§b○§f PIGSTEP 음반 x"+(2));
+            }
         }
         upgradeList.add("§e");
         if (upgrade==0) {
@@ -114,6 +122,18 @@ public class AccessoryUpgrade {
                 checkListAmount.add(21+upgrade*21);
                 checkListAmount.add(30+upgrade*50);
                 checkListAmount.add(64+upgrade*64);
+            }
+            case 8 -> {
+                checkListItem.add(new ItemStack(Material.END_ROD));
+                checkListItem.add(new ItemStack(Material.GOLD_BLOCK));
+                checkListAmount.add(64+upgrade*64);
+                checkListAmount.add(80+upgrade*100);
+            }
+            case 9 -> {
+                checkListItem.add(new ItemStack(Material.MAGMA_CREAM));
+                checkListItem.add(new ItemStack(Material.MUSIC_DISC_PIGSTEP));
+                checkListAmount.add(100+upgrade*110);
+                checkListAmount.add(2);
             }
         }
         for (int i=0;i<checkListItem.size();i++){

@@ -44,11 +44,11 @@ public class AccessoryItem {
                 }
                 else if (currentLevel == 2) {
                     accessoryLore.add("§7성급함 IV를 12.5초간 받습니다");
-                    accessoryLore.add("§3⌛ 재사용 대기시간: 55초");
+                    accessoryLore.add("§3⌛ 재사용 대기시간: 50초");
                 }
                 else if (currentLevel == 3) {
                     accessoryLore.add("§7성급함 V를 15초간 받습니다");
-                    accessoryLore.add("§3⌛ 재사용 대기시간: 50초");
+                    accessoryLore.add("§3⌛ 재사용 대기시간: 40초");
                 }
             }
             case 2 -> {
@@ -108,13 +108,15 @@ public class AccessoryItem {
                 accessoryLore.add("§7피해량이 추가로 "+(Math.max(1,currentLevel)*15+15)+"% 증가한다");
             }
             case 9 -> {
-                url = "33ff416aa8bec1665b92701fbe68a4effff3d06ed9147454fa77712dd6079b33";
+                url = "7717933c40fbf936aa9288513efe19bda4601efc0e4ecad2e023b0c1d28444b";
                 accessoryName = "플레임 펜던트";
-                accessoryLore.add("§7● 이동 속도 +"+Math.max(1,currentLevel)*2+"%p");
+                accessoryLore.add("§7● 불타는 엔티티에게 직접 타격 시 피해량 "+(Math.max(1,currentLevel)*5+5)+"% 증가");
                 accessoryLore.add("§7");
-                accessoryLore.add("§c⚡ 사용 효과: §f돌풍");
-                accessoryLore.add("§7보고 있는 방향으로 도약합니다");
-                accessoryLore.add("§3⌛ 재사용 대기시간: "+(20-Math.max(1,currentLevel)*5) +"초");
+                accessoryLore.add("§c⚡ 사용 효과: §f플레임 볼텍스");
+                accessoryLore.add("§71초간 정신을 집중한 뒤 주변 "+Math.max(1,currentLevel)*2+"블록 이내의 엔티티에게");
+                accessoryLore.add("§7"+(Math.max(1,currentLevel)*10+20)+"피해를 주고 불태운다");
+                accessoryLore.add("§7");
+                accessoryLore.add("§3⌛ 재사용 대기시간: "+(56-Math.max(1,currentLevel)*2) +"초");
             }
             case 10 -> {
                 url = "cfbb95502e0fd0dba60bbe5818e2fd5278eda2999cc2d78109c2ca577557a0a6";
@@ -123,7 +125,7 @@ public class AccessoryItem {
                 accessoryLore.add("§7");
                 accessoryLore.add("§c⚡ 사용 효과: §f돌풍");
                 accessoryLore.add("§7보고 있는 방향으로 도약합니다");
-                accessoryLore.add("§3⌛ 재사용 대기시간: "+(20-Math.max(1,currentLevel)*5) +"초");
+                accessoryLore.add("§3⌛ 재사용 대기시간이: "+(20-Math.max(1,currentLevel)*5) +"초");
             }
             case 80 -> {
                 url = "6b9a4dfcc7153c3176dc8cf38887d2d8385545fa4c5f8c2ff13f9d69e98e9";
