@@ -110,6 +110,11 @@ public class CosmicSurvival extends JavaPlugin implements CommandExecutor, Liste
         this.getConfig().set("Leaderboard."+player.getUniqueId() +".fi",PlayerDataStorage.map.get(p+"fishingLevel")*10000000+PlayerDataStorage.map.get(p+"fishingExp"));
         this.getConfig().set("Leaderboard."+player.getUniqueId() +".fa",PlayerDataStorage.map.get(p+"farmingLevel")*10000000+PlayerDataStorage.map.get(p+"farmingExp"));
         this.saveConfig();
+        if (Objects.equals(PlayerDataStorage.map.get(p + "wand1"), PlayerDataStorage.map.get(p + "wand2"))){
+            PlayerDataStorage.map.put(p+"wand1",0);
+            PlayerDataStorage.map.put(p+"wand2",1);
+            PlayerDataStorage.map.put(p+"wand3",2);
+        }
         db.setTokens(player,
                 PlayerDataStorage.map.get(p+"combatExp"),
                 PlayerDataStorage.map.get(p+"combatLevel"),

@@ -45,6 +45,19 @@ class DamageEvent {
             distance = (attacker.shooter as Entity).location.distance(victim.location)
             if (attacker.shooter is Player) {
                 damage *= (1 + (PlayerDataStorage.map[(attacker.shooter as Player).name + "statsSTR"]!!.toDouble() * 0.002))
+                for(i: Int in 1..3) {
+                    val accLv = PlayerDataStorage.accessory[attacker.name+(PlayerDataStorage.map[attacker.name + "accessory" + i])]!!
+                    when (PlayerDataStorage.map[attacker.name + "accessory" + i]) {
+                        8->{
+                            damage *= (1 + 0.1 * accLv + 0.1)
+                            if (distance>=30) {
+                                damage *= (1 + 0.15 * accLv + 0.15)
+                            }
+                        }
+
+
+                    }
+                }
             }
         }
 

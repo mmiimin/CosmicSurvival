@@ -83,13 +83,13 @@ public class AccessoryItem {
             }
             case 5 -> {
                 url = "d1df891f84d3cc735d3ec6f7244583377cd4d908eb6ff05c45339807180820d";
-                accessoryName = "옵시디언 팬던트";
+                accessoryName = "옵시디언 펜던트";
                 accessoryLore.add("§7● 웅크리고 있을 때 받는 피해가 "+ (Math.max(1,currentLevel)*8+8) +"% 감소한다");
             }
             case 6 -> {
                 url = "97c4036f80bf3609180c7c4a9568853fd815f154ad8438b92f3851019835b070";
                 accessoryName = "정오의 수정구";
-                accessoryLore.add("§7● 체력이 "+ (Math.max(1,currentLevel)+2)+" 이하인 엔티티를 직접 타격 시 처형합니다");
+                accessoryLore.add("§7● 체력이 "+ (Math.max(1,currentLevel)+2)+" 이하인 엔티티를 직접 타격 시 즉사시킨다");
             }
             case 7 -> {
                 url = "cfbb95502e0fd0dba60bbe5818e2fd5278eda2999cc2d78109c2ca577557a0a6";
@@ -101,6 +101,31 @@ public class AccessoryItem {
                 accessoryLore.add("§3⌛ 재사용 대기시간: "+(20-Math.max(1,currentLevel)*5) +"초");
             }
             case 8 -> {
+                url = "151599f66e83da555cf9b8b7e5a379d0deab21c2eee909d1837323db0893bf38";
+                accessoryName = "금빛 탄환";
+                accessoryLore.add("§7● 화살로 주는 피해량이 "+(Math.max(1,currentLevel)*10+10)+"% 증가한다");
+                accessoryLore.add("§7● 화살로 35블록 이상의 거리에서 피해를 줄 시");
+                accessoryLore.add("§7피해량이 추가로 "+(Math.max(1,currentLevel)*15+15)+"% 증가한다");
+            }
+            case 9 -> {
+                url = "33ff416aa8bec1665b92701fbe68a4effff3d06ed9147454fa77712dd6079b33";
+                accessoryName = "플레임 펜던트";
+                accessoryLore.add("§7● 이동 속도 +"+Math.max(1,currentLevel)*2+"%p");
+                accessoryLore.add("§7");
+                accessoryLore.add("§c⚡ 사용 효과: §f돌풍");
+                accessoryLore.add("§7보고 있는 방향으로 도약합니다");
+                accessoryLore.add("§3⌛ 재사용 대기시간: "+(20-Math.max(1,currentLevel)*5) +"초");
+            }
+            case 10 -> {
+                url = "cfbb95502e0fd0dba60bbe5818e2fd5278eda2999cc2d78109c2ca577557a0a6";
+                accessoryName = "서리바";
+                accessoryLore.add("§7● 이동 속도 +"+Math.max(1,currentLevel)*2+"%p");
+                accessoryLore.add("§7");
+                accessoryLore.add("§c⚡ 사용 효과: §f돌풍");
+                accessoryLore.add("§7보고 있는 방향으로 도약합니다");
+                accessoryLore.add("§3⌛ 재사용 대기시간: "+(20-Math.max(1,currentLevel)*5) +"초");
+            }
+            case 80 -> {
                 url = "6b9a4dfcc7153c3176dc8cf38887d2d8385545fa4c5f8c2ff13f9d69e98e9";
                 accessoryName = "금빛 타래";
                 accessoryLore.add("§7");

@@ -20,8 +20,8 @@ public class AccessoryUpgrade {
         List<String> upgradeList = new ArrayList<>();
         switch (code) {
             case 1 -> {
-                upgradeList.add("§b○§f 네더의 별 x1");
-                upgradeList.add("§b○§f 전달체 x1");
+                upgradeList.add("§b○§f 네더의 별 x"+(2+upgrade));
+                upgradeList.add("§b○§f 전달체 x"+(2+upgrade));
                 upgradeList.add("§b○§f 석탄 블록 x"+(128+upgrade*128));
             }
             case 2 -> {
@@ -71,8 +71,8 @@ public class AccessoryUpgrade {
                 checkListItem.add(new ItemStack(Material.NETHER_STAR));
                 checkListItem.add(new ItemStack(Material.CONDUIT));
                 checkListItem.add(new ItemStack(Material.COAL_BLOCK));
-                checkListAmount.add(1);
-                checkListAmount.add(1);
+                checkListAmount.add(2+upgrade);
+                checkListAmount.add(2+upgrade);
                 checkListAmount.add(128+upgrade*128);
             }
             case 2 -> {
