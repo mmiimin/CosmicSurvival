@@ -61,7 +61,7 @@ public class AccessoryMenu {
         for (int i = 45; i < 54; i++) {
             inv.setItem(i, item.createItem(Material.BLACK_STAINED_GLASS_PANE, " "));
         }
-        for (int i = (page-1)*45; i < 10; i++) {
+        for (int i = (page-1)*45; i < 11; i++) {
             inv.setItem(i, ai.createAccessory(player,i,2));
         }
 

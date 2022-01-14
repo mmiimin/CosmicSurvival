@@ -207,10 +207,6 @@ public class CosmeticMenu {
                     "§8HitSound♪",
                     "",
                     checkLevel(105,player)));
-            inv.setItem(25, item.createItem(item.createSkull("http://textures.minecraft.net/texture/7be7545297dfd6266bbaa2051825e8879cbfa42c7e7e24e50796f27ca6a18"), "§c무§6지§a개",
-                    "§8HitSound♪",
-                    "",
-                    checkLevel(115,player)));
         }
         else if (page == 2) {
 

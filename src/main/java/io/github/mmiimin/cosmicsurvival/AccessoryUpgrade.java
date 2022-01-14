@@ -20,43 +20,48 @@ public class AccessoryUpgrade {
         List<String> upgradeList = new ArrayList<>();
         switch (code) {
             case 1 -> {
-                upgradeList.add("§b○§f 네더의 별 x"+(2+upgrade));
-                upgradeList.add("§b○§f 전달체 x"+(2+upgrade));
-                upgradeList.add("§b○§f 석탄 블록 x"+(128+upgrade*128));
+                upgradeList.add("§b○§f 네더의 별 x"+(2));
+                upgradeList.add("§b○§f 전달체 x"+(2));
+                upgradeList.add("§b○§f 석탄 블록 x"+(128+upgrade*64));
             }
             case 2 -> {
-                upgradeList.add("§b○§f 황금 사과 x"+(64+upgrade*96));
+                upgradeList.add("§b○§f 황금 사과 x"+(64+upgrade*32));
                 upgradeList.add("§b○§f 꿀 블록 x"+(32+upgrade*16));
             }
             case 3 -> {
-                upgradeList.add("§b○§f 네더라이트 주괴 x"+(20+25*upgrade));
-                upgradeList.add("§b○§f 금 블록 x"+(100+upgrade*120));
+                upgradeList.add("§b○§f 네더라이트 주괴 x"+(20+10*upgrade));
+                upgradeList.add("§b○§f 금 블록 x"+(80+upgrade*40));
             }
             case 4 -> {
-                upgradeList.add("§b○§f 바다 랜턴 x"+(64+64*upgrade));
-                upgradeList.add("§b○§f 다이아몬드 x"+(100+upgrade*150));
+                upgradeList.add("§b○§f 바다 랜턴 x"+(64+40*upgrade));
+                upgradeList.add("§b○§f 다이아몬드 x"+(100+upgrade*50));
                 upgradeList.add("§b○§f 푸른 얼음 x"+(96+upgrade*64));
             }
             case 5 -> {
-                upgradeList.add("§b○§f 리스폰 정박기 x"+(48+48*upgrade));
-                upgradeList.add("§b○§f 네더라이트 블록 x"+(4+4*upgrade));
+                upgradeList.add("§b○§f 리스폰 정박기 x"+(32+32*upgrade));
+                upgradeList.add("§b○§f 네더라이트 블록 x"+(4+upgrade));
             }
             case 6 -> {
                 upgradeList.add("§b○§f 자수정 블록 x"+(256+256*upgrade));
-                upgradeList.add("§b○§f 네더라이트 블록 x"+(3+4*upgrade));
+                upgradeList.add("§b○§f 네더라이트 블록 x"+(3+ upgrade));
             }
             case 7 -> {
-                upgradeList.add("§b○§f 에메랄드 광석 x"+(21+21*upgrade));
-                upgradeList.add("§b○§f 다이아몬드 블록 x"+(30+50*upgrade));
-                upgradeList.add("§b○§f 빛나는 먹물 주머니 x"+(64+64*upgrade));
+                upgradeList.add("§b○§f 에메랄드 광석 x"+(21+11*upgrade));
+                upgradeList.add("§b○§f 다이아몬드 블록 x"+(30+20*upgrade));
+                upgradeList.add("§b○§f 빛나는 먹물 주머니 x"+(64+32*upgrade));
             }
             case 8 -> {
                 upgradeList.add("§b○§f 엔드 막대기 x"+(64+64*upgrade));
                 upgradeList.add("§b○§f 금 블록 x"+(80+100*upgrade));
             }
             case 9 -> {
-                upgradeList.add("§b○§f 마그마 크림 x"+(100+110*upgrade));
-                upgradeList.add("§b○§f PIGSTEP 음반 x"+(2));
+                upgradeList.add("§b○§f 마그마 크림 x"+(100+50*upgrade));
+                upgradeList.add("§b○§f PIGSTEP 음반 x"+(1));
+            }
+            case 10 -> {
+                upgradeList.add("§b○§f 빨간색 염료 x"+(20));
+                upgradeList.add("§b○§f 바다의 심장 x"+(1));
+                upgradeList.add("§b○§f 안산암 x"+(20));
             }
         }
         upgradeList.add("§e");
@@ -79,49 +84,49 @@ public class AccessoryUpgrade {
                 checkListItem.add(new ItemStack(Material.NETHER_STAR));
                 checkListItem.add(new ItemStack(Material.CONDUIT));
                 checkListItem.add(new ItemStack(Material.COAL_BLOCK));
-                checkListAmount.add(2+upgrade);
-                checkListAmount.add(2+upgrade);
-                checkListAmount.add(128+upgrade*128);
+                checkListAmount.add(2);
+                checkListAmount.add(2);
+                checkListAmount.add(128+upgrade*64);
             }
             case 2 -> {
                 checkListItem.add(new ItemStack(Material.GOLDEN_APPLE));
                 checkListItem.add(new ItemStack(Material.HONEY_BLOCK));
-                checkListAmount.add(64+upgrade*96);
+                checkListAmount.add(64+upgrade*32);
                 checkListAmount.add(32+upgrade*16);
             }
             case 3 -> {
                 checkListItem.add(new ItemStack(Material.NETHERITE_INGOT));
                 checkListItem.add(new ItemStack(Material.GOLD_BLOCK));
-                checkListAmount.add(20+upgrade*25);
-                checkListAmount.add(100+upgrade*120);
+                checkListAmount.add(20+upgrade*10);
+                checkListAmount.add(80+upgrade*40);
             }
             case 4 -> {
                 checkListItem.add(new ItemStack(Material.SEA_LANTERN));
                 checkListItem.add(new ItemStack(Material.DIAMOND));
                 checkListItem.add(new ItemStack(Material.BLUE_ICE));
-                checkListAmount.add(64+upgrade*64);
-                checkListAmount.add(100+upgrade*150);
+                checkListAmount.add(64+upgrade*40);
+                checkListAmount.add(100+upgrade*50);
                 checkListAmount.add(96+upgrade*64);
             }
             case 5 -> {
                 checkListItem.add(new ItemStack(Material.RESPAWN_ANCHOR));
                 checkListItem.add(new ItemStack(Material.NETHERITE_BLOCK));
-                checkListAmount.add(64+upgrade*64);
-                checkListAmount.add(4+4*upgrade);
+                checkListAmount.add(32+upgrade*32);
+                checkListAmount.add(4+upgrade);
             }
             case 6 -> {
                 checkListItem.add(new ItemStack(Material.NETHERITE_BLOCK));
                 checkListItem.add(new ItemStack(Material.AMETHYST_BLOCK));
-                checkListAmount.add(3+4*upgrade);
+                checkListAmount.add(3+upgrade);
                 checkListAmount.add(256+upgrade*256);
             }
             case 7 -> {
                 checkListItem.add(new ItemStack(Material.EMERALD_ORE));
                 checkListItem.add(new ItemStack(Material.DIAMOND_BLOCK));
                 checkListItem.add(new ItemStack(Material.GLOW_INK_SAC));
-                checkListAmount.add(21+upgrade*21);
-                checkListAmount.add(30+upgrade*50);
-                checkListAmount.add(64+upgrade*64);
+                checkListAmount.add(21+upgrade*11);
+                checkListAmount.add(30+upgrade*20);
+                checkListAmount.add(64+upgrade*32);
             }
             case 8 -> {
                 checkListItem.add(new ItemStack(Material.END_ROD));
@@ -132,8 +137,16 @@ public class AccessoryUpgrade {
             case 9 -> {
                 checkListItem.add(new ItemStack(Material.MAGMA_CREAM));
                 checkListItem.add(new ItemStack(Material.MUSIC_DISC_PIGSTEP));
-                checkListAmount.add(100+upgrade*110);
-                checkListAmount.add(2);
+                checkListAmount.add(100+upgrade*50);
+                checkListAmount.add(1);
+            }
+            case 10 -> {
+                checkListItem.add(new ItemStack(Material.RED_DYE));
+                checkListItem.add(new ItemStack(Material.ANDESITE));
+                checkListItem.add(new ItemStack(Material.HEART_OF_THE_SEA));
+                checkListAmount.add(20);
+                checkListAmount.add(20);
+                checkListAmount.add(1);
             }
         }
         for (int i=0;i<checkListItem.size();i++){

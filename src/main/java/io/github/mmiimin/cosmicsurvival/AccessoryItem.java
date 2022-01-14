@@ -39,36 +39,34 @@ public class AccessoryItem {
                 accessoryName = "미니 티타늄 드릴";
                 accessoryLore.add("§c⚡ 사용 효과: §f메가 드릴");
                 if (currentLevel <= 1) {
-                    accessoryLore.add("§7성급함 III를 10초간 받습니다");
-                    accessoryLore.add("§3⌛ 재사용 대기시간: 60초");
+                    accessoryLore.add("§7성급함 VI를 10초간 받습니다");
                 }
                 else if (currentLevel == 2) {
-                    accessoryLore.add("§7성급함 IV를 12.5초간 받습니다");
-                    accessoryLore.add("§3⌛ 재사용 대기시간: 50초");
+                    accessoryLore.add("§7성급함 VIII를 12.5초간 받습니다");
                 }
                 else if (currentLevel == 3) {
-                    accessoryLore.add("§7성급함 V를 15초간 받습니다");
-                    accessoryLore.add("§3⌛ 재사용 대기시간: 40초");
+                    accessoryLore.add("§7성급함 X를 15초간 받습니다");
                 }
+                accessoryLore.add("§7");
+                accessoryLore.add("§3⌛ 재사용 대기시간: "+ (70-Math.max(1,currentLevel)*10) +"초");
             }
             case 2 -> {
                 url = "56311387e750bf67b5c8720df8327d20ad7854412b563bf1ed8a49c9cc2024";
                 accessoryName = "황금 반지";
                 accessoryLore.add("§7● 최대 체력 +"+ Math.max(1,currentLevel));
                 accessoryLore.add("§7");
-                accessoryLore.add("§c⚡ 사용 효과: §f로얄 실드");
+                accessoryLore.add("§c⚡ 사용 효과: §f로얄 가드");
                 if (currentLevel <= 1) {
-                    accessoryLore.add("§7흡수 I을 2초간 받습니다");
-                    accessoryLore.add("§3⌛ 재사용 대기시간: 20초");
+                    accessoryLore.add("§7저항 II을 0.3초간 받습니다");
                 }
                 else if (currentLevel == 2) {
-                    accessoryLore.add("§7흡수 II를 2초간 받습니다");
-                    accessoryLore.add("§3⌛ 재사용 대기시간: 17초");
+                    accessoryLore.add("§7저항 II를 0.5초간 받습니다");
                 }
                 else if (currentLevel == 3) {
-                    accessoryLore.add("§7흡수 III를 2초간 받습니다");
-                    accessoryLore.add("§3⌛ 재사용 대기시간: 14초");
+                    accessoryLore.add("§7저항 III를 0.5초간 받습니다");
                 }
+                accessoryLore.add("§7");
+                accessoryLore.add("§3⌛ 재사용 대기시간: "+ (23-Math.max(1,currentLevel)*3) +"초");
             }
             case 3 -> {
                 url = "da8524274a65d8a80a0f44e103e2021e27c8916e965aa11f665ac0c49be40ec6";
@@ -89,7 +87,7 @@ public class AccessoryItem {
             case 6 -> {
                 url = "97c4036f80bf3609180c7c4a9568853fd815f154ad8438b92f3851019835b070";
                 accessoryName = "정오의 수정구";
-                accessoryLore.add("§7● 체력이 "+ (Math.max(1,currentLevel)+2)+" 이하인 엔티티를 직접 타격 시 즉사시킨다");
+                accessoryLore.add("§7● 현재 체력이 "+ (Math.max(1,currentLevel)+2)+" 이하인 엔티티를 직접 타격 시 즉사시킨다");
             }
             case 7 -> {
                 url = "cfbb95502e0fd0dba60bbe5818e2fd5278eda2999cc2d78109c2ca577557a0a6";
@@ -98,6 +96,7 @@ public class AccessoryItem {
                 accessoryLore.add("§7");
                 accessoryLore.add("§c⚡ 사용 효과: §f돌풍");
                 accessoryLore.add("§7보고 있는 방향으로 도약합니다");
+                accessoryLore.add("§7");
                 accessoryLore.add("§3⌛ 재사용 대기시간: "+(20-Math.max(1,currentLevel)*5) +"초");
             }
             case 8 -> {
@@ -113,19 +112,29 @@ public class AccessoryItem {
                 accessoryLore.add("§7● 불타는 엔티티에게 직접 타격 시 피해량 "+(Math.max(1,currentLevel)*5+5)+"% 증가");
                 accessoryLore.add("§7");
                 accessoryLore.add("§c⚡ 사용 효과: §f플레임 볼텍스");
-                accessoryLore.add("§71초간 정신을 집중한 뒤 주변 "+Math.max(1,currentLevel)*2+"블록 이내의 엔티티에게");
-                accessoryLore.add("§7"+(Math.max(1,currentLevel)*10+20)+"피해를 주고 불태운다");
+                accessoryLore.add("§71초간 정신을 집중한 뒤 주변 "+(Math.max(1,currentLevel)+3)+"블록 이내의 엔티티를");
+                accessoryLore.add("§7불태우고 공중에 띄운 뒤 낙하시키며 이동속도를 감소시킵니다");
+                accessoryLore.add("§7자신은 신속 I을 "+(Math.max(1,currentLevel)+5)+"초간 받습니다");
                 accessoryLore.add("§7");
-                accessoryLore.add("§3⌛ 재사용 대기시간: "+(56-Math.max(1,currentLevel)*2) +"초");
+                accessoryLore.add("§3⌛ 재사용 대기시간: "+(34-Math.max(1,currentLevel)*4) +"초");
             }
             case 10 -> {
+                url = "59d9b327ff82f6e109b8746c48bfb7f641e1552855493dd4118be24d5b02bc0a";
+                accessoryName = "루비 반지";
+                accessoryLore.add("§7● 최대 체력 +"+ (Math.max(1,currentLevel)));
+                accessoryLore.add("§7");
+                accessoryLore.add("§c⚡ 사용 효과: §f힐링 레인");
+                accessoryLore.add("§7자신의 5칸 앞에 즉시 회복 포션을 소환합니다");
+                accessoryLore.add("§3⌛ 재사용 대기시간: "+(11-Math.max(1,currentLevel)) +"초");
+            }
+            case 11 -> {
                 url = "cfbb95502e0fd0dba60bbe5818e2fd5278eda2999cc2d78109c2ca577557a0a6";
-                accessoryName = "서리바";
+                accessoryName = "루비 반a지";
                 accessoryLore.add("§7● 이동 속도 +"+Math.max(1,currentLevel)*2+"%p");
                 accessoryLore.add("§7");
-                accessoryLore.add("§c⚡ 사용 효과: §f돌풍");
-                accessoryLore.add("§7보고 있는 방향으로 도약합니다");
-                accessoryLore.add("§3⌛ 재사용 대기시간이: "+(20-Math.max(1,currentLevel)*5) +"초");
+                accessoryLore.add("§c⚡ 사용 효과: §faa");
+                accessoryLore.add("§7보asda약합니다");
+                accessoryLore.add("§3⌛ 재사용 대기시간: "+(20-Math.max(1,currentLevel)*15) +"초");
             }
             case 80 -> {
                 url = "6b9a4dfcc7153c3176dc8cf38887d2d8385545fa4c5f8c2ff13f9d69e98e9";

@@ -433,9 +433,13 @@ class EventListener: Listener{
     fun onDamaged(event: EntityDamageByEntityEvent) {
         val victim = event.entity
         val attacker = event.damager
-        event.damage = de.damageCalculate(victim,attacker,event.damage)
-        event.damage = de.victimDamageCalculate(victim,event.damage)
-        event.damage = de.execution(victim,attacker,event.finalDamage)
+        if (victim is LivingEntity) {
+            if (victim.absorptionAmount == 0.0) {
+                event.damage = de.damageCalculate(victim, attacker, event.damage)
+                event.damage = de.victimDamageCalculate(victim, event.damage)
+                event.damage = de.execution(victim, attacker, event.finalDamage)
+            }
+        }
         if (victim is Player) {
             if (attacker is Arrow) {
                 val distance= String.format("%.2f",(attacker.shooter as Entity).location.distance(victim.location))
