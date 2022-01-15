@@ -60,7 +60,7 @@ public class AccessoryUpgrade {
             }
             case 10 -> {
                 upgradeList.add("§b○§f 빨간색 염료 x"+(20));
-                upgradeList.add("§b○§f 바다의 심장 x"+(1));
+                upgradeList.add("§b○§f 용의 숨결 x"+(64));
                 upgradeList.add("§b○§f 안산암 x"+(20));
             }
         }
@@ -143,10 +143,10 @@ public class AccessoryUpgrade {
             case 10 -> {
                 checkListItem.add(new ItemStack(Material.RED_DYE));
                 checkListItem.add(new ItemStack(Material.ANDESITE));
-                checkListItem.add(new ItemStack(Material.HEART_OF_THE_SEA));
+                checkListItem.add(new ItemStack(Material.DRAGON_BREATH));
                 checkListAmount.add(20);
                 checkListAmount.add(20);
-                checkListAmount.add(1);
+                checkListAmount.add(64);
             }
         }
         for (int i=0;i<checkListItem.size();i++){

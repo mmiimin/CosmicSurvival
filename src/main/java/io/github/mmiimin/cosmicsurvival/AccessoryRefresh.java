@@ -14,12 +14,12 @@ public class AccessoryRefresh {
         for (int i=1;i<4;i++) {
             int accLv=PlayerDataStorage.accessory.get(player.getName()+PlayerDataStorage.map.get(player.getName() + "accessory" + i));
             switch (PlayerDataStorage.map.get(player.getName() + "accessory" + i)){
-                case 2, 10 ->{
+                case 10 ->{
                     if (accLv>=1) {
                         health += accLv;
                     }
                 }
-                case 3->{
+                case 2, 3->{
                     if (accLv>=1) {
                         health += accLv+1;
                     }

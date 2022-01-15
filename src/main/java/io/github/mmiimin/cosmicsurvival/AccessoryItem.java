@@ -53,7 +53,7 @@ public class AccessoryItem {
             case 2 -> {
                 url = "56311387e750bf67b5c8720df8327d20ad7854412b563bf1ed8a49c9cc2024";
                 accessoryName = "황금 반지";
-                accessoryLore.add("§7● 최대 체력 +"+ Math.max(1,currentLevel));
+                accessoryLore.add("§7● 최대 체력 +"+ (Math.max(1,currentLevel)+1));
                 accessoryLore.add("§7");
                 accessoryLore.add("§c⚡ 사용 효과: §f로얄 가드");
                 if (currentLevel <= 1) {
