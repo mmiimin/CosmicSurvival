@@ -1,5 +1,6 @@
 package io.github.mmiimin.cosmicsurvival
 
+import io.github.mmiimin.cosmicsurvival.util.NumberConvert
 import io.github.mmiimin.cosmicsurvival.util.PlayerDataStorage
 import net.md_5.bungee.api.ChatColor
 import org.bukkit.entity.Player
@@ -22,7 +23,7 @@ class LevelStyleManager {
             8 -> ""+ChatColor.of("#DBC8B2") + "[" + ChatColor.of("#AE8A66") + level + "❋" + ChatColor.of("#DBC8B2") + "]" //CaffeLatte
             9 -> ""+ChatColor.of("#4D484D") + "[" + ChatColor.of("#59575A") + level + "❋" + ChatColor.of("#4D484D") + "]" //Netherite
             10 -> ""+ChatColor.of("#1C7E6D") + "[" + ChatColor.of("#30CAAE") + level + "★" + ChatColor.of("#1C7E6D") + "]" //Pearl
-            11 -> ""+ChatColor.of("#FEF7E1") + "[" + level + ChatColor.of("#EB4540") + "❋" + ChatColor.of("#FEF7E1") + "]" //StrawberryCake
+            11 -> ""+ChatColor.of("#EB4540") + "[" + ChatColor.of("#FEF7E1") + level +  "❋" + ChatColor.of("#EB4540") + "]" //StrawberryCake
             12 -> {
                 val stringBuilder = StringBuilder()
                 val rainbowList = "§c§6§e§a§b§9§c§6§e§a§b§9".chunked(2)
@@ -36,16 +37,7 @@ class LevelStyleManager {
             13 -> ""+ChatColor.of("#86DDFF") + "[" + ChatColor.of("#2DA1FE") + level + ChatColor.of("#4F78FE") + "☽" + ChatColor.of("#374EEE") + "]" //Zenith
             14 -> ""+ChatColor.of("#FFE737") + "[" + ChatColor.of("#FFF07F") + level + ChatColor.of("#ADFCFF") + "✵" + ChatColor.of("#FFF5AD") + "]" //Luxury
             15 -> {//１２３４５６７８９０
-                val str = level.toString().replace("1", "I")
-                    .replace("2", "II")
-                    .replace("3", "III")
-                    .replace("4", "IV")
-                    .replace("5", "V")
-                    .replace("6", "VI")
-                    .replace("7", "VII")
-                    .replace("8", "VIII")
-                    .replace("9", "IX")
-                    .replace("0", "X")
+                val str = NumberConvert.toRoman(level)
                 "" + ChatColor.of("#98B2BF") + "[" + ChatColor.of("#F1EFD6") + str + "⚝" + ChatColor.of("#98B2BF") + "]"
             }//Modern
             16 -> ""+ChatColor.of("#E4FFC5") + "[" + ChatColor.of("#FFD5C5") + level + ChatColor.of("#FDFFC5") + "✵" + ChatColor.of("#E4FFC5") + "]" //Nature
@@ -60,7 +52,7 @@ class LevelStyleManager {
                 stringBuilder.toString()
             } //Christmas
             18 -> ""+ChatColor.of("#2E2D00") + "[" + ChatColor.of("#FFFFFF") + level + ChatColor.of("#FFFB00") + "☽" + ChatColor.of("#2E2D00") + "]" //Moonlight
-            19 -> {//１２３４５６７８９０
+            19 -> {
                 val str = level.toString().replace("1", "§c♪")
                     .replace("6", "§b♪")
                     .replace("9", "§d♪")
@@ -73,18 +65,8 @@ class LevelStyleManager {
                     .replace("0", "§4♪")
                 "" + ChatColor.of("#725D4B") + "[" + str + "§f♪" + ChatColor.of("#725D4B") + "]"
             }//NoteBlock
-            20 -> {//１２３４５６７８９０
-
-                val str = level.toString().replace("1", "I")
-                    .replace("2", "II")
-                    .replace("3", "III")
-                    .replace("4", "IV")
-                    .replace("5", "V")
-                    .replace("6", "VI")
-                    .replace("7", "VII")
-                    .replace("8", "VIII")
-                    .replace("9", "IX")
-                    .replace("0", "X")
+            20 -> {
+                val str = NumberConvert.toRoman(level)
 
                 val stringBuilder = StringBuilder()
                 val rainbowList = "§c§6§e§a§b§9§c§6§e§a§b§9".chunked(2)
@@ -94,8 +76,8 @@ class LevelStyleManager {
                     stringBuilder.append(everySplit[i])
                 }
                 stringBuilder.toString()
-
             }//RModern
+            21 -> ""+ChatColor.of("#A1FFFB") + "§k|" + ChatColor.of("#C9FFFD") + level + ChatColor.of("#E5FFFE") + "★" + ChatColor.of("#FFFFFF") + "§k|" //WhiteNoise
             else -> "§4ERROR (code:$code)"
         }
 

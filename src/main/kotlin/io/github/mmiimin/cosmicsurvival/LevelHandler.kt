@@ -60,7 +60,14 @@ class LevelHandler {
                     else -> "X"
                 }
                 Bukkit.broadcastMessage("§e↑ " + player.name+"§f님이 "+ icon + " §e" + PlayerDataStorage.map[player.name + codex + "Level"]+"레벨§f을 달성했습니다!")
+                player.sendMessage("§e❖ 스텟 포인트 +1")
                 addExp(player,code,0)
+                if (PlayerDataStorage.map[player.name + codex + "Level"] == 50){
+                    player.playSound(player.location,Sound.UI_TOAST_CHALLENGE_COMPLETE,1.0F,1.0F)
+                    player.sendTitle("§e축하합니다! " + icon + " §b" + PlayerDataStorage.map[player.name + codex + "Level"]+"레벨","§f최고 레벨 달성",20,120,120)
+                    player.sendMessage("§e❖ 추가 스텟 포인트 +10")
+                    PlayerDataStorage.map[player.name + "statsPoint"] = PlayerDataStorage.map[player.name + "statsPoint"]!! + 10
+                }
             }
             else{
             message = hi + " §b(+" + amount + ") " + fi.repeat(((PlayerDataStorage.map[player.name + codex + "Exp"]!! /((PlayerDataStorage.map[player.name + codex + "Level"]!!).toFloat()*10000+10000))*50).toInt())+

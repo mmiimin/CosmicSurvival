@@ -51,15 +51,13 @@ class DamageEvent {
                 damage *= (1 + (PlayerDataStorage.map[(attacker.shooter as Player).name + "statsSTR"]!!.toDouble() * 0.002))
                 for(i: Int in 1..3) {
                     val accLv = PlayerDataStorage.accessory[(attacker.shooter as Player).name+(PlayerDataStorage.map[(attacker.shooter as Player).name + "accessory" + i])]!!
-                    when (PlayerDataStorage.map[attacker.name + "accessory" + i]) {
+                    when (PlayerDataStorage.map[(attacker.shooter as Player).name + "accessory" + i]) {
                         8->{
-                            damage *= (1 + 0.1 * accLv + 0.1)
+                            damage *= (1 + 0.15 * accLv + 0.05)
                             if (distance>=30) {
-                                damage *= (1 + 0.15 * accLv + 0.15)
+                                damage *= (1 + 0.3 * accLv + 0.1)
                             }
                         }
-
-
                     }
                 }
             }

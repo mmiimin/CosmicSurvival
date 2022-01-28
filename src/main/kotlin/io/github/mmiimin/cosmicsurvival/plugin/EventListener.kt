@@ -72,6 +72,7 @@ class EventListener: Listener{
         if (attacker is Player) {
             if (attacker.world.name == "world" || attacker.world.name == "world_nether" || attacker.world.name == "world_the_end" ){
                 when (victim) {
+                    is PigZombie -> {lh.addExp(attacker,1,5)}
                     is Zombie -> {lh.addExp(attacker,1,150)}
                     is Skeleton -> {lh.addExp(attacker,1,175)}
                     is Creeper -> {lh.addExp(attacker,1,250)}
@@ -85,7 +86,6 @@ class EventListener: Listener{
                     is Zoglin -> {lh.addExp(attacker,1,660)}
                     is Phantom -> {lh.addExp(attacker,1,1450)}
                     is Hoglin -> {lh.addExp(attacker,1,700)}
-                    is PigZombie -> {lh.addExp(attacker,1,40)}
                     is Piglin -> {lh.addExp(attacker,1,455)}
                     is PiglinBrute -> {lh.addExp(attacker,1,650)}
                     is Evoker -> {lh.addExp(attacker,1,600)}
@@ -340,9 +340,15 @@ class EventListener: Listener{
         message = message.replace(":yellow_square:", "§e⬛§f")
         message = message.replace(":red_square:", "§c⬛§f")
         message = message.replace(":green_square:", "§a⬛§f")
-        message = message.replace(":rolling_on_the_floor_laughing:", "§f:rofl:§f")
         message = message.replace(":open_mouth:", "§eö§f")
         message = message.replace(":heart:", "§c❤§f")
+        message = message.replace(":accept:", "§2✔§f")
+        message = message.replace(":deny:", "§4❌§f")
+        message = message.replace(":question:", "§c§l?§f")
+        message = message.replace(":exclamation:", "§c§l!§f")
+        message = message.replace(":interrobang:", "§c§l!?§f")
+        message = message.replace(":bangbang:", "§c§l!!§f")
+        message = message.replace(":python:", "§1┛§e┏§f")
         for(player in Bukkit.getOnlinePlayers()) {
             if (message.contains(player.name)) {
                 player.playSound(player.location, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.0F)
@@ -512,10 +518,6 @@ class EventListener: Listener{
                 attacker.world.spawnParticle( Particle.VILLAGER_HAPPY,victim.location.x,victim.location.y+1,victim.location.z,50,0.0,0.0,1.0,0.0)
                 attacker.world.playSound(victim.location,Sound.ENTITY_ENDER_DRAGON_SHOOT,1.5F,1F)
             }
-            13 -> {
-                attacker.world.spawnParticle( Particle.REDSTONE,victim.location.x,victim.location.y+1.5,victim.location.z,0,0.4,0.4,0.4,1.0)
-                attacker.world.playSound(victim.location,Sound.BLOCK_NOTE_BLOCK_BELL,1.5F,1F)
-            }
         }
     }
 
@@ -541,7 +543,7 @@ class EventListener: Listener{
         if (event.state == PlayerFishEvent.State.CAUGHT_FISH) {
             var waterCount=0
             for(x: Int in -2..2) {
-                for(y: Int in 2..3) {
+                for(y: Int in 1..2) {
                     for(z: Int in -2..2) {
                         if (event.player.world.getBlockAt(event.hook.location.blockX+x,event.hook.location.blockY-y,event.hook.location.blockZ+z).type == Material.WATER){
                             waterCount += 1
@@ -549,7 +551,7 @@ class EventListener: Listener{
                     }
                 }
             }
-            if (waterCount<45){
+            if (waterCount<50){
                 if (event.caught is Item){
                     val rate = "§7§lCOMMON"
                     val caught: String
@@ -572,9 +574,9 @@ class EventListener: Listener{
                         caught = "유리병"
                     }
                     event.player.sendMessage("$rate §f$caught 을(를) 낚았다.")
-                    event.player.sendMessage("§c[!] 낚시 위치가 좋지 않습니다. 물이 많은 곳으로 이동하세요 §8(위치 점수: "+(waterCount*2)+"/100)")
+                    event.player.sendMessage("§c[!] 낚시 위치가 좋지 않습니다. 물이 많은 곳으로 이동하세요 §7(위치 점수: "+(waterCount*2)+"/100)")
                     event.player.playSound(event.player.location,Sound.BLOCK_NOTE_BLOCK_BASS,1.0F,0.5F)
-                    event.player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent("§a[!] 위치 점수가 90점 이상일 때만 낚시가 가능합니다"))
+                    event.player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent("§a[!] 위치 점수가 100점일 때만 낚시가 가능합니다"))
                 }
             }
             else{

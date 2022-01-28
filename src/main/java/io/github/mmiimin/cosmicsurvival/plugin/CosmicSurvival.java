@@ -64,8 +64,10 @@ public class CosmicSurvival extends JavaPlugin implements CommandExecutor, Liste
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (sender instanceof Player player) {
-            menu.openMainProfile(player);
-            saveAll(player);
+            if (command.getName().equals("menu") || command.getName().equals("profile")) {
+                menu.openMainProfile(player);
+                saveAll(player);
+            }
         }
         else{
             sender.sendMessage("Cannot open GUI menu");

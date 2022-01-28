@@ -16,7 +16,7 @@ public class AccessoryRefresh {
             switch (PlayerDataStorage.map.get(player.getName() + "accessory" + i)){
                 case 10 ->{
                     if (accLv>=1) {
-                        health += accLv;
+                        health += accLv-1;
                     }
                 }
                 case 2, 3->{

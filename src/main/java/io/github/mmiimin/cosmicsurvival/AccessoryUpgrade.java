@@ -52,7 +52,7 @@ public class AccessoryUpgrade {
             }
             case 8 -> {
                 upgradeList.add("§b○§f 엔드 막대기 x"+(64+64*upgrade));
-                upgradeList.add("§b○§f 금 블록 x"+(80+100*upgrade));
+                upgradeList.add("§b○§f 금 블록 x"+(80+40*upgrade));
             }
             case 9 -> {
                 upgradeList.add("§b○§f 마그마 크림 x"+(100+50*upgrade));
@@ -62,6 +62,12 @@ public class AccessoryUpgrade {
                 upgradeList.add("§b○§f 빨간색 염료 x"+(20));
                 upgradeList.add("§b○§f 용의 숨결 x"+(64));
                 upgradeList.add("§b○§f 안산암 x"+(20));
+            }
+            case 11 -> {
+                upgradeList.add("§b○§f 네더의 별 x"+(2));
+                upgradeList.add("§b○§f 금 블록 x"+(120+60*upgrade));
+                upgradeList.add("§b○§f 다이아몬드 x"+(350+130*upgrade));
+                upgradeList.add("§b○§f 가스트의 눈물 x"+(48+16*upgrade));
             }
         }
         upgradeList.add("§e");
@@ -132,7 +138,7 @@ public class AccessoryUpgrade {
                 checkListItem.add(new ItemStack(Material.END_ROD));
                 checkListItem.add(new ItemStack(Material.GOLD_BLOCK));
                 checkListAmount.add(64+upgrade*64);
-                checkListAmount.add(80+upgrade*100);
+                checkListAmount.add(80+upgrade*40);
             }
             case 9 -> {
                 checkListItem.add(new ItemStack(Material.MAGMA_CREAM));
@@ -147,6 +153,16 @@ public class AccessoryUpgrade {
                 checkListAmount.add(20);
                 checkListAmount.add(20);
                 checkListAmount.add(64);
+            }
+            case 11 -> {
+                checkListItem.add(new ItemStack(Material.NETHER_STAR));
+                checkListItem.add(new ItemStack(Material.GOLD_BLOCK));
+                checkListItem.add(new ItemStack(Material.DIAMOND));
+                checkListItem.add(new ItemStack(Material.GHAST_TEAR));
+                checkListAmount.add(2);
+                checkListAmount.add(120+upgrade*60);
+                checkListAmount.add(350+upgrade*130);
+                checkListAmount.add(48+upgrade*16);
             }
         }
         for (int i=0;i<checkListItem.size();i++){

@@ -1,6 +1,7 @@
 package io.github.mmiimin.cosmicsurvival.menu;
 
 import io.github.mmiimin.cosmicsurvival.LevelStyleManager;
+import io.github.mmiimin.cosmicsurvival.database.HardConfig;
 import io.github.mmiimin.cosmicsurvival.util.ItemManager;
 import io.github.mmiimin.cosmicsurvival.util.PlayerDataStorage;
 import net.md_5.bungee.api.ChatColor;
@@ -9,6 +10,8 @@ import org.bukkit.Material;
 import org.bukkit.advancement.Advancement;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+
+import static java.lang.Integer.max;
 
 public class CosmeticMenu {
 
@@ -142,6 +145,10 @@ public class CosmeticMenu {
                     "§7적용 예시: " + lsm.getLevelStyle(20,player),
                     "",
                     checkLevel(150,player)));
+            inv.setItem(37, item.createItem(item.createSkull("http://textures.minecraft.net/texture/891430f386468e9fae98465b4ccc5fcfb5cb1e4397e6e8a3436ba52f8cb5030"), "§f화이트 노이즈",
+                    "§7적용 예시: " + lsm.getLevelStyle(21,player),
+                    "",
+                    checkSpecific(player)));
         }
         else if (page == 2) {
 
@@ -247,6 +254,21 @@ public class CosmeticMenu {
         }
         else {
             return "§c요구 레벨: " + target;
+        }
+    }
+
+    private String checkSpecific(Player player) {
+        int m = PlayerDataStorage.map.get(player.getName() + "miningLevel");
+        int f = PlayerDataStorage.map.get(player.getName()+"foragingLevel");
+        int a = PlayerDataStorage.map.get(player.getName()+"farmingLevel");
+        int c = PlayerDataStorage.map.get(player.getName()+"combatLevel");
+        int i = PlayerDataStorage.map.get(player.getName()+"fishingLevel");
+        int level = max(i,max(a,max(c,max(f,m))));
+        if (level >= HardConfig.maxLevel){
+            return "§e클릭해서 변경하기";
+        }
+        else {
+            return "§c최고 레벨 숙련도 1개 이상 요구";
         }
     }
 }

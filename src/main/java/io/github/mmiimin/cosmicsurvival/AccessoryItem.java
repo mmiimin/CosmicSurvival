@@ -56,15 +56,7 @@ public class AccessoryItem {
                 accessoryLore.add("§7● 최대 체력 +"+ (Math.max(1,currentLevel)+1));
                 accessoryLore.add("§7");
                 accessoryLore.add("§c⚡ 사용 효과: §f로얄 가드");
-                if (currentLevel <= 1) {
-                    accessoryLore.add("§7저항 II을 0.3초간 받습니다");
-                }
-                else if (currentLevel == 2) {
-                    accessoryLore.add("§7저항 II를 0.5초간 받습니다");
-                }
-                else if (currentLevel == 3) {
-                    accessoryLore.add("§7저항 III를 0.5초간 받습니다");
-                }
+                accessoryLore.add("§7저항 IV을 0."+ (Math.max(1,currentLevel)*3) +"초간 받습니다");
                 accessoryLore.add("§7");
                 accessoryLore.add("§3⌛ 재사용 대기시간: "+ (23-Math.max(1,currentLevel)*3) +"초");
             }
@@ -102,9 +94,9 @@ public class AccessoryItem {
             case 8 -> {
                 url = "151599f66e83da555cf9b8b7e5a379d0deab21c2eee909d1837323db0893bf38";
                 accessoryName = "금빛 탄환";
-                accessoryLore.add("§7● 화살로 주는 피해량이 "+(Math.max(1,currentLevel)*10+10)+"% 증가한다");
+                accessoryLore.add("§7● 화살로 주는 피해량이 "+(Math.max(1,currentLevel)*15+5)+"% 증가한다");
                 accessoryLore.add("§7● 화살로 35블록 이상의 거리에서 피해를 줄 시");
-                accessoryLore.add("§7피해량이 추가로 "+(Math.max(1,currentLevel)*15+15)+"% 증가한다");
+                accessoryLore.add("§7피해량이 추가로 "+(Math.max(1,currentLevel)*30+10)+"% 증가한다");
             }
             case 9 -> {
                 url = "7717933c40fbf936aa9288513efe19bda4601efc0e4ecad2e023b0c1d28444b";
@@ -121,48 +113,32 @@ public class AccessoryItem {
             case 10 -> {
                 url = "59d9b327ff82f6e109b8746c48bfb7f641e1552855493dd4118be24d5b02bc0a";
                 accessoryName = "루비 반지";
-                accessoryLore.add("§7● 최대 체력 +"+ (Math.max(1,currentLevel)));
+                accessoryLore.add("§7● 최대 체력 +"+ (Math.max(1,currentLevel)-1));
                 accessoryLore.add("§7");
                 accessoryLore.add("§c⚡ 사용 효과: §f힐링 레인");
-                accessoryLore.add("§7자신의 5칸 앞에 즉시 회복 포션을 소환합니다");
-                accessoryLore.add("§3⌛ 재사용 대기시간: "+(11-Math.max(1,currentLevel)) +"초");
+                accessoryLore.add("§7잔류형 즉시 회복 I 포션을 투척합니다");
+                accessoryLore.add("§7");
+                accessoryLore.add("§3⌛ 재사용 대기시간: "+(31-Math.max(3,currentLevel)*5) +"초");
             }
             case 11 -> {
-                url = "cfbb95502e0fd0dba60bbe5818e2fd5278eda2999cc2d78109c2ca577557a0a6";
-                accessoryName = "루비 반a지";
-                accessoryLore.add("§7● 이동 속도 +"+Math.max(1,currentLevel)*2+"%p");
+                url = "b879436385bdb0efd13b1d2c094a311ea81e3b83520f9192d89e6442b6fdf2";
+                accessoryName = "루나 피스톨";
+                accessoryLore.add("§c⚡ 사용 효과: §f집광");
+                accessoryLore.add("§7바라보는 방향으로 빛을 쏘아 적중한 엔티티에게");
+                accessoryLore.add("§7"+(Math.max(1,currentLevel)*4+4) +"의 피해를 주고");
+                accessoryLore.add("§72초간 위치를 드러냅니다");
                 accessoryLore.add("§7");
-                accessoryLore.add("§c⚡ 사용 효과: §faa");
-                accessoryLore.add("§7보asda약합니다");
-                accessoryLore.add("§3⌛ 재사용 대기시간: "+(20-Math.max(1,currentLevel)*15) +"초");
+                accessoryLore.add("§7➡ 최대 사거리: 50칸");
+                accessoryLore.add("§3⌛ 재사용 대기시간: 0.5초");
             }
-            case 80 -> {
-                url = "6b9a4dfcc7153c3176dc8cf38887d2d8385545fa4c5f8c2ff13f9d69e98e9";
-                accessoryName = "금빛 타래";
-                accessoryLore.add("§7");
-                accessoryLore.add("§c⚡ 사용 효과:§f 운명의 끈");
-                if (currentLevel <= 1) {
-                    accessoryLore.add("§7최대 3번까지 튕기는 실을 일직선으로 발사합니다");
-                    accessoryLore.add("§7적중 시 상대에게 2 고정 피해를 주고");
-                    accessoryLore.add("§7자신은 2만큼 회복합니다");
-                    accessoryLore.add("§3⌛ 재사용 대기시간: 7초");
-                }
-                else if (currentLevel == 2) {
-                    accessoryLore.add("§7최대 5번까지 튕기는 실을 일직선으로 발사합니다");
-                    accessoryLore.add("§7적중 시 상대에게 3 고정 피해를 주고");
-                    accessoryLore.add("§7자신은 3만큼 회복합니다");
-                    accessoryLore.add("§3⌛ 재사용 대기시간: 6초");
-                }
-                else if (currentLevel == 3) {
-                    accessoryLore.add("§7최대 7번까지 튕기는 실을 일직선으로 발사합니다");
-                    accessoryLore.add("§7적중 시 상대에게 4 고정 피해를 주고");
-                    accessoryLore.add("§7자신은 4만큼 회복합니다");
-                    accessoryLore.add("§3⌛ 재사용 대기시간: 5초");
-                }
-            }
+
+
+
+
+
             default -> {
                 url = "2312e1b93e3544d0ed01e04716e5e2f3ea8ed799ae0253e4b1824de8b3002f64";
-                accessoryName = "§4오류 나진 않겠지";
+                accessoryName = "§4인덱스 초과";
                 accessoryLore.add("§4오류 코드: "+code);
             }
         }
