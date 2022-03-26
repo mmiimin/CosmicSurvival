@@ -10,6 +10,7 @@ public class AccessoryRefresh {
 
     public void aRefresh(Player player){
         int health=0;
+        int armor=0;
         int speed=0; //0.1%
         for (int i=1;i<4;i++) {
             int accLv=PlayerDataStorage.accessory.get(player.getName()+PlayerDataStorage.map.get(player.getName() + "accessory" + i));
@@ -31,6 +32,7 @@ public class AccessoryRefresh {
                 }
             }
         }
+        Objects.requireNonNull(player.getAttribute(Attribute.GENERIC_MAX_HEALTH)).setBaseValue(armor);
         Objects.requireNonNull(player.getAttribute(Attribute.GENERIC_MAX_HEALTH)).setBaseValue(20+health);
         Objects.requireNonNull(player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED)).setBaseValue(0.1 + PlayerDataStorage.map.get(player.getName()+"statsDEX")*0.0001 + speed*0.0001);
     }

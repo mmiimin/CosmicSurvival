@@ -69,6 +69,17 @@ public class AccessoryUpgrade {
                 upgradeList.add("§b○§f 다이아몬드 x"+(350+130*upgrade));
                 upgradeList.add("§b○§f 가스트의 눈물 x"+(48+16*upgrade));
             }
+            case 12 -> {
+                upgradeList.add("§b○§f 경험치 병 x"+(4+upgrade));
+                upgradeList.add("§b○§f 네더라이트 주괴 x"+(12+upgrade*4));
+                upgradeList.add("§b○§f 다이아몬드 x"+(150+upgrade*50));
+                upgradeList.add("§b○§f 금 원석 x"+(385+64*upgrade));
+            }
+            case 13 -> {
+                upgradeList.add("§b○§f 팬텀 막 x"+(32));
+                upgradeList.add("§b○§f 뼈 블록 x"+(640+120*upgrade));
+                upgradeList.add("§b○§f 심층암 에메랄드 광석 x"+(1));
+            }
         }
         upgradeList.add("§e");
         if (upgrade==0) {
@@ -163,6 +174,24 @@ public class AccessoryUpgrade {
                 checkListAmount.add(120+upgrade*60);
                 checkListAmount.add(350+upgrade*130);
                 checkListAmount.add(48+upgrade*16);
+            }
+            case 12 -> {
+                checkListItem.add(new ItemStack(Material.EXPERIENCE_BOTTLE));
+                checkListItem.add(new ItemStack(Material.NETHERITE_INGOT));
+                checkListItem.add(new ItemStack(Material.DIAMOND));
+                checkListItem.add(new ItemStack(Material.RAW_GOLD));
+                checkListAmount.add(4+upgrade);
+                checkListAmount.add(12+upgrade*4);
+                checkListAmount.add(150+upgrade*50);
+                checkListAmount.add(384+upgrade*64);
+            }
+            case 13 -> {
+                checkListItem.add(new ItemStack(Material.PHANTOM_MEMBRANE));
+                checkListItem.add(new ItemStack(Material.BONE_BLOCK));
+                checkListItem.add(new ItemStack(Material.DEEPSLATE_EMERALD_ORE));
+                checkListAmount.add(32);
+                checkListAmount.add(640+upgrade*120);
+                checkListAmount.add(1);
             }
         }
         for (int i=0;i<checkListItem.size();i++){

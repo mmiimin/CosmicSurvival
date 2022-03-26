@@ -98,7 +98,7 @@ class DamageEvent {
                     val accLv = PlayerDataStorage.accessory[attacker.name+PlayerDataStorage.map[attacker.name + "accessory" + i]]!!
                     when (PlayerDataStorage.map[attacker.name + "accessory" + i]) {
                         6->{
-                            if (victim.health <= accLv+2) {
+                            if (victim.health <= accLv*2+1) {
                                 damage=200.0
                                 victim.world.spawnParticle(Particle.REDSTONE,victim.location.add(0.0,1.0,0.0),50,0.3,0.3,0.3,
                                     DustOptions(Color.fromRGB(255, 0, 0), 1.0F))
