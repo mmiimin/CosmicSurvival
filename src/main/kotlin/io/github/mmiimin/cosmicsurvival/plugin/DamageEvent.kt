@@ -5,10 +5,10 @@ import org.bukkit.Color
 import org.bukkit.Particle
 import org.bukkit.Particle.DustOptions
 import org.bukkit.attribute.Attribute
-import org.bukkit.entity.Arrow
-import org.bukkit.entity.Entity
-import org.bukkit.entity.LivingEntity
-import org.bukkit.entity.Player
+import org.bukkit.entity.*
+import org.bukkit.potion.PotionEffect
+import org.bukkit.potion.PotionEffectType
+import kotlin.math.min
 import kotlin.math.pow
 
 
@@ -53,9 +53,24 @@ class DamageEvent {
                     val accLv = PlayerDataStorage.accessory[(attacker.shooter as Player).name+(PlayerDataStorage.map[(attacker.shooter as Player).name + "accessory" + i])]!!
                     when (PlayerDataStorage.map[(attacker.shooter as Player).name + "accessory" + i]) {
                         8->{
-                            damage *= (1 + 0.15 * accLv + 0.05)
-                            if (distance>=30) {
-                                damage *= (1 + 0.3 * accLv + 0.1)
+                            damage *= (1 + 0.1 * accLv)
+                            if (distance>=25) {
+                                damage *= (1 + 0.2 * accLv)
+                            }
+                        }
+                        13->{
+
+                            val entities = victim.getNearbyEntities(1.5, 1.5, 1.5)
+                            victim.world.spawnParticle(Particle.EXPLOSION_HUGE,victim.location,1,0.0,0.0,0.0,0.0)
+                            for (ett in entities) {
+                                if (ett is LivingEntity) {
+                                    if (ett !is Villager) { ett.damage(4.0*accLv, attacker.shooter as Player); }
+                                }
+                            }
+                        }
+                        14->{
+                            if (victim is LivingEntity){
+                                victim.addPotionEffect(PotionEffect(PotionEffectType.SLOW, 40 + 20 * accLv, 2))
                             }
                         }
                     }
@@ -103,6 +118,10 @@ class DamageEvent {
                                 victim.world.spawnParticle(Particle.REDSTONE,victim.location.add(0.0,1.0,0.0),50,0.3,0.3,0.3,
                                     DustOptions(Color.fromRGB(255, 0, 0), 1.0F))
                             }
+                        }
+                        12->{
+                            val damageDrain = min(attacker.health+1.5,attacker.health + damage*(accLv*0.02))
+                            attacker.health=min(attacker.getAttribute(Attribute.GENERIC_MAX_HEALTH)!!.value,damageDrain)
                         }
                     }
                 }

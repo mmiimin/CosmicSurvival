@@ -1,10 +1,8 @@
 package io.github.mmiimin.cosmicsurvival;
 
 import io.github.mmiimin.cosmicsurvival.util.PlayerDataStorage;
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.Particle;
-import org.bukkit.Sound;
+import org.bukkit.*;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -16,7 +14,7 @@ public class AccessoryUpgrade {
 
     AccessoryItem ai = new AccessoryItem();
 
-    public String[] getUpgradeList(int code, int upgrade) {
+    public String[] getUpgradeList(int code, int upgrade,Player player) {
         List<String> upgradeList = new ArrayList<>();
         switch (code) {
             case 1 -> {
@@ -73,12 +71,16 @@ public class AccessoryUpgrade {
                 upgradeList.add("§b○§f 경험치 병 x"+(4+upgrade));
                 upgradeList.add("§b○§f 네더라이트 주괴 x"+(12+upgrade*4));
                 upgradeList.add("§b○§f 다이아몬드 x"+(150+upgrade*50));
-                upgradeList.add("§b○§f 금 원석 x"+(385+64*upgrade));
+                upgradeList.add("§b○§f 금 원석 x"+(384+64*upgrade));
             }
             case 13 -> {
                 upgradeList.add("§b○§f 팬텀 막 x"+(32));
                 upgradeList.add("§b○§f 뼈 블록 x"+(640+120*upgrade));
                 upgradeList.add("§b○§f 심층암 에메랄드 광석 x"+(1));
+            }
+            case 14 -> {
+                upgradeList.add("§e○§6 엔더드래곤 처치 "+player.getStatistic(Statistic.KILL_ENTITY, EntityType.ENDER_DRAGON)+"/"+(4+3*upgrade)+"회");
+                upgradeList.add("§e○§6 박쥐 처치 "+player.getStatistic(Statistic.KILL_ENTITY, EntityType.BAT)+"/"+(300+150*upgrade)+"회");
             }
         }
         upgradeList.add("§e");
@@ -95,6 +97,8 @@ public class AccessoryUpgrade {
     public void upgradeAccessory(int code, int upgrade, Player player) {
         List<ItemStack> checkListItem = new ArrayList<>();
         List<Integer> checkListAmount = new ArrayList<>();
+        List<Integer> checkStats = new ArrayList<>();
+        List<Integer> checkStatsAmount = new ArrayList<>();
         int count=0;
         switch (code) {
             case 1 -> {
@@ -188,10 +192,16 @@ public class AccessoryUpgrade {
             case 13 -> {
                 checkListItem.add(new ItemStack(Material.PHANTOM_MEMBRANE));
                 checkListItem.add(new ItemStack(Material.BONE_BLOCK));
-                checkListItem.add(new ItemStack(Material.DEEPSLATE_EMERALD_ORE));
-                checkListAmount.add(32);
-                checkListAmount.add(640+upgrade*120);
-                checkListAmount.add(1);
+                checkListItem.add(new ItemStack(Material.FEATHER));
+                checkListAmount.add(64+upgrade*32);
+                checkListAmount.add(320+upgrade*120);
+                checkListAmount.add(32+upgrade*32);
+            }
+            case 14 -> {
+                checkStats.add(player.getStatistic(Statistic.KILL_ENTITY, EntityType.ENDER_DRAGON));
+                checkStats.add(player.getStatistic(Statistic.KILL_ENTITY, EntityType.BAT));
+                checkStatsAmount.add(4+3*upgrade);
+                checkStatsAmount.add(300+150*upgrade);
             }
         }
         for (int i=0;i<checkListItem.size();i++){
@@ -202,7 +212,15 @@ public class AccessoryUpgrade {
                 count++;
             }
         }
-        if (count==checkListItem.size()){
+        for (int i=0;i<checkStats.size();i++){
+            if (checkStats.get(i)<checkStatsAmount.get(i)){
+                player.sendMessage("§c[!] 스텟이 부족합니다: §7"+checkStats.get(i));
+            }
+            else{
+                count++;
+            }
+        }
+        if (count==(checkListItem.size()+checkStats.size())){
             for (int i=0;i<checkListItem.size();i++){
                 player.getInventory().removeItem(new ItemStack(checkListItem.get(i).getType(),checkListAmount.get(i)));
             }

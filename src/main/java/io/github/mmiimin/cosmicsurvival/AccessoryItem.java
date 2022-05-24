@@ -69,7 +69,7 @@ public class AccessoryItem {
             case 4 -> {
                 url = "7d16ae951120394f368f2250b7c3ad3fb12cea55ec1b2db5a94d1fb7fd4b6fa";
                 accessoryName = "새벽의 수정구";
-                accessoryLore.add("§7● 최대 체력인 엔티티에게 직접 타격 시 "+ (Math.max(1,currentLevel)*200-150) +"% 추가 피해");
+                accessoryLore.add("§7● 최대 체력인 엔티티에게 직접 타격 시 "+ (Math.max(1,currentLevel)*35) +"% 추가 피해");
             }
             case 5 -> {
                 url = "d1df891f84d3cc735d3ec6f7244583377cd4d908eb6ff05c45339807180820d";
@@ -94,21 +94,16 @@ public class AccessoryItem {
             case 8 -> {
                 url = "151599f66e83da555cf9b8b7e5a379d0deab21c2eee909d1837323db0893bf38";
                 accessoryName = "금빛 탄환";
-                accessoryLore.add("§7● 화살로 주는 피해량이 "+(Math.max(1,currentLevel)*15+5)+"% 증가한다");
-                accessoryLore.add("§7● 화살로 35블록 이상의 거리에서 피해를 줄 시");
-                accessoryLore.add("§7피해량이 추가로 "+(Math.max(1,currentLevel)*30+10)+"% 증가한다");
+                accessoryLore.add("§7● 화살로 주는 피해량이 "+(Math.max(1,currentLevel)*10)+"% 증가한다");
+                accessoryLore.add("§7● 화살로 25블록 이상의 거리에서 피해를 줄 시");
+                accessoryLore.add("§7피해량이 추가로 "+(Math.max(1,currentLevel)*20)+"% 증가한다");
             }
             case 9 -> {
                 url = "7717933c40fbf936aa9288513efe19bda4601efc0e4ecad2e023b0c1d28444b";
                 accessoryName = "플레임 펜던트";
-                accessoryLore.add("§7● 불타는 엔티티에게 직접 타격 시 피해량 "+(Math.max(1,currentLevel)*5+5)+"% 증가");
-                accessoryLore.add("§7");
-                accessoryLore.add("§c⚡ 사용 효과: §f플레임 볼텍스");
-                accessoryLore.add("§71초간 정신을 집중한 뒤 주변 "+(Math.max(1,currentLevel)+3)+"블록 이내의 엔티티를");
-                accessoryLore.add("§7불태우고 공중에 띄운 뒤 낙하시킵니다");
-                accessoryLore.add("§7자신은 신속 I을 "+(Math.max(1,currentLevel)+5)+"초간 받습니다");
-                accessoryLore.add("§7");
-                accessoryLore.add("§3⌛ 재사용 대기시간: "+(34-Math.max(1,currentLevel)*4) +"초");
+                accessoryLore.add("§7● 불타는 엔티티에게 직접 타격 시 피해량 "+(Math.max(1,currentLevel)*5)+"% 증가");
+                accessoryLore.add("§7● 화염 또는 용암으로부터 받는 피해 "+(Math.max(1,currentLevel)*10+20)+"% 감소");
+                accessoryLore.add("§7● 불타는 시간 감소 "+Math.max(1,currentLevel)+"레벨");
             }
             case 10 -> {
                 url = "59d9b327ff82f6e109b8746c48bfb7f641e1552855493dd4118be24d5b02bc0a";
@@ -116,7 +111,7 @@ public class AccessoryItem {
                 accessoryLore.add("§7● 최대 체력 +"+ (Math.max(1,currentLevel)-1));
                 accessoryLore.add("§7");
                 accessoryLore.add("§c⚡ 사용 효과: §f힐링 레인");
-                accessoryLore.add("§7잔류형 즉시 회복 I 포션을 투척합니다");
+                accessoryLore.add("§7투척형 즉시 회복 I 포션을 투척합니다");
                 accessoryLore.add("§7");
                 accessoryLore.add("§3⌛ 재사용 대기시간: "+(31-Math.max(1,currentLevel)*5) +"초");
             }
@@ -127,41 +122,31 @@ public class AccessoryItem {
                 accessoryLore.add("§7바라보는 방향으로 빛을 쏘아 적중한 엔티티에게");
                 accessoryLore.add("§7"+(Math.max(1,currentLevel)*4+4) +"의 피해를 주고");
                 accessoryLore.add("§72초간 위치를 드러냅니다");
+                accessoryLore.add("§7대상이 멀리 있다면 위력이 감소합니다");
                 accessoryLore.add("§7");
                 accessoryLore.add("§c➡ 최대 사거리: 50칸");
-                accessoryLore.add("§3⌛ 재사용 대기시간: 1.2초");
+                accessoryLore.add("§3⌛ 재사용 대기시간: 0.7초");
             }
             case 12 -> {
-                url = "bb2abd66939f4cb7257a88cf52fbc6fdceec1433ec2a6ef16d62e34f6238781";
-                accessoryName = "전기충격기";
-                accessoryLore.add("§c⚡ 사용 효과: §f감전");
-                accessoryLore.add("§7적중한 엔티티에게 2 피해를 주고");
-                accessoryLore.add("§7기절시키며 이동속도를 느리게 만듭니다");
-                accessoryLore.add("§7");
-                accessoryLore.add("§c➡ 최대 사거리: 30칸");
-                accessoryLore.add("§3⌛ 재사용 대기시간: "+String.format("%.2f",(0.2-Math.max(1,currentLevel)*0.05)) +"초");
+                url = "19b99238d9f8134015d74341b17115be30f125a37ea49032b8c9e3b769cf7ee1";
+                accessoryName = "가넷 펜던트";
+                accessoryLore.add("§7● 방어력 +"+Math.max(1,currentLevel));
+                accessoryLore.add("§7● 엔티티를 직접 타격시 피해량의 "+Math.max(1,currentLevel)*2+"%를 회복한다");
+                accessoryLore.add("§8└ 최대 회복량: 1.5");
             }
             case 13 -> {
-                url = "984a68fd7b628d309667db7a55855b54abc23f3595bbe43216211be5fe57014";
-                accessoryName = "독구름 씨앗";
-                accessoryLore.add("§c⚡ 사용 효과: §f독성 연막");
-                accessoryLore.add("§7바라보는 방향에 씨를 심어");
-                accessoryLore.add("§73초 후 주변 3블록의 시야를 11초간 차단하고");
-                accessoryLore.add("§7범위 안에 있는 엔티티에게 초당 "+(2+Math.max(1,currentLevel)*8) +" 피해를 준다");
-                accessoryLore.add("§7");
-                accessoryLore.add("§c➡ 최대 투척 사거리: 15칸");
-                accessoryLore.add("§3⌛ 재사용 대기시간: "+(50-Math.max(1,currentLevel)*8) +"초");
+                url = "b2c6b57b2d0e778b139ebcd518816e4bd0aeaecdaa0944bb3fef6ff7e1f3d2f1";
+                accessoryName = "화살용 폭약";
+                accessoryLore.add("§7● 화살이 적중하면 주변 1.5블록에");
+                accessoryLore.add("§7"+Math.max(1,currentLevel)*4+" 피해를 주는 폭발을 발생시킨다");
             }
             case 14 -> {
-                url = "984a68fd7b628d309667db7a55855b54abc23f3595bbe43216211be5fe57014";
-                accessoryName = "독구름 씨앗";
-                accessoryLore.add("§c⚡ 사용 효과: §f독성 연막");
-                accessoryLore.add("§7바라보는 방향에 씨를 심어");
-                accessoryLore.add("§73초 후 주변 3블록의 시야를 11초간 차단하고");
-                accessoryLore.add("§7범위 안에 있는 엔티티1에게 초당 "+(2+Math.max(1,currentLevel)*8) +" 피해를 준다");
-                accessoryLore.add("§7");
-                accessoryLore.add("§c➡ 최대 투척 사거리: 15칸");
-                accessoryLore.add("§3⌛ 재사용 대기시간: "+(28-Math.max(1,currentLevel)*3) +"초");
+                url = "cec7ba0aaa7bbfe3c1e3e10ae75a1de10bcf6df86c7a118466053508a894f89e";
+                accessoryName = "드래곤 렐릭";
+                accessoryLore.add("§7● 낙하 피해량과 운동 에너지 피해량이 "+(Math.max(1,currentLevel)*20+30)+"% 감소한다");
+                accessoryLore.add("§7● 이동 속도 +"+Math.max(1,currentLevel)*2+"%p");
+                accessoryLore.add("§7● 배고픔이 7 이하로 떨어지지 않는다");
+                accessoryLore.add("§7● 엔티티를 직접 타격 시 구속 III을 "+(Math.max(1,currentLevel)+2)+"초간 부여한다");
             }
 
 
@@ -200,7 +185,7 @@ public class AccessoryItem {
                 }
             }
         }
-        String[] array = accessoryLore.toArray(new String[accessoryLore.size()]);
+        String[] array = accessoryLore.toArray(new String[0]);
         return item.createItem(item.createSkull("https://textures.minecraft.net/texture/"+url),
                 accLevel+accessoryName,
                 array);

@@ -31,6 +31,7 @@ import org.bukkit.inventory.ItemStack
 import org.bukkit.plugin.Plugin
 import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
+import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.pow
 
@@ -344,6 +345,11 @@ class EventListener: Listener{
         message = message.replace(":heart:", "§c❤§f")
         message = message.replace(":accept:", "§2✔§f")
         message = message.replace(":deny:", "§4❌§f")
+        message = message.replace(":x:", "§4❌§f")
+        message = message.replace(":o:", "§4○§f")
+        message = message.replace(":v:", "§2✔§f")
+        message = message.replace(":star:", "§6⭐§f")
+        message = message.replace(":boj:", "§9/<>§f")
         message = message.replace(":question:", "§c§l?§f")
         message = message.replace(":exclamation:", "§c§l!§f")
         message = message.replace(":interrobang:", "§c§l!?§f")
@@ -400,11 +406,34 @@ class EventListener: Listener{
     @EventHandler
     fun onDamagedByEnvironment(event: EntityDamageEvent) {
         val victim = event.entity
+        var health = 1.0
+        var maxHealth = 1.0
         if (event.cause != EntityDamageEvent.DamageCause.ENTITY_ATTACK && event.cause != EntityDamageEvent.DamageCause.PROJECTILE &&
             event.cause != EntityDamageEvent.DamageCause.ENTITY_SWEEP_ATTACK &&
             event.cause != EntityDamageEvent.DamageCause.THORNS && event.cause != EntityDamageEvent.DamageCause.ENTITY_EXPLOSION) {
             if (victim is Player) {
+                maxHealth = victim.getAttribute(Attribute.GENERIC_MAX_HEALTH)!!.value
+                health =victim.health
+
                 event.damage = de.victimDamageCalculate(victim,event.damage)
+                var damage = event.damage
+                for(i: Int in 1..3) {
+                    val accLv = PlayerDataStorage.accessory[victim.name+(PlayerDataStorage.map[victim.name + "accessory" + i])]!!
+                    when (PlayerDataStorage.map[victim.name + "accessory" + i]) {
+                        9->{
+                            if (event.cause == EntityDamageEvent.DamageCause.FIRE || event.cause == EntityDamageEvent.DamageCause.FIRE_TICK || event.cause == EntityDamageEvent.DamageCause.LAVA) {
+                                damage *= 1-(0.2 + 0.1 * accLv)
+                                victim.fireTicks = max(0,victim.fireTicks-10*accLv)
+                            }
+                        }
+                        14->{
+                            if (event.cause == EntityDamageEvent.DamageCause.FLY_INTO_WALL || event.cause == EntityDamageEvent.DamageCause.FALL) {
+                                damage *= 1-(0.3 + 0.2 * accLv)
+                            }
+                        }
+                    }
+                }
+                event.damage=damage
                 if (PlayerDataStorage.map[victim.name + "settingDI"] == 1) {
                     val indicate: String = when (event.cause) {
                         EntityDamageEvent.DamageCause.FIRE -> "불"
@@ -518,6 +547,11 @@ class EventListener: Listener{
                 attacker.world.spawnParticle( Particle.VILLAGER_HAPPY,victim.location.x,victim.location.y+1,victim.location.z,50,0.0,0.0,1.0,0.0)
                 attacker.world.playSound(victim.location,Sound.ENTITY_ENDER_DRAGON_SHOOT,1.5F,1F)
             }
+            13 -> {
+                attacker.world.spawnParticle( Particle.FALLING_DRIPSTONE_WATER,victim.location.x,victim.location.y+1,victim.location.z,50,1.0,0.0,0.0,0.0)
+                attacker.world.spawnParticle( Particle.VILLAGER_HAPPY,victim.location.x,victim.location.y+1,victim.location.z,50,0.0,0.0,1.0,0.0)
+                attacker.world.playSound(victim.location,Sound.ENTITY_ENDER_DRAGON_SHOOT,1.5F,1F)
+            }
         }
     }
 
@@ -531,6 +565,16 @@ class EventListener: Listener{
         val player = event.entity as Player
         if (player.foodLevel > event.foodLevel){
             val srvRate = Math.random()
+            for(i: Int in 1..3) {
+                val accLv = PlayerDataStorage.accessory[player.name+(PlayerDataStorage.map[player.name + "accessory" + i])]!!
+                when (PlayerDataStorage.map[player.name + "accessory" + i]) {
+                    14->{
+                        if (event.foodLevel <= 7) {
+                            event.isCancelled=true;
+                        }
+                    }
+                }
+            }
             if (srvRate > (0.9965.pow(PlayerDataStorage.map[player.name + "statsSRV"]!!.toDouble()))){
                 event.isCancelled = true
                 player.health = min(player.health + 1, player.getAttribute(Attribute.GENERIC_MAX_HEALTH)!!.value)

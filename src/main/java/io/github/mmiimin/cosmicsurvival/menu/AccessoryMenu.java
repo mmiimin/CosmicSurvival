@@ -61,7 +61,7 @@ public class AccessoryMenu {
         for (int i = 45; i < 54; i++) {
             inv.setItem(i, item.createItem(Material.BLACK_STAINED_GLASS_PANE, " "));
         }
-        for (int i = (page-1)*45; i < 14; i++) {
+        for (int i = (page-1)*45; i < 15; i++) {
             inv.setItem(i, ai.createAccessory(player,i,2));
         }
 
@@ -83,11 +83,11 @@ public class AccessoryMenu {
             inv.setItem(i, item.createItem(Material.BLACK_STAINED_GLASS_PANE, " "));
         }
         if (mode==0) {
-            inv.setItem(24, item.createItem(Material.ANVIL, "§a제작하기", au.getUpgradeList(slot,PlayerDataStorage.accessory.get(player.getName()+slot))));
+            inv.setItem(24, item.createItem(Material.ANVIL, "§a제작하기", au.getUpgradeList(slot,PlayerDataStorage.accessory.get(player.getName()+slot),player)));
             inv.setItem(20, ai.createAccessory(player,slot,0));
         }
         else {
-            inv.setItem(24, item.createItem(Material.ANVIL, "§a강화하기", au.getUpgradeList(slot,PlayerDataStorage.accessory.get(player.getName()+slot))));
+            inv.setItem(24, item.createItem(Material.ANVIL, "§a강화하기", au.getUpgradeList(slot,PlayerDataStorage.accessory.get(player.getName()+slot),player)));
             inv.setItem(11, ai.createAccessory(player,slot,0));
             inv.setItem(29, ai.createAccessory(player,slot,10));
             inv.setItem(20, item.createItem(Material.WHITE_STAINED_GLASS_PANE, "§b↓"));
